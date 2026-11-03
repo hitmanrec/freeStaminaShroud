@@ -21,3 +21,7 @@ mkdir -p "$repo_dir/.build"
     -I "$repo_dir/third_party/enshwick" "$repo_dir/tests/actions_test.c" \
     -o "$repo_dir/.build/actions_test"
 "$repo_dir/.build/actions_test"
+"${CC:-cc}" -std=c11 -Wall -Wextra -Werror -pedantic \
+    -I "$repo_dir/third_party/enshwick" "$repo_dir/tests/respawn_test.c" \
+    -o "$repo_dir/.build/respawn_test"
+"$repo_dir/.build/respawn_test"

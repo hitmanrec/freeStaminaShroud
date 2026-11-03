@@ -288,6 +288,7 @@ static void on_game_event(const EnshwickGameEventData *event, void *user) {
                                        is_player(event_entity(schema, event, 3));
     if (!relevant && schema != &events[3]) return;
     note_sprint_event(schema,event);
+    if(schema==&events[3])note_respawn_dead_entity(event_entity(schema,event,0));
     if (event_lines >= EVENT_LIMIT) { ++event_dropped; return; }
     ++event_lines;
     Line l = {{0}, 0}; text(&l, "event game="); number(&l, game);

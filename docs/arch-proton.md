@@ -1,8 +1,10 @@
-# Gameplay Preview 0.5.2: Arch Linux / Proton
+# Gameplay Preview 0.6.0: Arch Linux / Proton
 
 Эта версия добавляет бесплатные наземные прыжки вне наблюдаемого боя и
 действия двуручных инструментов независимо от боя, сохраняя патч спринта.
 [Точные правила, ограничения и игровой тест 0.5.0](action-preview.md).
+В 0.6.0 добавлено [полное восполнение ресурсов при возрождении](respawn-refill.md).
+Первую проверку новой функции выполняйте по этому отдельному сценарию.
 Планер и плавание сохраняют обычный расход.
 Поддерживаются две проверенные сборки: CodeView
 `69f0e9573b32c24a8838d3fff550824c` / age 520 (EXACT) и
@@ -107,7 +109,7 @@ WINEDLLOVERRIDES="powrprof=n,b" %command%
 через Host. В логе источника `hitmanrec.stamina-probe` должны быть:
 
 ```text
-probe=0.5.2 read_only=false sprint_preview=true ...
+probe=0.6.0 read_only=false sprint_preview=true ...
 sprint_patch_registered status=0
 sample ... sprint_free_mask=1 ai_complete=1 skipped_sprint_adds=...
 ```

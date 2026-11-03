@@ -9,10 +9,10 @@
 static const EnshwickManifest manifest = {
     .header = HEADER(EnshwickManifest),
     .id = ENSHWICK_STR_INIT("hitmanrec.stamina-probe"),
-    .version = ENSHWICK_STR_INIT("0.5.2"),
+    .version = ENSHWICK_STR_INIT("0.6.0"),
     .side = EnshwickSide_SERVER,
     .name = ENSHWICK_STR_INIT("Free Stamina Shroud - Gameplay Preview"),
-    .description = ENSHWICK_STR_INIT("Experimental free sprint and ground jumps outside combat, plus tool actions."),
+    .description = ENSHWICK_STR_INIT("Experimental free traversal/tools and full resources after respawn."),
     .license = ENSHWICK_STR_INIT("MIT"),
 };
 
@@ -90,6 +90,7 @@ static void prefix(Line *l, const EnshwickTickData *tick) {
     text(l, " step="); number(l, tick->step);
 }
 
+static void note_respawn_dead_entity(uint32_t);
 #include "diagnostics.h"
 #include "builds.h"
 static int32_t action_delta(void *,int32_t,uint64_t,uint32_t *,uint32_t *);
@@ -97,6 +98,7 @@ static int32_t action_delta(void *,int32_t,uint64_t,uint32_t *,uint32_t *);
 #include "sprint.h"
 #include "actions.h"
 #include "climb_trace.h"
+#include "respawn.h"
 
 static void tick(EnshwickEvent event, const void *data, void *user) {
     (void)user;
@@ -110,6 +112,7 @@ static void tick(EnshwickEvent event, const void *data, void *user) {
         reset_sprint_players();
         reset_actions();
         reset_climb_trace();
+        reset_respawn();
         previous_status = previous_count = UINT32_MAX;
     }
     const int heartbeat = (++samples % 20 == 1);
@@ -178,6 +181,7 @@ static void tick(EnshwickEvent event, const void *data, void *user) {
     publish_sprint(t,players,count,heartbeat);
     publish_actions(players,count);
     drain_climb_trace(t,players,count,heartbeat);
+    tick_respawn(t,players,count,heartbeat);
     for (unsigned p = 0; p < PLAYERS; ++p)
         if (!cache[p].seen) {
             cache[p].entity = 0;
@@ -199,7 +203,7 @@ EnshwickStatus enshwick_mod_init(const EnshwickHostApi *host, EnshwickModHandle 
     EnshwickBuildInfo build = {.header = HEADER(EnshwickBuildInfo)};
     api->build(&build);
     Line l = {{0}, 0};
-    text(&l, "probe=0.5.2 read_only=false sprint_preview=true loader=");
+    text(&l, "probe=0.6.0 read_only=false sprint_preview=true loader=");
     for (size_t i = 0; i < host->host_version.len && l.used < sizeof(l.text); ++i)
         l.text[l.used++] = (char)host->host_version.ptr[i];
     text(&l, " binary_side="); number(&l, build.side);
@@ -236,6 +240,7 @@ EnshwickStatus enshwick_mod_init(const EnshwickHostApi *host, EnshwickModHandle 
     init_sprint(&build);
     init_actions(&build);
     init_climb_trace(&build);
+    init_respawn(&build);
     EnshwickTickHandle handle = 0;
     return api->subscribe_tick(self, PERIOD_NS, tick, 0, &handle);
 }

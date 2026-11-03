@@ -1,6 +1,6 @@
 # Stamina mod implementation
 
-Version 0.5.2 provides a Windows x86-64 Enshwick DLL for the two explicitly
+Version 0.6.0 provides a Windows x86-64 Enshwick DLL for the two explicitly
 reviewed client builds. The host sprint path has been validated in game on
 build /205, including blocking on wolf aggression before the first hit.
 Jump and tool suppression are new experimental gameplay changes, tested in
@@ -25,6 +25,7 @@ needed for axes/pickaxes. The runtime rule checks the live Tools item category
 and TwoHanded animation at the reviewed action debit site. Other matching tools
 can also qualify; the full classification limits are documented below.
 
+- [One-shot respawn restoration](respawn-refill.md)
 - [Gameplay rules, implementation details and 0.5.0 test](action-preview.md)
 - [Arch Linux / Proton build and installation](arch-proton.md)
 - [Per-player guest diagnostics and test](guest-test.md)

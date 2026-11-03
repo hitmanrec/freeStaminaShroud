@@ -4,17 +4,17 @@ An Enshrouded mod in development: free sprinting and jumping outside combat,
 plus free tool actions regardless of combat or target. Attacks with ordinary
 combat weapons retain their normal stamina costs.
 
-Version **0.5.2** adds experimental free ground jumps outside observed combat
-and free two-handed tool actions at any time, alongside the tested sprint patch.
-The tool rule checks the live item's Tools category and animation; ordinary
-combat weapons retain their costs. Combat detection uses the selected AI combat
-target and hit events with a 10-second cooldown. New jump/tool behavior still
-needs in-game validation; guest prediction is not yet confirmed.
+Version **0.6.0** adds experimental one-shot restoration of health, stamina
+and mana to the character's current maxima after respawn. Sprint, ground jumps,
+axe and the confirmed pickaxe have been validated for host and guest in recorded
+sessions. Respawn restoration still needs live testing; regeneration pauses
+between double jumps remain a separate open task.
 
+- [Восполнение ресурсов при возрождении: 0.6.0](docs/respawn-refill.md)
 - [Кирка и диагностика расхода на горе: 0.5.2](docs/pickaxe-and-slope.md)
 - [Исправление первых прыжков и склона в 0.5.1](docs/session-050-jump-fix.md)
 - [Правила и короткий тест прыжков/инструментов 0.5.0](docs/action-preview.md)
-- [Установка и проверка Gameplay Preview 0.5.2 на Arch / Proton](docs/arch-proton.md)
+- [Установка и проверка Gameplay Preview 0.6.0 на Arch / Proton](docs/arch-proton.md)
 - [Поддержка новой сборки игры в 0.4.4](docs/build-205-support.md)
 - [Исправление целей ИИ и совместный тест с гостем без мода (0.4.3)](docs/guest-test.md)
 - [Исправление отказа по селектору в 0.4.2](docs/session-041-analysis.md)
