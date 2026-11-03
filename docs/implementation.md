@@ -28,7 +28,10 @@ The Windows command has not been executed in the Linux cloud environment.
 | Action | Outside combat | In combat | Combat state unknown |
 | --- | --- | --- | --- |
 | Sprint | Free | Original cost | Original cost |
-| Jump | Free | Original cost | Original cost |
+| Ordinary jump | Original behavior (already free) | Original behavior | Original behavior |
+| Double jump | Free | Original cost | Original cost |
+| Jump up a slope | Free | Original cost | Original cost |
+| Gliding | Original cost | Original cost | Original cost |
 | Cut a tree with an axe | Free | Free | Free |
 | Mine ore with a pickaxe | Free | Free | Free |
 | Attack an enemy, including with either tool | Original cost | Original cost | Original cost |

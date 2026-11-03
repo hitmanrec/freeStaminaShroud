@@ -26,9 +26,12 @@ int main() {
     };
     const std::array<CombatState, 3> states = {
         CombatState::outside_combat, CombatState::in_combat, CombatState::unknown};
-    const std::array<Case, 7> cases = {{
+    const std::array<Case, 10> cases = {{
         {Action::sprint, "sprint", {true, false, false}},
-        {Action::jump, "jump", {true, false, false}},
+        {Action::ordinary_jump, "ordinary jump retains original behavior", {false, false, false}},
+        {Action::double_jump, "double jump", {true, false, false}},
+        {Action::slope_jump, "slope jump", {true, false, false}},
+        {Action::glide, "gliding retains original cost", {false, false, false}},
         {Action::chop_tree, "axe gathering", {true, true, true}},
         {Action::mine_ore, "pickaxe gathering", {true, true, true}},
         {Action::attack_enemy, "enemy attacks", {false, false, false}},
@@ -58,9 +61,9 @@ int main() {
     host = CombatState::in_combat;
     guest = CombatState::outside_combat;
     check(stamina_cost(5.0F, Action::sprint, host) == 5.0F, "host enters combat");
-    check(stamina_cost(5.0F, Action::jump, guest) == 0.0F, "guest leaves combat");
+    check(stamina_cost(5.0F, Action::double_jump, guest) == 0.0F, "guest leaves combat");
     host = CombatState::outside_combat;
-    check(stamina_cost(5.0F, Action::jump, host) == 0.0F, "host leaves combat");
+    check(stamina_cost(5.0F, Action::slope_jump, host) == 0.0F, "host leaves combat");
 
     std::cout << checks << " checks, " << failures << " failures\n";
     return failures == 0 ? 0 : 1;

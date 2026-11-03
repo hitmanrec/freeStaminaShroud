@@ -6,7 +6,10 @@ namespace free_stamina {
 // simply equipping an axe or pickaxe does not establish a gathering action.
 enum class Action {
     sprint,
-    jump,
+    ordinary_jump,
+    double_jump,
+    slope_jump,
+    glide,
     chop_tree,
     mine_ore,
     attack_enemy,
@@ -24,7 +27,8 @@ constexpr bool suppress_cost(Action action, CombatState combat) noexcept {
     case Action::mine_ore:
         return true;
     case Action::sprint:
-    case Action::jump:
+    case Action::double_jump:
+    case Action::slope_jump:
         return combat == CombatState::outside_combat;
     default:
         return false;
