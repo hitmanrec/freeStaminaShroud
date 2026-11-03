@@ -58,6 +58,24 @@ int main(void) {
     image_code[0]^=1;range_size=1;init_cost_trace(&build);CHECK(hooks==0);
     range_size=sizeof(image_code);init_cost_trace(&build);CHECK(hooks==1);
     CHECK(strstr(output,"cost_trace_hook status=0")!=0);
+    // A reviewed PATTERNS build is permitted explicitly; a changed identity,
+    // side, table mode, or the old build in PATTERNS mode must stay refused.
+    CHECK(reviewed_client_build(&build)==1);
+    build.table=EnshwickBuildTable_PATTERNS;CHECK(!reviewed_client_build(&build));
+    memcpy(build.fingerprint.guid,client_205_guid,16);build.fingerprint.age=205;
+    CHECK(reviewed_client_build(&build)==2);
+    init_cost_trace(&build);CHECK(hooks==2);
+    build.fingerprint.guid[0]^=1;init_cost_trace(&build);CHECK(hooks==2);
+    build.fingerprint.guid[0]^=1;build.fingerprint.age=206;CHECK(!reviewed_client_build(&build));
+    build.fingerprint.age=205;build.side=EnshwickSide_SERVER;CHECK(!reviewed_client_build(&build));
+    build.side=EnshwickSide_CLIENT;build.table=99;CHECK(!reviewed_client_build(&build));
+    build.table=EnshwickBuildTable_EXACT;CHECK(reviewed_client_build(&build)==2);
+    CHECK(sprint_code_digest((const uint8_t *)"hello",5)==UINT32_C(0x4f9f2cab));
+    uint8_t unreviewed_body[0x5b3]={0};
+    CHECK(!reviewed_sprint_code(1,unreviewed_body,sizeof(unreviewed_body)));
+    CHECK(!reviewed_sprint_code(2,unreviewed_body,sizeof(unreviewed_body)));
+    CHECK(!reviewed_sprint_code(0,unreviewed_body,sizeof(unreviewed_body)));
+    CHECK(!reviewed_sprint_code(2,unreviewed_body,sizeof(unreviewed_body)-1));
     return_address=(uintptr_t)image_code+4;
     int registry=42;expected_registry=&registry;
     cost_observe(&meter,&registry,-7,COST_ROOT);

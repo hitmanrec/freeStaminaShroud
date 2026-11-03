@@ -1,10 +1,12 @@
-# Sprint Preview 0.4.3: Arch Linux / Proton
+# Sprint Preview 0.4.4: Arch Linux / Proton
 
 Эта версия уже меняет расход: **спринт вне наблюдаемого боя становится
 бесплатным**. Прыжки, инструменты, плавание и планер пока работают как в игре.
-Поддерживается только EXE из присланных отчётов: CodeView
-`69f0e9573b32c24a8838d3fff550824c`, age `520` (таблица client 26320373).
-При несовпадении сборки/кода патч отказывается включаться.
+Поддерживаются две проверенные сборки: CodeView
+`69f0e9573b32c24a8838d3fff550824c` / age 520 (EXACT) и
+`e378da3d6079c049b30cd1604a0e7846` / age 205 (EXACT или PATTERNS).
+Другие сборки и непроверенный код отклоняются. Подробнее —
+[поддержка новой сборки 0.4.4](build-205-support.md).
 
 Это экспериментальная версия; Enshrouded/Proton в облаке не запускался.
 Подробнее об ограничениях детектора боя — [здесь](sprint-preview.md).
@@ -103,7 +105,7 @@ WINEDLLOVERRIDES="powrprof=n,b" %command%
 через Host. В логе источника `hitmanrec.stamina-probe` должны быть:
 
 ```text
-probe=0.4.3 read_only=false sprint_preview=true ...
+probe=0.4.4 read_only=false sprint_preview=true ...
 sprint_patch_registered status=0
 sample ... sprint_free_mask=1 ai_complete=1 skipped_sprint_adds=...
 ```
@@ -116,7 +118,7 @@ sample ... sprint_free_mask=1 ai_complete=1 skipped_sprint_adds=...
 Если появляется `sprint_patch_guard`, `sprint_patch_site` или
 `sprint_patch_prologue` с ошибкой, проверку не обходите: сохраните лог.
 
-В 0.4.3 исправлена блокировка из-за небоевых элементов SelectedTargets и
+В 0.4.4 добавлена поддержка новой сборки игры. В 0.4.3 исправлена блокировка из-за небоевых элементов SelectedTargets и
 добавлена отдельная диагностика каждого игрока. Для текущего совместного
 прогона используйте [сценарий с гостем без мода](guest-test.md).
 

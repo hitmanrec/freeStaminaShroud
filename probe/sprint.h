@@ -186,14 +186,13 @@ static void *allocate_sprint_near(uintptr_t site) {
 static void init_sprint(const EnshwickBuildInfo *build) {
     sprint_installed=0;reset_sprint_players();
 #ifdef _WIN32
-    int identity=build->side==EnshwickSide_CLIENT && build->table==EnshwickBuildTable_EXACT && build->fingerprint.age==520;
-    for(unsigned i=0;i<16;++i)if(build->fingerprint.guid[i]!=cost_guid[i])identity=0;
+    unsigned identity=reviewed_client_build(build);
     uint64_t system=0,begin=0,length=0;
     if(!identity || !api->patch_code || !api->system || !api->code_range ||
        build->base>UINT64_MAX-SPRINT_SITE ||
        api->system(str("stamina_depletion_sprint"),&system)!=EnshwickStatus_OK ||
        system!=build->base+SPRINT_SYSTEM || api->code_range(&begin,&length)!=EnshwickStatus_OK ||
-       system<begin || !range_ok(system-begin,0x50e,length)) {
+       system<begin || !range_ok(system-begin,0x5b3,length)) {
         diagnostic_status("sprint_patch_guard",EnshwickStatus_REFUSED);return;
     }
     const uint8_t prologue[]={0x40,0x55,0x41,0x57,0x48,0x8d,0xac,0x24,0xf8,0xfe,0xff,0xff,0x48,0x81,0xec,0x08,0x02,0,0};
@@ -203,6 +202,8 @@ static void init_sprint(const EnshwickBuildInfo *build) {
         diagnostic_status("sprint_patch_prologue",EnshwickStatus_REFUSED);return;}
     for(unsigned i=0;i<sizeof(original);++i)if(((const uint8_t *)site)[i]!=original[i]){
         diagnostic_status("sprint_patch_site",EnshwickStatus_REFUSED);return;}
+    if(!reviewed_sprint_code(identity,(const uint8_t *)(uintptr_t)system,0x5b3)){
+        diagnostic_status("sprint_patch_body",EnshwickStatus_REFUSED);return;}
     uint8_t *stub=allocate_sprint_near(site);
     if(!stub){diagnostic_status("sprint_patch_allocation",EnshwickStatus_MISSING);return;}
     size_t size=build_sprint_stub(stub,4096,(uintptr_t)stub,(uintptr_t)sprint_gate,site+8);
@@ -217,7 +218,7 @@ static void init_sprint(const EnshwickBuildInfo *build) {
     if(!sprint_installed)VirtualFree(stub,0,0x8000);
     diagnostic_status("sprint_patch_registered",status);
 #else
-    (void)build;(void)sprint_gate;(void)build_sprint_stub;
+    (void)build;(void)sprint_gate;(void)build_sprint_stub;(void)reviewed_sprint_code;
     diagnostic_status("sprint_patch_platform",EnshwickStatus_REFUSED);
 #endif
 }

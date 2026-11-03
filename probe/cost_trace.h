@@ -10,9 +10,6 @@ static const uint8_t cost_prologue[] = {
     0x48,0x89,0x5c,0x24,0x10,0x48,0x89,0x6c,0x24,0x18,
     0x48,0x89,0x74,0x24,0x20,0x57,0x48,0x83,0xec,0x60
 };
-static const uint8_t cost_guid[] = {
-    0x69,0xf0,0xe9,0x57,0x3b,0x32,0xc2,0x4a,0x88,0x38,0xd3,0xff,0xf5,0x50,0x82,0x4c
-};
 static _Atomic(uintptr_t) cost_next;
 static atomic_flag cost_lock = ATOMIC_FLAG_INIT;
 static _Atomic(uint32_t) cost_dropped;
@@ -84,9 +81,7 @@ static void drain_cost_trace(const EnshwickTickData *t, const EnshwickPlayerInfo
 }
 static void init_cost_trace(const EnshwickBuildInfo *build) {
     EnshwickStatus status = EnshwickStatus_REFUSED;
-    int identity = build->side == EnshwickSide_CLIENT &&
-                   build->table == EnshwickBuildTable_EXACT && build->fingerprint.age == 520;
-    for (unsigned i=0;i<16;++i) if(build->fingerprint.guid[i]!=cost_guid[i])identity=0;
+    unsigned identity=reviewed_client_build(build);
     if (!identity || !api->hook || !api->caller_frame || !api->code_range ||
         !build->base || build->base > UINT64_MAX-COST_RVA) {
         diagnostic_status("cost_trace_guard",status); return;

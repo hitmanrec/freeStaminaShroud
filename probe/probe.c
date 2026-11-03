@@ -9,7 +9,7 @@
 static const EnshwickManifest manifest = {
     .header = HEADER(EnshwickManifest),
     .id = ENSHWICK_STR_INIT("hitmanrec.stamina-probe"),
-    .version = ENSHWICK_STR_INIT("0.4.3"),
+    .version = ENSHWICK_STR_INIT("0.4.4"),
     .side = EnshwickSide_SERVER,
     .name = ENSHWICK_STR_INIT("Free Stamina Shroud - Sprint Preview"),
     .description = ENSHWICK_STR_INIT("Experimental free sprint outside observed combat, with diagnostics."),
@@ -91,6 +91,7 @@ static void prefix(Line *l, const EnshwickTickData *tick) {
 }
 
 #include "diagnostics.h"
+#include "builds.h"
 #include "cost_trace.h"
 #include "sprint.h"
 
@@ -191,7 +192,7 @@ EnshwickStatus enshwick_mod_init(const EnshwickHostApi *host, EnshwickModHandle 
     EnshwickBuildInfo build = {.header = HEADER(EnshwickBuildInfo)};
     api->build(&build);
     Line l = {{0}, 0};
-    text(&l, "probe=0.4.3 read_only=false sprint_preview=true loader=");
+    text(&l, "probe=0.4.4 read_only=false sprint_preview=true loader=");
     for (size_t i = 0; i < host->host_version.len && l.used < sizeof(l.text); ++i)
         l.text[l.used++] = (char)host->host_version.ptr[i];
     text(&l, " binary_side="); number(&l, build.side);
