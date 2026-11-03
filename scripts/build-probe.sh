@@ -10,7 +10,7 @@ sha256sum -c third_party/enshwick/SHA256SUMS
 sh scripts/test-probe.sh
 out="$repo_dir/.build/probe/hitmanrec.stamina-probe"
 mkdir -p "$out"
-"$zig_bin" build-lib -target x86_64-windows-msvc \
+"$zig_bin" build-lib -target x86_64-windows-gnu -lkernel32 \
     -dynamic -fentry=probe_entry -O ReleaseSmall -fno-emit-implib \
     -I third_party/enshwick -femit-bin="$out/stamina_probe.dll" \
     -cflags -std=c11 -Wall -Wextra -Werror -ffreestanding -- probe/probe.c probe/entry.c

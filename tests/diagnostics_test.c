@@ -92,6 +92,7 @@ static EnshwickStatus component(EnshwickModHandle me,EnshwickEntity entity,uint3
     else if(type==14 && entity==1)*out=actor;
     else if(type==12 && entity==100)*out=selected;
     else if(type==11 && entity==100)*out=&faction_value;
+    else if(type==15 && entity==1)*out=stamina;
     else return EnshwickStatus_MISSING;
     return EnshwickStatus_OK;
 }
@@ -177,6 +178,45 @@ int main(void) {
     for(unsigned i=0;i<EVENT_LIMIT+3;++i)event_callbacks[0](&event,event_users[0]);
     CHECK(event_dropped==3);event_window();CHECK(strstr(logs,"event_rate_limit dropped=3")!=0);
     sample(2,1);CHECK(game==2 && samples==1);
+    // Preview eligibility is per entity, short lived, and fails closed on
+    // incomplete AI observations. Exercise the same publication used in game.
+    reset_sprint_players();sprint_installed=1;sprint_test_time=100;
+    fields[4].available=1;fields[4].hash=15;fields[4].offset=0;
+    EnshwickPlayerInfo one={.slot=0,.entity=1};
+    EnshwickTickData tick_data={.game=2,.step=10};
+    observed_ai_complete=1;observed_ai_mask=0;
+    publish_sprint(&tick_data,&one,1,0);
+    CHECK(sprint_gate((uintptr_t)stamina,4));
+    CHECK(!sprint_gate((uintptr_t)stamina,9));
+    CHECK(!sprint_gate((uintptr_t)stamina+4,4));
+    sprint_test_time=451;CHECK(!sprint_gate((uintptr_t)stamina,4));
+    publish_sprint(&tick_data,&one,1,0);CHECK(sprint_gate((uintptr_t)stamina,4));
+    observed_ai_complete=0;publish_sprint(&tick_data,&one,1,0);
+    CHECK(!sprint_gate((uintptr_t)stamina,4));
+    observed_ai_complete=1;observed_ai_mask=1;publish_sprint(&tick_data,&one,1,0);
+    CHECK(!sprint_gate((uintptr_t)stamina,4));
+    observed_ai_mask=0;sprint_test_time=10450;publish_sprint(&tick_data,&one,1,0);
+    CHECK(!sprint_gate((uintptr_t)stamina,4));
+    sprint_test_time=10451;publish_sprint(&tick_data,&one,1,0);
+    CHECK(sprint_gate((uintptr_t)stamina,4));
+    put(hit+events[0].fields[5].offset,0x4000,4);
+    note_sprint_event(&events[0],&event);CHECK(sprint_gate((uintptr_t)stamina,4));
+    put(hit+events[0].fields[5].offset,0,4);
+    note_sprint_event(&events[0],&event);CHECK(!sprint_gate((uintptr_t)stamina,4));
+    sprint_test_time+=10000;publish_sprint(&tick_data,&one,1,0);
+    CHECK(sprint_gate((uintptr_t)stamina,4));
+    // Incoming hits also block. Malformed events cannot grant free sprint.
+    put(hit+events[0].fields[0].offset,100,4);
+    put(hit+events[0].fields[1].offset,1,4);put(hit+events[0].fields[2].offset,1,4);
+    note_sprint_event(&events[0],&event);CHECK(!sprint_gate((uintptr_t)stamina,4));
+    sprint_test_time+=10000;publish_sprint(&tick_data,&one,1,0);
+    CHECK(sprint_gate((uintptr_t)stamina,4));
+    event.size=1;note_sprint_event(&events[0],&event);event.size=256;
+    CHECK(!sprint_gate((uintptr_t)stamina,4));
+    reset_sprint_players();CHECK(!sprint_gate((uintptr_t)stamina,4));
+    observed_ai_complete=0;sample_targets(&tick_data,&one,1,0);CHECK(observed_ai_complete);
+    ai_status=EnshwickStatus_MISSING;sample_targets(&tick_data,&one,1,0);CHECK(!observed_ai_complete);
+    ai_status=EnshwickStatus_OK;
     invalid_constant=1;init_stamina();CHECK(!stamina_layout.available);
     CHECK(strstr(logs,"stamina_schema status=4")!=0);
     CHECK(little(stamina+8,4)==90); // Diagnostics did not alter the meter.

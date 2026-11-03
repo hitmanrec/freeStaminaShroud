@@ -5,6 +5,8 @@
 #define EVENT_TYPES_LIMIT 2048
 static uint64_t last_step;
 static uint32_t event_lines, event_dropped;
+static uint32_t observed_ai_mask;
+static int observed_ai_complete;
 static int range_ok(uint64_t offset, uint64_t width, uint64_t size) {
     return offset <= size && width <= size - offset;
 }
@@ -125,6 +127,7 @@ static void target_line(const EnshwickTickData *t, uint32_t owner, uint32_t any,
 static void sample_targets(const EnshwickTickData *t, const EnshwickPlayerInfo *players,
                             uint32_t count, int heartbeat) {
     last_step = t->step;
+    observed_ai_mask=0;observed_ai_complete=0;
     if (!ai_available) return;
     uint32_t total = 0, ready = 0, matched = 0, overflow = 0;
     // Enumerate the actual target-bearing runtime component, not a setup-only
@@ -137,13 +140,14 @@ static void sample_targets(const EnshwickTickData *t, const EnshwickPlayerInfo *
     }
     for (unsigned i = 0; i < AI_TRACKED; ++i) ai_cache[i].seen = 0;
     uint32_t limit = total < AI_LIMIT ? total : AI_LIMIT;
+    int complete=total<=AI_LIMIT;
     for (uint32_t i = 0; i < limit; ++i) {
         int owner_is_player = 0;
         for (uint32_t p = 0; p < count; ++p)
             if (players[p].entity == ai_entities[i].entity) owner_is_player = 1;
         if (owner_is_player) continue;
         const void *pointer = 0;
-        if (api->component(self, ai_entities[i].entity, targets.hash, &pointer) != EnshwickStatus_OK || !pointer) continue;
+        if (api->component(self, ai_entities[i].entity, targets.hash, &pointer) != EnshwickStatus_OK || !pointer) {complete=0;continue;}
         ++ready; uint32_t any = 0, primary = 0;
         for (unsigned index = 0; index < 16; ++index) {
             const uint8_t *p = (const uint8_t *)pointer + targets.offset + index * target_entity.size;
@@ -157,6 +161,7 @@ static void sample_targets(const EnshwickTickData *t, const EnshwickPlayerInfo *
                 }
         }
         if (!any) continue;
+        observed_ai_mask|=any;
         ++matched; AiCache *c = 0;
         for (unsigned j = 0; j < AI_TRACKED; ++j)
             if (ai_cache[j].entity == ai_entities[i].entity) { c = &ai_cache[j]; break; }
@@ -181,6 +186,7 @@ static void sample_targets(const EnshwickTickData *t, const EnshwickPlayerInfo *
         text(&l, " cache_overflow="); number(&l, overflow); emit(&l);
     }
     ai_previous_total = total;
+    observed_ai_complete=complete && !overflow;
 }
 
 typedef struct { const char *name; uint32_t width; uint64_t offset; int valid; } EventField;
@@ -188,6 +194,7 @@ typedef struct {
     const char *name; uint32_t hash, size; int enabled;
     EventField fields[16];
 } EventSchema;
+static void note_sprint_event(const EventSchema *,const EnshwickGameEventData *);
 #define EF(name, width) {name, width, 0, 0}
 static EventSchema events[] = {
     {"keen::ecs::HitEvent", 0, 0, 0, {
@@ -246,6 +253,7 @@ static void on_game_event(const EnshwickGameEventData *event, void *user) {
     if (!event || !event->data || event->header.size < sizeof(*event) ||
         event->header.abi_major != ENSHWICK_ABI_MAJOR || event->type_hash != schema->hash) return;
     if (event->size != schema->size) {
+        note_sprint_event(schema,event);
         if (event_lines++ < EVENT_LIMIT) diagnostic_status("event_size_mismatch", EnshwickStatus_BAD_ARGS);
         else ++event_dropped;
         return;
@@ -255,6 +263,7 @@ static void on_game_event(const EnshwickGameEventData *event, void *user) {
                                        is_player(event_entity(schema, event, 2)) |
                                        is_player(event_entity(schema, event, 3));
     if (!relevant && schema != &events[3]) return;
+    note_sprint_event(schema,event);
     if (event_lines >= EVENT_LIMIT) { ++event_dropped; return; }
     ++event_lines;
     Line l = {{0}, 0}; text(&l, "event game="); number(&l, game);
