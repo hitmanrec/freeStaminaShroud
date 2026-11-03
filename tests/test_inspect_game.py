@@ -40,6 +40,7 @@ def image():
     data[0x640:0x644] = b"RSDS"
     data[0x644:0x654] = bytes.fromhex(inspector.KNOWN_GUID)
     struct.pack_into("<I", data, 0x654, 520)
+    data[0x700] = 1  # UNWIND_INFO version 1, no chain.
     return data
 
 
@@ -59,6 +60,34 @@ class InspectTests(unittest.TestCase):
         data = image()
         struct.pack_into("<II", data, 0x98 + 112 + 3 * 8, 0, 0)
         self.assertIsNone(inspector.analyze(data)["hash_matches"][0]["function"])
+
+    def test_chained_range_includes_real_parent(self):
+        data = image()
+        # Hash-bearing range 0x1000 is chained to a parent at 0x1020.
+        data[0x700] = 1 | (4 << 3)
+        struct.pack_into("<III", data, 0x704, 0x1020, 0x1030, 0x2120)
+        data[0x720] = 1
+        # A sibling continuation has no stamina hash of its own, but belongs
+        # to the same parent's control flow and must be exported too.
+        struct.pack_into("<I", data, 0x98 + 112 + 3 * 8 + 4, 24)
+        struct.pack_into("<III", data, 0x80C, 0x1040, 0x1050, 0x2140)
+        data[0x740] = 1 | (4 << 3)
+        struct.pack_into("<III", data, 0x744, 0x1020, 0x1030, 0x2120)
+        report = inspector.analyze(data)
+        inspector.expand_ranges(data, report, [0x1005, 0xDEADBEEF])
+        self.assertIn([0x1020, 0x1030], report["disassembly_ranges"])
+        self.assertIn([0x1040, 0x1050], report["disassembly_ranges"])
+        self.assertEqual(report["sibling_ranges_included"], 1)
+        self.assertEqual(len(report["unwind_chains"][0]["chain"]), 2)
+        self.assertEqual(report["focus_requests"][1]["status"], "no_runtime_range")
+
+    def test_chained_unwind_cycle_is_reported(self):
+        data = image()
+        data[0x700] = 1 | (4 << 3)
+        struct.pack_into("<III", data, 0x704, 0x1000, 0x1010, 0x2100)
+        report = inspector.analyze(data)
+        inspector.expand_ranges(data, report, [])
+        self.assertIn("Cyclic", report["unwind_chains"][0]["error"])
 
     def test_unmatched_fingerprint(self):
         data = image()
