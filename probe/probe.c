@@ -1,4 +1,4 @@
-// Read-only Enshwick diagnostic. Never writes components or installs hooks.
+// Enshwick diagnostic: no component writes; optional guarded observation hook.
 #include "enshwick.h"
 
 #define HEADER(T) {sizeof(T), ENSHWICK_ABI_MAJOR, ENSHWICK_ABI_MINOR}
@@ -9,7 +9,7 @@
 static const EnshwickManifest manifest = {
     .header = HEADER(EnshwickManifest),
     .id = ENSHWICK_STR_INIT("hitmanrec.stamina-probe"),
-    .version = ENSHWICK_STR_INIT("0.2.1"),
+    .version = ENSHWICK_STR_INIT("0.3.0"),
     .side = EnshwickSide_SERVER,
     .name = ENSHWICK_STR_INIT("Stamina Combat Probe"),
     .description = ENSHWICK_STR_INIT("Read-only combat candidates; does not change stamina."),
@@ -91,6 +91,7 @@ static void prefix(Line *l, const EnshwickTickData *tick) {
 }
 
 #include "diagnostics.h"
+#include "cost_trace.h"
 
 static void tick(EnshwickEvent event, const void *data, void *user) {
     (void)user;
@@ -100,6 +101,7 @@ static void tick(EnshwickEvent event, const void *data, void *user) {
     if (game != t->game) {
         clear_cache(); game = t->game; samples = 0;
         reset_diagnostics();
+        reset_cost_trace();
         previous_status = previous_count = UINT32_MAX;
     }
     const int heartbeat = (++samples % 20 == 1);
@@ -119,6 +121,7 @@ static void tick(EnshwickEvent event, const void *data, void *user) {
     }
     if (status != EnshwickStatus_OK) { clear_cache(); return; }
     if (count > PLAYERS) count = PLAYERS;
+    drain_cost_trace(t, players, count);
     for (uint32_t p = 0; p < count; ++p) {
         const EnshwickPlayerInfo *player = &players[p];
         // Slots are defined by the loader as 0..15; reject invalid data.
@@ -182,7 +185,7 @@ EnshwickStatus enshwick_mod_init(const EnshwickHostApi *host, EnshwickModHandle 
     EnshwickBuildInfo build = {.header = HEADER(EnshwickBuildInfo)};
     api->build(&build);
     Line l = {{0}, 0};
-    text(&l, "probe=0.2.1 read_only=true loader=");
+    text(&l, "probe=0.3.0 read_only=true loader=");
     for (size_t i = 0; i < host->host_version.len && l.used < sizeof(l.text); ++i)
         l.text[l.used++] = (char)host->host_version.ptr[i];
     text(&l, " binary_side="); number(&l, build.side);
@@ -214,6 +217,8 @@ EnshwickStatus enshwick_mod_init(const EnshwickHostApi *host, EnshwickModHandle 
         emit(&line);
     }
     init_diagnostics();
+    init_cost_trace(&build);
+    log_cost_systems(&build);
     EnshwickTickHandle handle = 0;
     return api->subscribe_tick(self, PERIOD_NS, tick, 0, &handle);
 }

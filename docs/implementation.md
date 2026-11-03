@@ -3,9 +3,11 @@
 ## Current deliverable
 
 The portable C++17 stamina policy and its executable tests are implemented.
-A separate read-only Enshwick C diagnostic DLL now logs per-player combat
-candidates. See [Arch/Proton instructions](arch-proton.md) for building and
-installing it. It does not apply the stamina policy or install game hooks.
+A separate Enshwick C diagnostic DLL logs per-player combat candidates.
+Version 0.3.0 also has a guarded helper observation hook, forwarding all cost
+arguments unchanged; see [cost tracing](cost-trace.md). See
+[Arch/Proton instructions](arch-proton.md) for building and installing it.
+It does not apply the stamina policy or make any action free.
 Neither policy tests nor fake-host tests demonstrate live game behavior or
 multiplayer replication.
 
