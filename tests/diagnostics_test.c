@@ -10,7 +10,8 @@ static EnshwickHostApi fake;
 static EnshwickEventFn callback;
 static EnshwickGameEventFn event_callbacks[EVENT_COUNT];
 static void *event_users[EVENT_COUNT];
-static uint8_t stamina[40], selected[128], actor[80], faction_value = 6;
+static uint8_t stamina[40], selected[192], actor[80], faction_value = 6;
+static uint8_t guest_stamina[40], guest_depletion[4];
 static uint32_t ai_total = 1;
 static EnshwickStatus ai_status = EnshwickStatus_OK;
 static int invalid_constant;
@@ -34,8 +35,8 @@ static EnshwickStatus hash(EnshwickStr name,uint32_t *out) {
 static EnshwickStatus type_size(EnshwickStr name,uint32_t *out) {
     if(eq(name,"keen::ecs::Stamina"))*out=40;
     else if(eq(name,"keen::ecs::Faction"))*out=1;
-    else if(eq(name,"keen::ecs::SelectedTargets"))*out=128;
-    else if(eq(name,"keen::ecs::TargetInfo"))*out=8;
+    else if(eq(name,"keen::ecs::SelectedTargets"))*out=192;
+    else if(eq(name,"keen::ecs::TargetInfo"))*out=12;
     else if(eq(name,"keen::ecs::BaseHitEvent"))*out=128;
     else if(eq(name,"keen::ecs::GameEvent"))*out=8;
     else if(eq(name,"keen::ecs::Actor"))*out=80;
@@ -60,6 +61,8 @@ static EnshwickStatus offset(EnshwickStr type,EnshwickStr field,uint64_t *out) {
     else if(eq(type,"keen::ecs::SelectedTargets") && eq(field,"targets"))*out=0;
     else if(eq(type,"keen::ecs::TargetInfo") && eq(field,"targetEntityId"))*out=0;
     else if(eq(type,"keen::ecs::TargetInfo") && eq(field,"targetRootEntityId"))*out=4;
+    else if(eq(type,"keen::ecs::TargetInfo") && eq(field,"flags"))*out=8;
+    else if(eq(type,"keen::ecs::TargetInfo") && eq(field,"targetImportance"))*out=9;
     else {
         for(unsigned i=0;i<EVENT_COUNT;++i)if(eq(type,events[i].name)) {
             uint64_t position=0;
@@ -89,16 +92,18 @@ static EnshwickStatus constant(EnshwickModHandle me,EnshwickStr name,uint64_t *o
 static EnshwickStatus component(EnshwickModHandle me,EnshwickEntity entity,uint32_t type,const void **out) {
     (void)me;
     if(type==10 && entity==1)*out=stamina;
+    else if(type==10 && entity==2)*out=guest_stamina;
     else if(type==14 && entity==1)*out=actor;
     else if(type==12 && entity==100)*out=selected;
     else if(type==11 && entity==100)*out=&faction_value;
     else if(type==15 && entity==1)*out=stamina;
+    else if(type==15 && entity==2)*out=guest_depletion;
     else return EnshwickStatus_MISSING;
     return EnshwickStatus_OK;
 }
 static EnshwickStatus player(EnshwickModHandle me,EnshwickEntity entity,EnshwickPlayerInfo *out) {
-    (void)me;if(entity!=1)return EnshwickStatus_MISSING;
-    out->entity=1;out->slot=0;return EnshwickStatus_OK;
+    (void)me;if(entity!=1 && entity!=2)return EnshwickStatus_MISSING;
+    out->entity=entity;out->slot=entity==1?0:7;return EnshwickStatus_OK;
 }
 static EnshwickStatus players(EnshwickModHandle me,EnshwickPlayerInfo *out,uint32_t capacity,uint32_t *count) {
     (void)me;CHECK(capacity>0);*count=1;out[0].entity=1;out[0].slot=0;return EnshwickStatus_OK;
@@ -150,7 +155,7 @@ int main(void) {
     put(stamina+4,39,2);CHECK(read_stamina(1,&current,&maximum)==EnshwickStatus_BAD_ARGS);
     put(stamina+4,8,2);stamina[6]=0;CHECK(read_stamina(1,&current,&maximum)==EnshwickStatus_NOT_LOADED);stamina[6]=1;
     // A failed enumeration must not claim a previously observed target was lost.
-    ai_status=EnshwickStatus_MISSING;unsigned before=calls;sample(1,3);CHECK(calls==before);
+    ai_status=EnshwickStatus_MISSING;unsigned before=calls;sample(1,3);CHECK(!observed_ai_complete);
     ai_status=EnshwickStatus_OK;put(selected,0,4);sample(1,4);
     CHECK(strstr(logs,"ai_candidate=100 target_observation=lost")!=0);
     ai_total=AI_LIMIT+1;sample(1,5);CHECK(strstr(logs,"query_truncated=1")!=0);ai_total=1;
@@ -234,6 +239,59 @@ int main(void) {
     observed_ai_complete=0;sample_targets(&tick_data,&one,1,0);CHECK(observed_ai_complete);
     ai_status=EnshwickStatus_MISSING;sample_targets(&tick_data,&one,1,0);CHECK(!observed_ai_complete);
     ai_status=EnshwickStatus_OK;
+    // Regression: a noncombat target category must not block free sprint.
+    reset_sprint_players();sprint_test_time=60000;
+    memset(selected,0,sizeof(selected));put(selected+12,1,4);
+    selected[20]=3;selected[21]=2;
+    sample_targets(&tick_data,&one,1,0);
+    CHECK(observed_ai_candidate_mask==1 && observed_ai_mask==0 && observed_ai_complete);
+    publish_sprint(&tick_data,&one,1,0);CHECK(sprint_gate((uintptr_t)stamina,0));
+    CHECK(strstr(logs,"index_mask=2 combat_selected=0")!=0);
+    CHECK(strstr(logs,"index=1 player_mask=1 flags=3 importance=2")!=0);
+    // Only host is selected in combat. Guest is in a nonsequential slot,
+    // listed first: permission/counters must follow slot and entity identity.
+    EnshwickPlayerInfo pair[2]={{.slot=7,.entity=2},{.slot=0,.entity=1}};
+    memset(selected,0,sizeof(selected));put(selected,1,4);
+    sample_targets(&tick_data,pair,2,0);CHECK(observed_ai_mask==1);
+    publish_sprint(&tick_data,pair,2,0);
+    CHECK(!sprint_gate((uintptr_t)stamina,0));
+    CHECK(sprint_gate((uintptr_t)guest_depletion,0));
+    CHECK(atomic_load(&sprint_players[0].blocked)>0);
+    CHECK(atomic_load(&sprint_players[7].skipped)==1);
+    CHECK(atomic_load(&sprint_players[0].skipped)==0); // Drained on state change.
+    // Incoming guest hit blocks the guest immediately, independent of AI.
+    put(hit+events[0].fields[0].offset,100,4);
+    put(hit+events[0].fields[1].offset,2,4);put(hit+events[0].fields[2].offset,2,4);
+    note_sprint_event(&events[0],&event);
+    CHECK(!sprint_gate((uintptr_t)guest_depletion,0));
+    CHECK(atomic_load(&sprint_players[7].combat_hits)==1);
+    CHECK(atomic_load(&sprint_players[0].combat_hits)==0);
+    // Both regain eligibility after targets disappear and cooldown elapses.
+    memset(selected,0,sizeof(selected));sample_targets(&tick_data,pair,2,0);
+    sprint_test_time+=10000;publish_sprint(&tick_data,pair,2,1);
+    CHECK(sprint_gate((uintptr_t)stamina,0));CHECK(sprint_gate((uintptr_t)guest_depletion,0));
+    CHECK(strstr(logs,"sprint_player slot=7 entity=2 allowed=1")!=0);
+    // Outgoing guest hit must not block the idle host.
+    put(hit+events[0].fields[0].offset,2,4);
+    put(hit+events[0].fields[1].offset,100,4);put(hit+events[0].fields[2].offset,100,4);
+    note_sprint_event(&events[0],&event);
+    CHECK(!sprint_gate((uintptr_t)guest_depletion,0));CHECK(sprint_gate((uintptr_t)stamina,0));
+    sprint_test_time+=10000;publish_sprint(&tick_data,pair,2,1);
+    CHECK(sprint_gate((uintptr_t)guest_depletion,0));
+    // Stamina sampling is per character and preserves distinct values.
+    memcpy(guest_stamina,stamina,sizeof(stamina));put(guest_stamina+8,77,4);
+    sample_stamina(&tick_data,7,2,1);
+    CHECK(strstr(logs,"entity=2 stamina_status=0 current=77 maximum=120")!=0);
+    CHECK(atomic_load(&sprint_players[7].skipped)==1);
+    publish_sprint(&tick_data,&one,1,0);
+    CHECK(!sprint_gate((uintptr_t)guest_depletion,0));
+    CHECK(atomic_load(&sprint_players[7].pointer)==0);
+    CHECK(strstr(logs,"sprint_player_left slot=7 entity=2")!=0);
+    publish_sprint(&tick_data,pair,2,0);
+    CHECK(sprint_gate((uintptr_t)guest_depletion,0));
+    CHECK(atomic_load(&sprint_players[7].skipped)==1); // No previous occupant's count.
+    publish_sprint(&tick_data,pair,0,0);
+    CHECK(!sprint_gate((uintptr_t)stamina,0));CHECK(!sprint_gate((uintptr_t)guest_depletion,0));
     invalid_constant=1;init_stamina();CHECK(!stamina_layout.available);
     CHECK(strstr(logs,"stamina_schema status=4")!=0);
     CHECK(little(stamina+8,4)==90); // Diagnostics did not alter the meter.

@@ -7,6 +7,9 @@ typedef struct {
     _Atomic(uintptr_t) pointer;
     _Atomic(uint64_t) lease, blocked_until;
     _Atomic(uint32_t) entity, allowed;
+    _Atomic(uint32_t) matches, skipped, deny_selector, deny_permission, expired, blocked, combat_hits;
+    uint32_t logged_entity, logged_allowed, logged_ai, logged_candidates;
+    int logged;
 } SprintPlayer;
 static SprintPlayer sprint_players[PLAYERS];
 static int sprint_installed;
@@ -49,12 +52,14 @@ static int sprint_gate(uintptr_t accumulator,uint32_t actual_selector) {
         SprintPlayer *p=&sprint_players[i];
         if(atomic_load_explicit(&p->pointer,memory_order_acquire)!=accumulator)continue;
         sprint_count(SPRINT_POINTER_OK);
+        atomic_fetch_add_explicit(&p->matches,1,memory_order_relaxed);
         atomic_fetch_or_explicit(&sprint_matched_selector_mask,selector_bit,memory_order_relaxed);
-        if(!sprint_selector_supported(actual_selector)){sprint_count(SPRINT_OTHER_SELECTOR);return 0;}
-        if(now<atomic_load(&p->blocked_until)){sprint_count(SPRINT_BLOCKED);return 0;}
+        if(!sprint_selector_supported(actual_selector)){sprint_count(SPRINT_OTHER_SELECTOR);atomic_fetch_add(&p->deny_selector,1);return 0;}
+        if(now<atomic_load(&p->blocked_until)){sprint_count(SPRINT_BLOCKED);atomic_fetch_add(&p->blocked,1);return 0;}
         if(!atomic_load_explicit(&p->allowed,memory_order_acquire)){
-            sprint_count(SPRINT_NOT_ALLOWED);return 0;}
-        if(now>atomic_load(&p->lease)){sprint_count(SPRINT_EXPIRED);return 0;}
+            sprint_count(SPRINT_NOT_ALLOWED);atomic_fetch_add(&p->deny_permission,1);return 0;}
+        if(now>atomic_load(&p->lease)){sprint_count(SPRINT_EXPIRED);atomic_fetch_add(&p->expired,1);return 0;}
+        atomic_fetch_add_explicit(&p->skipped,1,memory_order_relaxed);
         atomic_fetch_add_explicit(&sprint_skipped,1,memory_order_relaxed);return 1;
     }
     sprint_count(SPRINT_UNKNOWN_POINTER);return 0;
@@ -64,12 +69,18 @@ static void reset_sprint_players(void) {
     atomic_store(&sprint_selector_mask,0);atomic_store(&sprint_matched_selector_mask,0);
     for(unsigned i=0;i<PLAYERS;++i){atomic_store(&sprint_players[i].allowed,0);
         atomic_store(&sprint_players[i].pointer,0);atomic_store(&sprint_players[i].entity,0);
-        atomic_store(&sprint_players[i].blocked_until,0);}
+        atomic_store(&sprint_players[i].blocked_until,0);
+        atomic_store(&sprint_players[i].matches,0);atomic_store(&sprint_players[i].skipped,0);
+        atomic_store(&sprint_players[i].deny_selector,0);atomic_store(&sprint_players[i].deny_permission,0);
+        atomic_store(&sprint_players[i].expired,0);atomic_store(&sprint_players[i].blocked,0);
+        atomic_store(&sprint_players[i].combat_hits,0);
+        sprint_players[i].logged=0;}
 }
 static void block_sprint_entity(uint32_t entity) {
     uint64_t until=sprint_clock()+SPRINT_COOLDOWN_MS;
     for(unsigned i=0;i<PLAYERS;++i)if(atomic_load(&sprint_players[i].entity)==entity){
         atomic_store(&sprint_players[i].allowed,0);atomic_store(&sprint_players[i].blocked_until,until);
+        atomic_fetch_add_explicit(&sprint_players[i].combat_hits,1,memory_order_relaxed);
     }
 }
 static void note_sprint_event(const EventSchema *schema,const EnshwickGameEventData *event) {
@@ -96,11 +107,18 @@ static void publish_sprint(const EnshwickTickData *t,const EnshwickPlayerInfo *p
     for(unsigned i=0;i<PLAYERS;++i)atomic_store_explicit(&sprint_players[i].allowed,0,memory_order_release);
     int event_ready=events[0].enabled && events[0].fields[0].valid &&
                     events[0].fields[1].valid && events[0].fields[2].valid && events[0].fields[5].valid;
-    uint64_t now=sprint_clock();uint32_t allowed_mask=0;
+    uint64_t now=sprint_clock();uint32_t allowed_mask=0,present_mask=0;
     for(uint32_t i=0;i<count;++i) {
         uint32_t slot=players[i].slot;if(slot>=PLAYERS)continue;
+        if(!players[i].entity)continue;
+        present_mask|=1u<<slot;
         SprintPlayer *p=&sprint_players[slot];
-        if(atomic_load(&p->entity)!=players[i].entity){atomic_store(&p->blocked_until,0);}
+        if(atomic_load(&p->entity)!=players[i].entity){
+            atomic_store(&p->blocked_until,0);p->logged=0;
+            atomic_store(&p->matches,0);atomic_store(&p->skipped,0);atomic_store(&p->deny_selector,0);
+            atomic_store(&p->deny_permission,0);atomic_store(&p->expired,0);atomic_store(&p->blocked,0);
+            atomic_store(&p->combat_hits,0);
+        }
         atomic_store(&p->entity,players[i].entity);
         if(observed_ai_mask&(1u<<slot))atomic_store(&p->blocked_until,now+SPRINT_COOLDOWN_MS);
         const void *component=0;
@@ -111,6 +129,36 @@ static void publish_sprint(const EnshwickTickData *t,const EnshwickPlayerInfo *p
            now>=atomic_load(&p->blocked_until)) {
             atomic_store_explicit(&p->allowed,1,memory_order_release);allowed_mask|=1u<<slot;
         }
+        uint32_t allowed=(allowed_mask>>slot)&1, combat_ai=(observed_ai_mask>>slot)&1;
+        uint32_t candidates=(observed_ai_candidate_mask>>slot)&1;
+        if(heartbeat || !p->logged || p->logged_entity!=players[i].entity ||
+           p->logged_allowed!=allowed || p->logged_ai!=combat_ai || p->logged_candidates!=candidates) {
+            Line l={{0},0};prefix(&l,t);text(&l," sprint_player slot=");number(&l,slot);
+            text(&l," entity=");number(&l,players[i].entity);text(&l," allowed=");number(&l,allowed);
+            text(&l," pointer_valid=");number(&l,valid);text(&l," event_ready=");number(&l,event_ready);
+            text(&l," ai_complete=");number(&l,observed_ai_complete);
+            text(&l," ai_candidate=");number(&l,candidates);text(&l," ai_combat_target=");number(&l,combat_ai);
+            uint64_t until=atomic_load(&p->blocked_until);
+            text(&l," cooldown_ms=");number(&l,until>now?until-now:0);
+            text(&l," matches=");number(&l,atomic_exchange(&p->matches,0));
+            text(&l," skipped=");number(&l,atomic_exchange(&p->skipped,0));
+            text(&l," deny_selector=");number(&l,atomic_exchange(&p->deny_selector,0));
+            text(&l," deny_permission=");number(&l,atomic_exchange(&p->deny_permission,0));
+            text(&l," expired=");number(&l,atomic_exchange(&p->expired,0));
+            text(&l," combat_blocked=");number(&l,atomic_exchange(&p->blocked,0));
+            text(&l," combat_hits=");number(&l,atomic_exchange(&p->combat_hits,0));
+            EnshwickStatus net=api->net_ready?api->net_ready(self,players[i].key):EnshwickStatus_MISSING;
+            text(&l," loader_channel_status=");number(&l,net);emit(&l);
+            p->logged=1;p->logged_entity=players[i].entity;p->logged_allowed=allowed;
+            p->logged_ai=combat_ai;p->logged_candidates=candidates;
+        }
+    }
+    for(unsigned slot=0;slot<PLAYERS;++slot)if(!(present_mask&(1u<<slot))) {
+        SprintPlayer *p=&sprint_players[slot];
+        uint32_t entity=atomic_load(&p->entity);
+        if(entity){Line l={{0},0};prefix(&l,t);text(&l," sprint_player_left slot=");number(&l,slot);
+            text(&l," entity=");number(&l,entity);emit(&l);}
+        atomic_store(&p->pointer,0);atomic_store(&p->entity,0);atomic_store(&p->blocked_until,0);p->logged=0;
     }
     uint32_t skipped=atomic_exchange(&sprint_skipped,0);
     if(heartbeat || skipped){Line l={{0},0};prefix(&l,t);text(&l," sprint_free_mask=");number(&l,allowed_mask);

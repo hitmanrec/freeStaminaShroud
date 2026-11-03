@@ -6,6 +6,7 @@
 static uint64_t last_step;
 static uint32_t event_lines, event_dropped;
 static uint32_t observed_ai_mask;
+static uint32_t observed_ai_candidate_mask;
 static int observed_ai_complete;
 static int range_ok(uint64_t offset, uint64_t width, uint64_t size) {
     return offset <= size && width <= size - offset;
@@ -102,11 +103,11 @@ static void init_stamina(void) {
     diagnostic_status("stamina_schema", s);
 }
 
-static Field targets, target_entity, target_root, faction;
+static Field targets, target_entity, target_root, target_flags, target_importance, faction;
 static uint32_t enemy_hash;
 static int ai_available;
 static EnshwickEntityPlace ai_entities[AI_LIMIT];
-typedef struct { uint32_t entity, any, primary, seen; } AiCache;
+typedef struct { uint32_t entity, any, primary, seen, signature; } AiCache;
 static AiCache ai_cache[AI_TRACKED];
 static uint32_t ai_previous_total = UINT32_MAX;
 static void target_line(const EnshwickTickData *t, uint32_t owner, uint32_t any, uint32_t primary) {
@@ -127,7 +128,7 @@ static void target_line(const EnshwickTickData *t, uint32_t owner, uint32_t any,
 static void sample_targets(const EnshwickTickData *t, const EnshwickPlayerInfo *players,
                             uint32_t count, int heartbeat) {
     last_step = t->step;
-    observed_ai_mask=0;observed_ai_complete=0;
+    observed_ai_mask=0;observed_ai_candidate_mask=0;observed_ai_complete=0;
     if (!ai_available) return;
     uint32_t total = 0, ready = 0, matched = 0, overflow = 0;
     // Enumerate the actual target-bearing runtime component, not a setup-only
@@ -148,7 +149,8 @@ static void sample_targets(const EnshwickTickData *t, const EnshwickPlayerInfo *
         if (owner_is_player) continue;
         const void *pointer = 0;
         if (api->component(self, ai_entities[i].entity, targets.hash, &pointer) != EnshwickStatus_OK || !pointer) {complete=0;continue;}
-        ++ready; uint32_t any = 0, primary = 0;
+        ++ready; uint32_t any = 0, primary = 0, signature=0;
+        uint32_t indices[PLAYERS]={0};
         for (unsigned index = 0; index < 16; ++index) {
             const uint8_t *p = (const uint8_t *)pointer + targets.offset + index * target_entity.size;
             uint32_t entity = (uint32_t)little(p + target_entity.offset, 4);
@@ -157,20 +159,42 @@ static void sample_targets(const EnshwickTickData *t, const EnshwickPlayerInfo *
                 if (players[player].slot < PLAYERS && players[player].entity &&
                     (entity == players[player].entity || root == players[player].entity)) {
                     any |= 1u << players[player].slot;
+                    indices[players[player].slot]|=1u<<index;
+                    signature=signature*33+index+1;
+                    if(target_flags.available)signature=signature*33+p[target_flags.offset];
+                    if(target_importance.available)signature=signature*33+p[target_importance.offset];
                     if (index == 0) primary |= 1u << players[player].slot;
                 }
         }
         if (!any) continue;
-        observed_ai_mask|=any;
+        // The combat-target winner is SelectedTargets[0], not every sensor
+        // category in this array (same-EXE engine map; see guest-test.md).
+        observed_ai_candidate_mask|=any;
+        observed_ai_mask|=primary;
         ++matched; AiCache *c = 0;
         for (unsigned j = 0; j < AI_TRACKED; ++j)
             if (ai_cache[j].entity == ai_entities[i].entity) { c = &ai_cache[j]; break; }
         if (!c) for (unsigned j = 0; j < AI_TRACKED; ++j)
             if (!ai_cache[j].entity) { c = &ai_cache[j]; break; }
         if (!c) { ++overflow; continue; }
-        if (heartbeat || c->entity != ai_entities[i].entity || c->any != any || c->primary != primary)
+        if (heartbeat || c->entity != ai_entities[i].entity || c->any != any || c->primary != primary || c->signature!=signature) {
             target_line(t, ai_entities[i].entity, any, primary);
-        *c = (AiCache){ai_entities[i].entity, any, primary, 1};
+            for(unsigned slot=0;slot<PLAYERS;++slot)if(indices[slot]) {
+                Line l={{0},0};prefix(&l,t);text(&l," ai_target_indices owner=");number(&l,ai_entities[i].entity);
+                text(&l," player_slot=");number(&l,slot);text(&l," index_mask=");number(&l,indices[slot]);
+                text(&l," combat_selected=");number(&l,(primary>>slot)&1);emit(&l);
+            }
+            for(unsigned index=0;index<16;++index) {
+                uint32_t mask=0;for(unsigned slot=0;slot<PLAYERS;++slot)if(indices[slot]&(1u<<index))mask|=1u<<slot;
+                if(!mask)continue;
+                const uint8_t *entry=(const uint8_t *)pointer+targets.offset+index*target_entity.size;
+                Line l={{0},0};prefix(&l,t);text(&l," ai_target_detail owner=");number(&l,ai_entities[i].entity);
+                text(&l," index=");number(&l,index);text(&l," player_mask=");number(&l,mask);
+                text(&l," flags=");if(target_flags.available)number(&l,entry[target_flags.offset]);else text(&l,"unavailable");
+                text(&l," importance=");if(target_importance.available)number(&l,entry[target_importance.offset]);else text(&l,"unavailable");emit(&l);
+            }
+        }
+        *c = (AiCache){ai_entities[i].entity, any, primary, 1, signature};
     }
     for (unsigned j = 0; j < AI_TRACKED; ++j)
         if (ai_cache[j].entity && !ai_cache[j].seen) {
@@ -302,6 +326,10 @@ static void init_diagnostics(void) {
     targets = resolve("keen::ecs::SelectedTargets", "targets", 1, 1);
     target_entity = resolve("keen::ecs::TargetInfo", "targetEntityId", 4, 0);
     target_root = resolve("keen::ecs::TargetInfo", "targetRootEntityId", 4, 0);
+    target_flags = resolve("keen::ecs::TargetInfo", "flags", 1, 0);
+    target_importance = resolve("keen::ecs::TargetInfo", "targetImportance", 1, 0);
+    if(target_flags.size!=target_entity.size)target_flags.available=0;
+    if(target_importance.size!=target_entity.size)target_importance.available=0;
     ai_available = api->entities && targets.available && target_entity.available && target_root.available &&
         target_entity.size == target_root.size && target_entity.size > 0 &&
         range_ok(targets.offset, (uint64_t)target_entity.size * 16, targets.size);
