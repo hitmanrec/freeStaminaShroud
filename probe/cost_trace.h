@@ -1,11 +1,12 @@
 // Verified four-argument helper from the user's exact EXE report. This observer
-// forwards all calls unchanged. Worker threads never read ECS or write logs.
+// forwards unknown calls unchanged. Gameplay classification is main-thread only.
 #include <stdatomic.h>
 #define COST_RVA UINT64_C(0x21fbc0)
 #define COST_ROOT UINT32_C(0x04b6aa8b)
 #define COST_CAPACITY 256
 typedef void (*CostNext)(void *, const void *, int32_t, uint32_t);
-typedef struct { uintptr_t attribute; int32_t delta; uint64_t caller_rva; } CostRecord;
+typedef struct { uintptr_t attribute; int32_t delta; uint64_t caller_rva; int32_t applied; uint32_t reason,detail; } CostRecord;
+static int cost_installed;
 static const uint8_t cost_prologue[] = {
     0x48,0x89,0x5c,0x24,0x10,0x48,0x89,0x6c,0x24,0x18,
     0x48,0x89,0x74,0x24,0x20,0x57,0x48,0x83,0xec,0x60
@@ -32,14 +33,16 @@ static void cost_observe(void *attribute, const void *registry, int32_t delta, u
     }
     // Loader contract: never invokes the detour before this slot is armed.
     CostNext next = (CostNext)atomic_load_explicit(&cost_next, memory_order_acquire);
-    next(attribute, registry, delta, root);
+    uint32_t reason=0,detail=0;
+    int32_t applied=root==COST_ROOT && delta<0?action_delta(attribute,delta,caller,&reason,&detail):delta;
+    next(attribute, registry, applied, root);
     if (root != COST_ROOT || delta >= 0) return;
     // Non-blocking bounded queue: no allocation, ECS calls, I/O or waiting.
     if (atomic_flag_test_and_set_explicit(&cost_lock, memory_order_acquire)) {
         atomic_fetch_add_explicit(&cost_dropped, 1, memory_order_relaxed); return;
     }
     if (cost_count < COST_CAPACITY)
-        cost_queue[cost_count++] = (CostRecord){(uintptr_t)attribute, delta, caller};
+        cost_queue[cost_count++] = (CostRecord){(uintptr_t)attribute, delta, caller,applied,reason,detail};
     else atomic_fetch_add_explicit(&cost_dropped, 1, memory_order_relaxed);
     atomic_flag_clear_explicit(&cost_lock, memory_order_release);
 }
@@ -69,7 +72,10 @@ static void drain_cost_trace(const EnshwickTickData *t, const EnshwickPlayerInfo
             Line l = {{0},0}; prefix(&l,t); text(&l," cost_trace entity="); number(&l,players[p].entity);
             text(&l," delta="); signed32(&l,(uint32_t)cost_drain[i].delta);
             text(&l," caller_return_rva="); number(&l,cost_drain[i].caller_rva);
-            text(&l," forwarded_unchanged=true"); emit(&l); found=1; break;
+            text(&l," forwarded_unchanged=");text(&l,cost_drain[i].applied==cost_drain[i].delta?"true":"false");
+            text(&l," applied_delta=");signed32(&l,(uint32_t)cost_drain[i].applied);
+            text(&l," action_reason=");number(&l,cost_drain[i].reason);
+            text(&l," action_detail=");number(&l,cost_drain[i].detail);emit(&l); found=1; break;
         }
         if (!found) ++unmatched;
     }
@@ -80,6 +86,7 @@ static void drain_cost_trace(const EnshwickTickData *t, const EnshwickPlayerInfo
     }
 }
 static void init_cost_trace(const EnshwickBuildInfo *build) {
+    cost_installed=0;
     EnshwickStatus status = EnshwickStatus_REFUSED;
     unsigned identity=reviewed_client_build(build);
     if (!identity || !api->hook || !api->caller_frame || !api->code_range ||
@@ -100,6 +107,7 @@ static void init_cost_trace(const EnshwickBuildInfo *build) {
     EnshwickHookSpec spec={target,(size_t)cost_observe,(const uintptr_t *)&cost_next,0,
                            EnshwickHookFlags_CALLER_FRAME};
     status=api->hook(self,&spec);
+    cost_installed=status==EnshwickStatus_OK;
     diagnostic_status("cost_trace_hook",status);
 }
 static void log_cost_systems(const EnshwickBuildInfo *build) {

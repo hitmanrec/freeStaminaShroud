@@ -17,3 +17,7 @@ mkdir -p "$repo_dir/.build"
 "${CC:-cc}" -std=c11 -O2 -Wall -Wextra -Werror -pedantic \
     "$repo_dir/tests/sprint_stub_test.c" -o "$repo_dir/.build/sprint_stub_test"
 "$repo_dir/.build/sprint_stub_test"
+"${CC:-cc}" -std=c11 -Wall -Wextra -Werror -pedantic \
+    -I "$repo_dir/third_party/enshwick" "$repo_dir/tests/actions_test.c" \
+    -o "$repo_dir/.build/actions_test"
+"$repo_dir/.build/actions_test"

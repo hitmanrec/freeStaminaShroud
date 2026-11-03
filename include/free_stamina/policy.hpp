@@ -2,8 +2,8 @@
 
 namespace free_stamina {
 
-// These are semantic actions. The game adapter must identify the actual target;
-// simply equipping an axe or pickaxe does not establish a gathering action.
+// Semantic actions. Tool actions are free regardless of target/combat; the
+// adapter must identify a tool rather than infer it from a weapon animation.
 enum class Action {
     sprint,
     ordinary_jump,
@@ -12,6 +12,7 @@ enum class Action {
     glide,
     chop_tree,
     mine_ore,
+    tool_action,
     attack_enemy,
     other,
     unknown,
@@ -25,6 +26,7 @@ constexpr bool suppress_cost(Action action, CombatState combat) noexcept {
     switch (action) {
     case Action::chop_tree:
     case Action::mine_ore:
+    case Action::tool_action:
         return true;
     case Action::sprint:
     case Action::double_jump:

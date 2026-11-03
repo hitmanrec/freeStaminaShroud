@@ -26,7 +26,7 @@ int main() {
     };
     const std::array<CombatState, 3> states = {
         CombatState::outside_combat, CombatState::in_combat, CombatState::unknown};
-    const std::array<Case, 10> cases = {{
+    const std::array<Case, 11> cases = {{
         {Action::sprint, "sprint", {true, false, false}},
         {Action::ordinary_jump, "ordinary jump retains original behavior", {false, false, false}},
         {Action::double_jump, "double jump", {true, false, false}},
@@ -34,7 +34,8 @@ int main() {
         {Action::glide, "gliding retains original cost", {false, false, false}},
         {Action::chop_tree, "axe gathering", {true, true, true}},
         {Action::mine_ore, "pickaxe gathering", {true, true, true}},
-        {Action::attack_enemy, "enemy attacks", {false, false, false}},
+        {Action::tool_action, "tool swing at air, terrain or enemy", {true, true, true}},
+        {Action::attack_enemy, "ordinary combat weapon attacks", {false, false, false}},
         {Action::other, "other actions", {false, false, false}},
         {Action::unknown, "unknown actions", {false, false, false}},
     }};
