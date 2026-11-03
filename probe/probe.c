@@ -9,7 +9,7 @@
 static const EnshwickManifest manifest = {
     .header = HEADER(EnshwickManifest),
     .id = ENSHWICK_STR_INIT("hitmanrec.stamina-probe"),
-    .version = ENSHWICK_STR_INIT("0.2.0"),
+    .version = ENSHWICK_STR_INIT("0.2.1"),
     .side = EnshwickSide_SERVER,
     .name = ENSHWICK_STR_INIT("Stamina Combat Probe"),
     .description = ENSHWICK_STR_INIT("Read-only combat candidates; does not change stamina."),
@@ -182,7 +182,7 @@ EnshwickStatus enshwick_mod_init(const EnshwickHostApi *host, EnshwickModHandle 
     EnshwickBuildInfo build = {.header = HEADER(EnshwickBuildInfo)};
     api->build(&build);
     Line l = {{0}, 0};
-    text(&l, "probe=0.2.0 read_only=true loader=");
+    text(&l, "probe=0.2.1 read_only=true loader=");
     for (size_t i = 0; i < host->host_version.len && l.used < sizeof(l.text); ++i)
         l.text[l.used++] = (char)host->host_version.ptr[i];
     text(&l, " binary_side="); number(&l, build.side);
@@ -195,6 +195,11 @@ EnshwickStatus enshwick_mod_init(const EnshwickHostApi *host, EnshwickModHandle 
         if (s == EnshwickStatus_OK) s = api->type_size(str(field->type), &field->size);
         if (s == EnshwickStatus_OK)
             s = api->field_offset(str(field->type), str(field->field), &field->offset);
+        if (s == EnshwickStatus_MISSING && equal_text(field->type, "keen::ecs::Actor") &&
+            equal_text(field->field, "currentState")) {
+            // Actor inherits currentState from BaseActor; query Actor storage.
+            s = api->field_offset(str("keen::ecs::BaseActor"), str(field->field), &field->offset);
+        }
         if (s == EnshwickStatus_OK &&
             (field->offset > field->size || field->width > field->size - field->offset))
             s = EnshwickStatus_BAD_ARGS;

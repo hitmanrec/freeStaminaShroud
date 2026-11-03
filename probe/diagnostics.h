@@ -1,5 +1,5 @@
 // Included after probe.c's read-only host and bounded log helpers.
-#define AI_LIMIT 256
+#define AI_LIMIT 4096
 #define AI_TRACKED 64
 #define EVENT_LIMIT 64
 #define EVENT_TYPES_LIMIT 2048
@@ -106,6 +106,7 @@ static int ai_available;
 static EnshwickEntityPlace ai_entities[AI_LIMIT];
 typedef struct { uint32_t entity, any, primary, seen; } AiCache;
 static AiCache ai_cache[AI_TRACKED];
+static uint32_t ai_previous_total = UINT32_MAX;
 static void target_line(const EnshwickTickData *t, uint32_t owner, uint32_t any, uint32_t primary) {
     Line l = {{0}, 0}; prefix(&l, t); text(&l, " ai_candidate="); number(&l, owner);
     text(&l, " player_slot_mask="); number(&l, any);
@@ -173,12 +174,13 @@ static void sample_targets(const EnshwickTickData *t, const EnshwickPlayerInfo *
             Line l = {{0}, 0}; prefix(&l, t); text(&l, " ai_candidate="); number(&l, ai_cache[j].entity);
             text(&l, " target_observation=lost"); emit(&l); ai_cache[j].entity = 0;
         }
-    if (heartbeat || total > AI_LIMIT || overflow) {
+    if (heartbeat || total != ai_previous_total || overflow) {
         Line l = {{0}, 0}; prefix(&l, t); text(&l, " ai_enumerated="); number(&l, total);
         text(&l, " selected_ready="); number(&l, ready); text(&l, " matched="); number(&l, matched);
         text(&l, " query_truncated="); number(&l, total > AI_LIMIT);
         text(&l, " cache_overflow="); number(&l, overflow); emit(&l);
     }
+    ai_previous_total = total;
 }
 
 typedef struct { const char *name; uint32_t width; uint64_t offset; int valid; } EventField;
@@ -201,6 +203,18 @@ static EventSchema events[] = {
 };
 #define EVENT_COUNT (sizeof(events) / sizeof(events[0]))
 static EnshwickEventTypeInfo event_types[EVENT_TYPES_LIMIT];
+static int equal_text(const char *a, const char *b) {
+    while (*a && *a == *b) { ++a; ++b; }
+    return *a == *b;
+}
+static const char *event_field_owner(const EventSchema *e, const EventField *f) {
+    if (equal_text(f->name, "timeStamp")) return "keen::ecs::GameEvent";
+    if (e == &events[0] && (equal_text(f->name, "rootSourceId") ||
+        equal_text(f->name, "targetId") || equal_text(f->name, "flags") ||
+        equal_text(f->name, "hasMiningVolume") || equal_text(f->name, "miningRemovedVolume")))
+        return "keen::ecs::BaseHitEvent";
+    return e->name;
+}
 static int same_name(EnshwickStr actual, const char *wanted) {
     EnshwickStr full = str(wanted);
     const char *short_name = wanted;
@@ -238,7 +252,8 @@ static void on_game_event(const EnshwickGameEventData *event, void *user) {
     }
     int relevant = is_player(event_entity(schema, event, 0));
     if (schema == &events[0]) relevant |= is_player(event_entity(schema, event, 1)) |
-                                       is_player(event_entity(schema, event, 2));
+                                       is_player(event_entity(schema, event, 2)) |
+                                       is_player(event_entity(schema, event, 3));
     if (!relevant && schema != &events[3]) return;
     if (event_lines >= EVENT_LIMIT) { ++event_dropped; return; }
     ++event_lines;
@@ -270,6 +285,7 @@ static void reset_diagnostics(void) {
     last_step = 0; event_lines = event_dropped = 0;
     for (unsigned p = 0; p < PLAYERS; ++p) stamina_cache[p].known = 0;
     for (unsigned i = 0; i < AI_TRACKED; ++i) ai_cache[i].entity = 0;
+    ai_previous_total = UINT32_MAX;
 }
 static void init_diagnostics(void) {
     reset_diagnostics(); init_stamina();
@@ -300,8 +316,13 @@ static void init_diagnostics(void) {
         if (!e->enabled) { diagnostic_status(e->name, EnshwickStatus_MISSING); continue; }
         for (unsigned j = 0; j < 16 && e->fields[j].name; ++j) {
             EventField *f = &e->fields[j];
-            Field resolved = resolve(e->name, f->name, f->width, 0);
-            f->offset = resolved.offset; f->valid = resolved.available && resolved.size == e->size;
+            // Reflection lists inherited fields on their declaring base. As in
+            // Enshwick EventType::inherited_field, offsets are from the same
+            // prefix; validate both declaring and complete event boundaries.
+            Field resolved = resolve(event_field_owner(e, f), f->name, f->width, 0);
+            f->offset = resolved.offset;
+            f->valid = resolved.available && resolved.size <= e->size &&
+                       range_ok(resolved.offset, f->width, e->size);
         }
         s = api->game_event(self, e->hash, on_game_event, e);
         diagnostic_status(e->name, s); e->enabled = s == EnshwickStatus_OK;

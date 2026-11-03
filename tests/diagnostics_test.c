@@ -10,7 +10,7 @@ static EnshwickHostApi fake;
 static EnshwickEventFn callback;
 static EnshwickGameEventFn event_callbacks[EVENT_COUNT];
 static void *event_users[EVENT_COUNT];
-static uint8_t stamina[40], selected[128], faction_value = 6;
+static uint8_t stamina[40], selected[128], actor[80], faction_value = 6;
 static uint32_t ai_total = 1;
 static EnshwickStatus ai_status = EnshwickStatus_OK;
 static int invalid_constant;
@@ -27,6 +27,7 @@ static EnshwickStatus hash(EnshwickStr name,uint32_t *out) {
     else if(eq(name,"keen::ecs::Faction"))*out=11;
     else if(eq(name,"keen::ecs::SelectedTargets"))*out=12;
     else if(eq(name,"keen::ecs::Enemy01BehaviorState"))*out=13;
+    else if(eq(name,"keen::ecs::Actor"))*out=14;
     else return EnshwickStatus_MISSING;
     return EnshwickStatus_OK;
 }
@@ -35,6 +36,9 @@ static EnshwickStatus type_size(EnshwickStr name,uint32_t *out) {
     else if(eq(name,"keen::ecs::Faction"))*out=1;
     else if(eq(name,"keen::ecs::SelectedTargets"))*out=128;
     else if(eq(name,"keen::ecs::TargetInfo"))*out=8;
+    else if(eq(name,"keen::ecs::BaseHitEvent"))*out=128;
+    else if(eq(name,"keen::ecs::GameEvent"))*out=8;
+    else if(eq(name,"keen::ecs::Actor"))*out=80;
     else {
         for(unsigned i=0;i<EVENT_COUNT;++i)if(eq(name,events[i].name)){*out=256;return EnshwickStatus_OK;}
         return EnshwickStatus_MISSING;
@@ -42,7 +46,17 @@ static EnshwickStatus type_size(EnshwickStr name,uint32_t *out) {
     return EnshwickStatus_OK;
 }
 static EnshwickStatus offset(EnshwickStr type,EnshwickStr field,uint64_t *out) {
-    if(eq(type,"keen::ecs::Faction") && eq(field,"faction"))*out=0;
+    if(eq(type,"keen::ecs::GameEvent") && eq(field,"timeStamp"))*out=0;
+    else if(eq(type,"keen::ecs::BaseActor") && eq(field,"currentState"))*out=32;
+    else if(eq(type,"keen::ecs::BaseHitEvent")) {
+        uint64_t position=0;
+        for(unsigned j=0;j<16 && events[0].fields[j].name;++j) {
+            if(eq(field,events[0].fields[j].name)){*out=position;return EnshwickStatus_OK;}
+            position+=events[0].fields[j].width;
+        }
+        return EnshwickStatus_MISSING;
+    }
+    else if(eq(type,"keen::ecs::Faction") && eq(field,"faction"))*out=0;
     else if(eq(type,"keen::ecs::SelectedTargets") && eq(field,"targets"))*out=0;
     else if(eq(type,"keen::ecs::TargetInfo") && eq(field,"targetEntityId"))*out=0;
     else if(eq(type,"keen::ecs::TargetInfo") && eq(field,"targetRootEntityId"))*out=4;
@@ -50,7 +64,11 @@ static EnshwickStatus offset(EnshwickStr type,EnshwickStr field,uint64_t *out) {
         for(unsigned i=0;i<EVENT_COUNT;++i)if(eq(type,events[i].name)) {
             uint64_t position=0;
             for(unsigned j=0;j<16 && events[i].fields[j].name;++j) {
-                if(eq(field,events[i].fields[j].name)){*out=position;return EnshwickStatus_OK;}
+                if(eq(field,events[i].fields[j].name)) {
+                    if(!equal_text(event_field_owner(&events[i],&events[i].fields[j]),events[i].name))
+                        return EnshwickStatus_MISSING;
+                    *out=position;return EnshwickStatus_OK;
+                }
                 position+=events[i].fields[j].width;
             }
         }
@@ -71,6 +89,7 @@ static EnshwickStatus constant(EnshwickModHandle me,EnshwickStr name,uint64_t *o
 static EnshwickStatus component(EnshwickModHandle me,EnshwickEntity entity,uint32_t type,const void **out) {
     (void)me;
     if(type==10 && entity==1)*out=stamina;
+    else if(type==14 && entity==1)*out=actor;
     else if(type==12 && entity==100)*out=selected;
     else if(type==11 && entity==100)*out=&faction_value;
     else return EnshwickStatus_MISSING;
@@ -116,6 +135,10 @@ int main(void) {
     put(stamina+8,100,4);put(stamina+16,120,4);put(selected,1,4);
     CHECK(enshwick_mod_init(&fake,1)==EnshwickStatus_OK);
     CHECK(stamina_layout.available && ai_available);
+    CHECK(fields[6].available && fields[6].hash==14 && fields[6].offset==32);
+    uint64_t ignored=0;
+    CHECK(offset(str(events[0].name),str("rootSourceId"),&ignored)==EnshwickStatus_MISSING);
+    CHECK(events[0].fields[0].valid && events[0].fields[1].valid && events[0].fields[5].valid);
     for(unsigned i=0;i<EVENT_COUNT;++i)CHECK(event_callbacks[i]!=0);
     sample(1,1);
     CHECK(strstr(logs,"stamina_status=0 current=100 maximum=120")!=0);
@@ -137,6 +160,11 @@ int main(void) {
     event_callbacks[0](&event,event_users[0]);
     CHECK(strstr(logs,"type=keen::ecs::HitEvent rootSourceId=01000000")!=0);
     CHECK(strstr(logs,"target_faction_component_status=0 faction_raw=06")!=0);
+    // If a build lacks rootSourceId, sourceId still retains outgoing hits.
+    int valid=events[0].fields[0].valid;events[0].fields[0].valid=0;
+    put(hit+events[0].fields[3].offset,1,4);before=calls;
+    event_callbacks[0](&event,event_users[0]);CHECK(calls==before+1);
+    events[0].fields[0].valid=valid;put(hit+events[0].fields[3].offset,0,4);
     // Ignore unrelated hits. A wrong-sized event never reaches field reads.
     put(hit+events[0].fields[0].offset,200,4);before=calls;
     event_callbacks[0](&event,event_users[0]);CHECK(calls==before);
