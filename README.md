@@ -15,6 +15,7 @@ validation.
 - [Точки расхода и офлайн-разбор EXE без новой игровой сессии](docs/cost-paths.md)
 - [Результат первого разбора EXE и найденные списания](docs/offline-report-analysis.md)
 - [Результат второго отчёта и наблюдение стоимости 0.3.0](docs/cost-trace.md)
+- [Разбор реальной сессии 0.3.0: прыжки, склон, инструменты](docs/session-03-analysis.md)
 - [Исследование API и существующих модов](docs/research.md)
 - [Stamina rules and integration plan](docs/implementation.md)
 
