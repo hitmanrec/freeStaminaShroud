@@ -1,0 +1,58 @@
+10:30:08.772Z info  [enshwick] Enshwick 1.0.0-alpha.11 starting on Wine 11.0, 28 logical processors
+10:30:08.772Z info  [enshwick] 106 powrprof.dll exports are missing on this system
+10:30:08.793Z info  [enshwick] 12658 types and 770 systems reflected
+10:30:08.831Z info  [enshwick] 9 of 9 attribute slots read from the game's data
+10:30:08.891Z info  [enshwick] engine routes read in 3 ms, found 720 entries in 57 ms
+10:30:08.891Z info  [enshwick] game: 1.0 client (26320373)
+10:30:08.924Z info  [enshwick] crash blame runs before the crash filter at 0x6ffffbcfc0e4, which another module set
+10:30:08.927Z info  [enshwick] hitmanrec.stamina-probe 0.2.0 initialised
+10:30:08.927Z info  [enshwick] 0 texts from mods
+10:30:08.927Z info  [enshwick] knowledge guard on: refusing what a vanilla client never asks for
+10:30:08.927Z info  [enshwick] game events: 4 subscriptions
+10:30:08.927Z info  [enshwick] chat lines on
+10:30:08.927Z info  [enshwick] own channel ready on game channel 14
+10:30:08.927Z info  [enshwick] interaction filters on
+10:30:08.927Z info  [enshwick] interface: 0 frame and 0 HUD callbacks from mods
+10:30:09.929Z info  [enshwick] arming 1001 ms after the loader started
+10:30:09.933Z info  [enshwick] 26 hook targets armed
+10:30:09.937Z info  [enshwick] ready: 1 of 1 mods running
+10:30:09.937Z info  [enshwick] join check: a player in the world has 30 s to say hello, then 10 s to read the note, where the world requires Enshwick
+10:30:11.305Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world0, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world0.ksd
+10:30:11.305Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world1, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world1.ksd
+10:30:11.305Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world2, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world2.ksd
+10:30:11.305Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world3, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world3.ksd
+10:30:11.305Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world4, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world4.ksd
+10:30:11.305Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world5, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world5.ksd
+10:30:11.305Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world6, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world6.ksd
+10:30:11.306Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world7, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world7.ksd
+10:30:11.306Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world8, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world8.ksd
+10:30:11.306Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world9, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world9.ksd
+10:30:11.306Z info  [enshwick] world key world0, from world0.ksd
+10:30:11.342Z info  [enshwick] world key world1, from world1.ksd
+10:30:11.381Z info  [enshwick] world key world2, from world2.ksd
+10:30:11.381Z info  [enshwick] world key world3, from world3.ksd
+10:30:11.381Z info  [enshwick] world key world4, from world4.ksd
+10:30:11.381Z info  [enshwick] world key world5, from world5.ksd
+10:30:11.381Z info  [enshwick] world key world6, from world6.ksd
+10:30:11.381Z info  [enshwick] world key world7, from world7.ksd
+10:30:11.381Z info  [enshwick] world key world8, from world8.ksd
+10:30:11.381Z info  [enshwick] world key world9, from world9.ksd
+10:31:03.207Z info  [enshwick] this client hosts a game on thread 860: server mods act
+10:31:03.207Z info  [enshwick] survivors: CurrentTransform is component type 133, NpcCommon 401
+10:31:14.675Z info  [enshwick] world settings: world world0
+10:31:14.733Z info  [enshwick] this client hosts a game on thread 860: server mods act
+10:31:15.009Z info  [enshwick] hosted games: lobby 109775243322317407 names Enshwick, mods 
+10:31:15.048Z info  [enshwick] own channel: the session takes 1148 bytes a packet, 8192 and 16384 for long messages
+10:31:15.048Z info  [enshwick] own channel: socket open for a39c0ec6346e0ebc
+10:31:15.198Z info  [enshwick] join check: the host is a39c0ec6346e0ebc
+10:31:15.198Z info  [enshwick] mod messages: the client of a39c0ec6346e0ebc said hello
+10:31:15.237Z info  [enshwick] mod messages: the server answered
+10:32:33.697Z info  [enshwick] the hosted game stopped; server mods rest until the next
+10:32:56.477Z info  [enshwick] world settings: world world0
+10:32:56.533Z info  [enshwick] this client hosts a game on thread 860: server mods act
+10:32:56.533Z info  [enshwick] survivors: CurrentTransform is component type 133, NpcCommon 401
+10:32:56.775Z info  [enshwick] hosted games: lobby 109775243322440555 names Enshwick, mods 
+10:32:56.994Z info  [enshwick] join check: the host is a39c0ec6346e0ebc
+10:32:56.994Z info  [enshwick] mod messages: the client of a39c0ec6346e0ebc said hello
+10:32:57.015Z info  [enshwick] mod messages: the server answered
+10:33:36.592Z info  [enshwick] the hosted game stopped; server mods rest until the next
