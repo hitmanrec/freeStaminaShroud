@@ -80,17 +80,21 @@ static void init_actions(const EnshwickBuildInfo *build) {
     actions_ready=0;reset_actions();
     action_slot=resolve("keen::ecs::SlotSelection","actionItem",20,1);
     action_item_id=resolve("keen::ItemInstanceInfo","itemId",4,0);
-    action_jump=resolve("keen::ecs::DynamicLocomotion","jumpType",1,1);
+    // The request is written before the debit; DynamicLocomotion.jumpType is
+    // applied later and can still describe the preceding jump (or be Invalid).
+    action_jump=resolve("keen::ecs::ActorInput","externalTriggerJumpType",1,1);
     if(action_item_id.size!=20)action_item_id.available=0;
     if(api->inventory_open)diagnostic_status("action_inventory",api->inventory_open(self));
     uint64_t begin=0,length=0;
     if(!cost_installed || !reviewed_client_build(build) || !api->code_range ||
        build->base>UINT64_MAX-JUMP_RETURN || api->code_range(&begin,&length)!=EnshwickStatus_OK ||
-       build->base+UINT64_C(0x223af7)<begin || build->base+UINT64_C(0x2c97d0)<begin ||
+       build->base+UINT64_C(0x223af7)<begin || build->base+UINT64_C(0x2c9684)<begin ||
        !range_ok(build->base+UINT64_C(0x223af7)-begin,24,length) ||
+       !range_ok(build->base+UINT64_C(0x2c9684)-begin,23,length) ||
        !range_ok(build->base+UINT64_C(0x2c97d0)-begin,41,length)){
         diagnostic_status("action_cost_guard",EnshwickStatus_REFUSED);return;}
     if(sprint_code_digest((const uint8_t *)(uintptr_t)(build->base+UINT64_C(0x223af7)),24)!=UINT32_C(0xdec87622) ||
+       sprint_code_digest((const uint8_t *)(uintptr_t)(build->base+UINT64_C(0x2c9684)),23)!=UINT32_C(0x75f3353c) ||
        sprint_code_digest((const uint8_t *)(uintptr_t)(build->base+UINT64_C(0x2c97d0)),41)!=UINT32_C(0xec1d643e)){
         diagnostic_status("action_cost_sites",EnshwickStatus_REFUSED);return;}
     actions_ready=1;diagnostic_status("action_cost_guard",EnshwickStatus_OK);

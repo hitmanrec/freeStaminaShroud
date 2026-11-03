@@ -1,6 +1,6 @@
 # Stamina mod implementation
 
-Version 0.5.0 provides a Windows x86-64 Enshwick DLL for the two explicitly
+Version 0.5.1 provides a Windows x86-64 Enshwick DLL for the two explicitly
 reviewed client builds. The host sprint path has been validated in game on
 build /205, including blocking on wolf aggression before the first hit.
 Jump and tool suppression are new experimental gameplay changes, tested in
