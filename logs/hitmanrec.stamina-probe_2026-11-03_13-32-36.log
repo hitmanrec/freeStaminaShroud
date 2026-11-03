@@ -1,0 +1,805 @@
+13:32:37.009Z info  [hitmanrec.stamina-probe] probe=0.4.0 read_only=false sprint_preview=true loader=1.0.0-alpha.11 binary_side=2 build_table=0 fingerprint_guid_le=69f0e9573b32c24a8838d3fff550824c fingerprint_age=520
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::CombatStance.combatStanceDuration status=0 offset=0 width=8 type_size=16
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::CombatStance.combatStanceEndTime status=0 offset=8 width=8 type_size=16
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::ClientLocomotion.inCombatStance status=0 offset=108 width=1 type_size=112
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::ControlCombatTarget.targetId status=0 offset=0 width=4 type_size=32
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::StaminaDepletion.accumulatedValue status=0 offset=0 width=4 type_size=4
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::NetworkStamina.stamina status=0 offset=0 width=2 type_size=4
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::Actor.currentState status=0 offset=3064 width=8 type_size=3832
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::ActorInput.sequenceTriggerId status=0 offset=392 width=4 type_size=456
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::ActorInput.locomotionSpeed status=0 offset=452 width=1 type_size=456
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::ClientLocomotion.currentGait status=0 offset=104 width=1 type_size=112
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::DynamicLocomotion.state status=0 offset=89 width=1 type_size=456
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::DynamicLocomotion.jumpCount status=0 offset=341 width=1 type_size=456
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::DynamicLocomotion.lastJumpTime status=0 offset=184 width=8 type_size=456
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 offset=0 width=1 type_size=2
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 offset=1 width=1 type_size=2
+13:32:37.009Z info  [hitmanrec.stamina-probe] stamina_schema status=0
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::Faction.faction status=0 offset=0 width=1 type_size=1
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::SelectedTargets.targets status=0 offset=0 width=1 type_size=2184
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::TargetInfo.targetEntityId status=0 offset=100 width=4 type_size=136
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::TargetInfo.targetRootEntityId status=0 offset=96 width=4 type_size=136
+13:32:37.009Z info  [hitmanrec.stamina-probe] ai_schema status=0
+13:32:37.009Z info  [hitmanrec.stamina-probe] event_catalog status=0
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::BaseHitEvent.rootSourceId status=0 offset=144 width=4 type_size=160
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::BaseHitEvent.targetId status=0 offset=148 width=4 type_size=160
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HitEvent.rootTargetId status=0 offset=160 width=4 type_size=248
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HitEvent.sourceId status=0 offset=164 width=4 type_size=248
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HitEvent.weaponPideId status=0 offset=172 width=4 type_size=248
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::BaseHitEvent.flags status=0 offset=152 width=4 type_size=160
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HitEvent.healthChange status=0 offset=188 width=4 type_size=248
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HitEvent.staminaChange status=0 offset=192 width=4 type_size=248
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HitEvent.damageTypes status=0 offset=220 width=2 type_size=248
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HitEvent.targetFaction status=0 offset=240 width=1 type_size=248
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HitEvent.weaponCategory status=0 offset=216 width=4 type_size=248
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HitEvent.attackCategory status=0 offset=223 width=1 type_size=248
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::BaseHitEvent.hasMiningVolume status=0 offset=157 width=1 type_size=160
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::BaseHitEvent.miningRemovedVolume status=0 offset=96 width=4 type_size=160
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::GameEvent.timeStamp status=0 offset=0 width=8 type_size=8
+13:32:37.009Z info  [hitmanrec.stamina-probe] keen::ecs::HitEvent status=0
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HandleEquipmentSlotChangedEvent.playerEntityId status=0 offset=8 width=4 type_size=16
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::HandleEquipmentSlotChangedEvent.equipmentSlot status=0 offset=12 width=1 type_size=16
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::GameEvent.timeStamp status=0 offset=0 width=8 type_size=8
+13:32:37.009Z info  [hitmanrec.stamina-probe] keen::ecs::HandleEquipmentSlotChangedEvent status=0
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::ResourceChangeEvent.targetEntityId status=0 offset=8 width=4 type_size=40
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::ResourceChangeEvent.staminaChange status=0 offset=28 width=8 type_size=40
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::ResourceChangeEvent.healthChange status=0 offset=12 width=8 type_size=40
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::GameEvent.timeStamp status=0 offset=0 width=8 type_size=8
+13:32:37.009Z info  [hitmanrec.stamina-probe] keen::ecs::ResourceChangeEvent status=0
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::EntityDiedEvent.deadEntityId status=0 offset=8 width=4 type_size=16
+13:32:37.009Z info  [hitmanrec.stamina-probe] resolve keen::ecs::GameEvent.timeStamp status=0 offset=0 width=8 type_size=8
+13:32:37.009Z info  [hitmanrec.stamina-probe] keen::ecs::EntityDiedEvent status=0
+13:32:37.009Z info  [hitmanrec.stamina-probe] cost_trace_hook status=0
+13:32:37.009Z info  [hitmanrec.stamina-probe] cost_system stamina_depletion_sprint status=0 rva=3084288
+13:32:37.009Z info  [hitmanrec.stamina-probe] cost_system stamina_depletion_glider status=0 rva=3083488
+13:32:37.009Z info  [hitmanrec.stamina-probe] cost_system stamina_depletion_climb_wall status=0 rva=3081728
+13:32:37.009Z info  [hitmanrec.stamina-probe] cost_system stamina_depletion_finalize status=0 rva=3082896
+13:32:37.009Z info  [hitmanrec.stamina-probe] cost_system stamina_recharge status=0 rva=2349952
+13:32:37.009Z info  [hitmanrec.stamina-probe] cost_system player_control_action_sequence status=0 rva=3001280
+13:32:37.009Z info  [hitmanrec.stamina-probe] sprint_patch_registered status=0
+13:33:37.664Z info  [hitmanrec.stamina-probe] sample game=1 step=1 players_status=0 players=0
+13:33:37.664Z info  [hitmanrec.stamina-probe] sample game=1 step=1 ai_enumerated=0 selected_ready=0 matched=0 query_truncated=0 cache_overflow=0
+13:33:37.664Z info  [hitmanrec.stamina-probe] sample game=1 step=1 sprint_free_mask=0 ai_complete=1 skipped_sprint_adds=0
+13:33:43.286Z info  [hitmanrec.stamina-probe] sample game=1 step=141 players_status=0 players=0
+13:33:43.286Z info  [hitmanrec.stamina-probe] sample game=1 step=141 ai_enumerated=0 selected_ready=0 matched=0 query_truncated=0 cache_overflow=0
+13:33:43.286Z info  [hitmanrec.stamina-probe] sample game=1 step=141 sprint_free_mask=0 ai_complete=1 skipped_sprint_adds=0
+13:33:48.602Z info  [hitmanrec.stamina-probe] sample game=1 step=271 ai_enumerated=30 selected_ready=30 matched=0 query_truncated=0 cache_overflow=0
+13:33:48.885Z info  [hitmanrec.stamina-probe] sample game=1 step=278 players_status=0 players=0
+13:33:48.885Z info  [hitmanrec.stamina-probe] sample game=1 step=278 ai_enumerated=30 selected_ready=30 matched=0 query_truncated=0 cache_overflow=0
+13:33:48.885Z info  [hitmanrec.stamina-probe] sample game=1 step=278 sprint_free_mask=0 ai_complete=1 skipped_sprint_adds=0
+13:33:49.186Z info  [hitmanrec.stamina-probe] sample game=1 step=285 ai_enumerated=314 selected_ready=314 matched=0 query_truncated=0 cache_overflow=0
+13:33:49.437Z info  [hitmanrec.stamina-probe] sample game=1 step=297 ai_enumerated=322 selected_ready=322 matched=0 query_truncated=0 cache_overflow=0
+13:33:49.955Z info  [hitmanrec.stamina-probe] sample game=1 step=328 ai_enumerated=325 selected_ready=325 matched=0 query_truncated=0 cache_overflow=0
+13:33:50.205Z info  [hitmanrec.stamina-probe] sample game=1 step=343 ai_enumerated=335 selected_ready=335 matched=0 query_truncated=0 cache_overflow=0
+13:33:50.472Z info  [hitmanrec.stamina-probe] sample game=1 step=359 ai_enumerated=336 selected_ready=336 matched=0 query_truncated=0 cache_overflow=0
+13:33:50.722Z info  [hitmanrec.stamina-probe] sample game=1 step=374 ai_enumerated=351 selected_ready=351 matched=0 query_truncated=0 cache_overflow=0
+13:33:50.972Z info  [hitmanrec.stamina-probe] sample game=1 step=389 ai_enumerated=363 selected_ready=363 matched=0 query_truncated=0 cache_overflow=0
+13:33:51.222Z info  [hitmanrec.stamina-probe] sample game=1 step=404 ai_enumerated=365 selected_ready=365 matched=0 query_truncated=0 cache_overflow=0
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 players_status=0 players=1
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 entity=1 stamina_status=0 current=130 maximum=130
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=0000000000000000
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=00
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0040000000000000
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=00
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=02
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=0000000000000000
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=04
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=00
+13:33:53.591Z info  [hitmanrec.stamina-probe] sample game=1 step=546 ai_enumerated=366 selected_ready=365 matched=0 query_truncated=0 cache_overflow=0
+13:33:53.856Z info  [hitmanrec.stamina-probe] sample game=1 step=562 entity=1 stamina_status=0 current=138 maximum=138
+13:33:53.856Z info  [hitmanrec.stamina-probe] sample game=1 step=562 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0140010000000000
+13:33:53.856Z info  [hitmanrec.stamina-probe] sample game=1 step=562 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:33:53.856Z info  [hitmanrec.stamina-probe] sample game=1 step=562 ai_enumerated=379 selected_ready=378 matched=0 query_truncated=0 cache_overflow=0
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 players_status=0 players=1
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 entity=1 stamina_status=0 current=138 maximum=138
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=0000000000000000
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=00
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0140010000000000
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=00
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=0000000000000000
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=04
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=00
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 ai_enumerated=383 selected_ready=382 matched=0 query_truncated=0 cache_overflow=0
+13:33:54.123Z info  [hitmanrec.stamina-probe] sample game=1 step=578 sprint_free_mask=1 ai_complete=1 skipped_sprint_adds=0
+13:33:54.373Z info  [hitmanrec.stamina-probe] sample game=1 step=593 ai_enumerated=387 selected_ready=386 matched=0 query_truncated=0 cache_overflow=0
+13:33:54.639Z info  [hitmanrec.stamina-probe] sample game=1 step=609 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0140010000000400
+13:33:54.639Z info  [hitmanrec.stamina-probe] sample game=1 step=609 ai_enumerated=389 selected_ready=388 matched=0 query_truncated=0 cache_overflow=0
+13:33:55.155Z info  [hitmanrec.stamina-probe] sample game=1 step=640 ai_enumerated=391 selected_ready=390 matched=0 query_truncated=0 cache_overflow=0
+13:33:56.705Z info  [hitmanrec.stamina-probe] sample game=1 step=733 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0140014000001400
+13:33:56.705Z info  [hitmanrec.stamina-probe] sample game=1 step=733 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:33:56.955Z info  [hitmanrec.stamina-probe] sample game=1 step=748 entity=1 stamina_status=0 current=137 maximum=138
+13:33:56.955Z info  [hitmanrec.stamina-probe] sample game=1 step=748 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=d86ac66e05000000
+13:33:56.955Z info  [hitmanrec.stamina-probe] sample game=1 step=748 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:33:56.955Z info  [hitmanrec.stamina-probe] sample game=1 step=748 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0140010000001400
+13:33:56.955Z info  [hitmanrec.stamina-probe] sample game=1 step=748 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=04
+13:33:57.205Z info  [hitmanrec.stamina-probe] sample game=1 step=763 entity=1 stamina_status=0 current=136 maximum=138
+13:33:57.205Z info  [hitmanrec.stamina-probe] sample game=1 step=763 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=5d1dad7d05000000
+13:33:57.205Z info  [hitmanrec.stamina-probe] sample game=1 step=763 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=0000003f
+13:33:57.457Z info  [hitmanrec.stamina-probe] sample game=1 step=778 entity=1 stamina_status=0 current=133 maximum=138
+13:33:57.457Z info  [hitmanrec.stamina-probe] sample game=1 step=778 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=e2cf938c05000000
+13:33:57.457Z info  [hitmanrec.stamina-probe] sample game=1 step=778 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:33:57.723Z info  [hitmanrec.stamina-probe] sample game=1 step=794 entity=1 stamina_status=0 current=131 maximum=138
+13:33:57.723Z info  [hitmanrec.stamina-probe] sample game=1 step=794 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=92d2789c05000000
+13:33:57.723Z info  [hitmanrec.stamina-probe] sample game=1 step=794 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:33:57.723Z info  [hitmanrec.stamina-probe] sample game=1 step=794 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0140000000001400
+13:33:57.973Z info  [hitmanrec.stamina-probe] sample game=1 step=809 entity=1 stamina_status=0 current=128 maximum=138
+13:33:57.973Z info  [hitmanrec.stamina-probe] sample game=1 step=809 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=17855fab05000000
+13:33:57.973Z info  [hitmanrec.stamina-probe] sample game=1 step=809 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3e
+13:33:58.239Z info  [hitmanrec.stamina-probe] sample game=1 step=825 entity=1 stamina_status=0 current=126 maximum=138
+13:33:58.239Z info  [hitmanrec.stamina-probe] sample game=1 step=825 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=c78744bb05000000
+13:33:58.239Z info  [hitmanrec.stamina-probe] sample game=1 step=825 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:33:58.490Z info  [hitmanrec.stamina-probe] sample game=1 step=840 entity=1 stamina_status=0 current=123 maximum=138
+13:33:58.490Z info  [hitmanrec.stamina-probe] sample game=1 step=840 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=4c3a2bca05000000
+13:33:58.490Z info  [hitmanrec.stamina-probe] sample game=1 step=840 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:33:58.756Z info  [hitmanrec.stamina-probe] sample game=1 step=856 entity=1 stamina_status=0 current=120 maximum=138
+13:33:58.756Z info  [hitmanrec.stamina-probe] sample game=1 step=856 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=fc3c10da05000000
+13:33:58.756Z info  [hitmanrec.stamina-probe] sample game=1 step=856 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:33:59.022Z info  [hitmanrec.stamina-probe] sample game=1 step=872 entity=1 stamina_status=0 current=118 maximum=138
+13:33:59.022Z info  [hitmanrec.stamina-probe] sample game=1 step=872 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=ac3ff5e905000000
+13:33:59.022Z info  [hitmanrec.stamina-probe] sample game=1 step=872 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 players_status=0 players=1
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 entity=1 stamina_status=0 current=115 maximum=138
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=31f2dbf805000000
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3e
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0140000000001400
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=04
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=0000000000000000
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=04
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=00
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 ai_enumerated=391 selected_ready=390 matched=0 query_truncated=0 cache_overflow=0
+13:33:59.273Z info  [hitmanrec.stamina-probe] sample game=1 step=887 sprint_free_mask=1 ai_complete=1 skipped_sprint_adds=0
+13:33:59.539Z info  [hitmanrec.stamina-probe] sample game=1 step=903 entity=1 stamina_status=0 current=113 maximum=138
+13:33:59.539Z info  [hitmanrec.stamina-probe] sample game=1 step=903 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=e1f4c00806000000
+13:33:59.539Z info  [hitmanrec.stamina-probe] sample game=1 step=903 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=acaaaa3e
+13:33:59.789Z info  [hitmanrec.stamina-probe] sample game=1 step=918 entity=1 stamina_status=0 current=111 maximum=138
+13:33:59.789Z info  [hitmanrec.stamina-probe] sample game=1 step=918 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=66a7a71706000000
+13:33:59.789Z info  [hitmanrec.stamina-probe] sample game=1 step=918 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5855553e
+13:34:00.039Z info  [hitmanrec.stamina-probe] sample game=1 step=933 entity=1 stamina_status=0 current=109 maximum=138
+13:34:00.039Z info  [hitmanrec.stamina-probe] sample game=1 step=933 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=eb598e2606000000
+13:34:00.039Z info  [hitmanrec.stamina-probe] sample game=1 step=933 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=b0aaaa3d
+13:34:00.305Z info  [hitmanrec.stamina-probe] sample game=1 step=949 entity=1 stamina_status=0 current=107 maximum=138
+13:34:00.305Z info  [hitmanrec.stamina-probe] sample game=1 step=949 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=9b5c733606000000
+13:34:00.305Z info  [hitmanrec.stamina-probe] sample game=1 step=949 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0140000000000400
+13:34:00.305Z info  [hitmanrec.stamina-probe] sample game=1 step=949 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=00
+13:34:00.572Z info  [hitmanrec.stamina-probe] sample game=1 step=965 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=4b5f584606000000
+13:34:00.572Z info  [hitmanrec.stamina-probe] sample game=1 step=965 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0140000000001400
+13:34:00.572Z info  [hitmanrec.stamina-probe] sample game=1 step=965 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:00.839Z info  [hitmanrec.stamina-probe] sample game=1 step=981 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=fb613d5606000000
+13:34:01.089Z info  [hitmanrec.stamina-probe] sample game=1 step=996 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=8014246506000000
+13:34:01.089Z info  [hitmanrec.stamina-probe] sample game=1 step=996 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=06
+13:34:01.089Z info  [hitmanrec.stamina-probe] sample game=1 step=996 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=02
+13:34:01.339Z info  [hitmanrec.stamina-probe] sample game=1 step=1011 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=da760c7306000000
+13:34:01.339Z info  [hitmanrec.stamina-probe] sample game=1 step=1011 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000001400
+13:34:01.339Z info  [hitmanrec.stamina-probe] sample game=1 step=1011 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=00
+13:34:01.856Z info  [hitmanrec.stamina-probe] sample game=1 step=1042 entity=1 stamina_status=0 current=109 maximum=138
+13:34:02.123Z info  [hitmanrec.stamina-probe] sample game=1 step=1058 entity=1 stamina_status=0 current=111 maximum=138
+13:34:02.373Z info  [hitmanrec.stamina-probe] sample game=1 step=1073 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=6f31a2b106000000
+13:34:02.373Z info  [hitmanrec.stamina-probe] sample game=1 step=1073 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655153f
+13:34:02.373Z info  [hitmanrec.stamina-probe] sample game=1 step=1073 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=04
+13:34:02.639Z info  [hitmanrec.stamina-probe] sample game=1 step=1089 entity=1 stamina_status=0 current=109 maximum=138
+13:34:02.639Z info  [hitmanrec.stamina-probe] sample game=1 step=1089 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=1f3487c106000000
+13:34:02.890Z info  [hitmanrec.stamina-probe] sample game=1 step=1104 entity=1 stamina_status=0 current=107 maximum=138
+13:34:02.890Z info  [hitmanrec.stamina-probe] sample game=1 step=1104 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=a4e66dd006000000
+13:34:02.890Z info  [hitmanrec.stamina-probe] sample game=1 step=1104 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=acaaea3e
+13:34:03.156Z info  [hitmanrec.stamina-probe] sample game=1 step=1120 entity=1 stamina_status=0 current=105 maximum=138
+13:34:03.156Z info  [hitmanrec.stamina-probe] sample game=1 step=1120 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=54e952e006000000
+13:34:03.422Z info  [hitmanrec.stamina-probe] sample game=1 step=1136 entity=1 stamina_status=0 current=103 maximum=138
+13:34:03.422Z info  [hitmanrec.stamina-probe] sample game=1 step=1136 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=04ec37f006000000
+13:34:03.689Z info  [hitmanrec.stamina-probe] sample game=1 step=1152 entity=1 stamina_status=0 current=101 maximum=138
+13:34:03.689Z info  [hitmanrec.stamina-probe] sample game=1 step=1152 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=b4ee1c0007000000
+13:34:03.939Z info  [hitmanrec.stamina-probe] sample game=1 step=1167 entity=1 stamina_status=0 current=99 maximum=138
+13:34:03.939Z info  [hitmanrec.stamina-probe] sample game=1 step=1167 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=39a1030f07000000
+13:34:03.939Z info  [hitmanrec.stamina-probe] sample game=1 step=1167 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=acaaaa3e
+13:34:03.939Z info  [hitmanrec.stamina-probe] sample game=1 step=1167 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:04.206Z info  [hitmanrec.stamina-probe] sample game=1 step=1183 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=e9a3e81e07000000
+13:34:04.206Z info  [hitmanrec.stamina-probe] sample game=1 step=1183 ai_enumerated=388 selected_ready=387 matched=0 query_truncated=0 cache_overflow=0
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 players_status=0 players=1
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 entity=1 stamina_status=0 current=99 maximum=138
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=99a6cd2e07000000
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=acaaaa3e
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000001400
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=0000000000000000
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=00
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=02
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 ai_enumerated=387 selected_ready=386 matched=0 query_truncated=0 cache_overflow=0
+13:34:04.472Z info  [hitmanrec.stamina-probe] sample game=1 step=1199 sprint_free_mask=1 ai_complete=1 skipped_sprint_adds=0
+13:34:04.723Z info  [hitmanrec.stamina-probe] sample game=1 step=1214 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=1e59b43d07000000
+13:34:04.723Z info  [hitmanrec.stamina-probe] sample game=1 step=1214 ai_enumerated=386 selected_ready=385 matched=0 query_truncated=0 cache_overflow=0
+13:34:04.989Z info  [hitmanrec.stamina-probe] sample game=1 step=1230 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=78bb9c4b07000000
+13:34:05.239Z info  [hitmanrec.stamina-probe] sample game=1 step=1245 entity=1 stamina_status=0 current=100 maximum=138
+13:34:05.506Z info  [hitmanrec.stamina-probe] sample game=1 step=1261 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=00
+13:34:05.506Z info  [hitmanrec.stamina-probe] sample game=1 step=1261 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0200000001001400
+13:34:05.506Z info  [hitmanrec.stamina-probe] sample game=1 step=1261 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=02
+13:34:05.506Z info  [hitmanrec.stamina-probe] sample game=1 step=1261 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=01
+13:34:05.506Z info  [hitmanrec.stamina-probe] sample game=1 step=1261 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=0108047806000000
+13:34:05.756Z info  [hitmanrec.stamina-probe] sample game=1 step=1276 cost_trace entity=1 delta=-10 caller_return_rva=2922489 forwarded_unchanged=true
+13:34:05.756Z info  [hitmanrec.stamina-probe] sample game=1 step=1276 cost_trace_unmatched=1 dropped=0
+13:34:05.756Z info  [hitmanrec.stamina-probe] sample game=1 step=1276 entity=1 stamina_status=0 current=90 maximum=138
+13:34:06.022Z info  [hitmanrec.stamina-probe] sample game=1 step=1292 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=02
+13:34:06.022Z info  [hitmanrec.stamina-probe] sample game=1 step=1292 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=098cdb8f06000000
+13:34:06.273Z info  [hitmanrec.stamina-probe] sample game=1 step=1307 ai_enumerated=388 selected_ready=387 matched=0 query_truncated=0 cache_overflow=0
+13:34:07.039Z info  [hitmanrec.stamina-probe] sample game=1 step=1353 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:34:07.039Z info  [hitmanrec.stamina-probe] sample game=1 step=1353 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000000400
+13:34:07.039Z info  [hitmanrec.stamina-probe] sample game=1 step=1353 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=00
+13:34:07.039Z info  [hitmanrec.stamina-probe] sample game=1 step=1353 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:34:07.039Z info  [hitmanrec.stamina-probe] sample game=1 step=1353 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:34:07.822Z info  [hitmanrec.stamina-probe] sample game=1 step=1400 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000001400
+13:34:07.822Z info  [hitmanrec.stamina-probe] sample game=1 step=1400 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:08.356Z info  [hitmanrec.stamina-probe] sample game=1 step=1432 entity=1 stamina_status=0 current=91 maximum=138
+13:34:08.356Z info  [hitmanrec.stamina-probe] sample game=1 step=1432 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=07
+13:34:08.356Z info  [hitmanrec.stamina-probe] sample game=1 step=1432 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=03
+13:34:08.623Z info  [hitmanrec.stamina-probe] sample game=1 step=1448 entity=1 stamina_status=0 current=93 maximum=138
+13:34:08.873Z info  [hitmanrec.stamina-probe] sample game=1 step=1463 entity=1 stamina_status=0 current=95 maximum=138
+13:34:09.139Z info  [hitmanrec.stamina-probe] sample game=1 step=1479 entity=1 stamina_status=0 current=98 maximum=138
+13:34:09.139Z info  [hitmanrec.stamina-probe] sample game=1 step=1479 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=00
+13:34:09.139Z info  [hitmanrec.stamina-probe] sample game=1 step=1479 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=00
+13:34:09.390Z info  [hitmanrec.stamina-probe] sample game=1 step=1494 entity=1 stamina_status=0 current=100 maximum=138
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 players_status=0 players=1
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 entity=1 stamina_status=0 current=102 maximum=138
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=d60ac16308000000
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655153f
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000001400
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=04
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=098cdb8f06000000
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=00
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=03
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 ai_enumerated=388 selected_ready=387 matched=0 query_truncated=0 cache_overflow=0
+13:34:09.656Z info  [hitmanrec.stamina-probe] sample game=1 step=1510 sprint_free_mask=1 ai_complete=1 skipped_sprint_adds=0
+13:34:09.923Z info  [hitmanrec.stamina-probe] sample game=1 step=1526 entity=1 stamina_status=0 current=100 maximum=138
+13:34:09.923Z info  [hitmanrec.stamina-probe] sample game=1 step=1526 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=860da67308000000
+13:34:10.189Z info  [hitmanrec.stamina-probe] sample game=1 step=1542 entity=1 stamina_status=0 current=98 maximum=138
+13:34:10.189Z info  [hitmanrec.stamina-probe] sample game=1 step=1542 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=36108b8308000000
+13:34:10.457Z info  [hitmanrec.stamina-probe] sample game=1 step=1558 entity=1 stamina_status=0 current=96 maximum=138
+13:34:10.457Z info  [hitmanrec.stamina-probe] sample game=1 step=1558 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=e612709308000000
+13:34:10.457Z info  [hitmanrec.stamina-probe] sample game=1 step=1558 ai_candidate=7827 player_slot_mask=1 primary_slot_mask=0 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:10.722Z info  [hitmanrec.stamina-probe] sample game=1 step=1574 entity=1 stamina_status=0 current=94 maximum=138
+13:34:10.722Z info  [hitmanrec.stamina-probe] sample game=1 step=1574 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=961555a308000000
+13:34:10.973Z info  [hitmanrec.stamina-probe] sample game=1 step=1589 entity=1 stamina_status=0 current=92 maximum=138
+13:34:10.973Z info  [hitmanrec.stamina-probe] sample game=1 step=1589 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=1bc83bb208000000
+13:34:10.973Z info  [hitmanrec.stamina-probe] sample game=1 step=1589 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=acaaea3e
+13:34:11.240Z info  [hitmanrec.stamina-probe] sample game=1 step=1605 entity=1 stamina_status=0 current=90 maximum=138
+13:34:11.240Z info  [hitmanrec.stamina-probe] sample game=1 step=1605 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=cbca20c208000000
+13:34:11.490Z info  [hitmanrec.stamina-probe] sample game=1 step=1620 entity=1 stamina_status=0 current=89 maximum=138
+13:34:11.490Z info  [hitmanrec.stamina-probe] sample game=1 step=1620 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=507d07d108000000
+13:34:11.490Z info  [hitmanrec.stamina-probe] sample game=1 step=1620 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655753f
+13:34:11.490Z info  [hitmanrec.stamina-probe] sample game=1 step=1620 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:11.756Z info  [hitmanrec.stamina-probe] sample game=1 step=1636 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=0080ece008000000
+13:34:12.007Z info  [hitmanrec.stamina-probe] sample game=1 step=1651 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=8532d3ef08000000
+13:34:12.273Z info  [hitmanrec.stamina-probe] sample game=1 step=1667 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=3535b8ff08000000
+13:34:12.523Z info  [hitmanrec.stamina-probe] sample game=1 step=1682 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=0ea7a50a09000000
+13:34:12.789Z info  [hitmanrec.stamina-probe] sample game=1 step=1698 entity=1 stamina_status=0 current=90 maximum=138
+13:34:12.789Z info  [hitmanrec.stamina-probe] sample game=1 step=1698 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=07
+13:34:13.039Z info  [hitmanrec.stamina-probe] sample game=1 step=1713 entity=1 stamina_status=0 current=92 maximum=138
+13:34:13.306Z info  [hitmanrec.stamina-probe] sample game=1 step=1729 entity=1 stamina_status=0 current=94 maximum=138
+13:34:13.573Z info  [hitmanrec.stamina-probe] sample game=1 step=1745 entity=1 stamina_status=0 current=97 maximum=138
+13:34:13.839Z info  [hitmanrec.stamina-probe] sample game=1 step=1761 entity=1 stamina_status=0 current=100 maximum=138
+13:34:14.089Z info  [hitmanrec.stamina-probe] sample game=1 step=1776 entity=1 stamina_status=0 current=103 maximum=138
+13:34:14.340Z info  [hitmanrec.stamina-probe] sample game=1 step=1791 entity=1 stamina_status=0 current=106 maximum=138
+13:34:14.590Z info  [hitmanrec.stamina-probe] sample game=1 step=1806 entity=1 stamina_status=0 current=109 maximum=138
+13:34:14.590Z info  [hitmanrec.stamina-probe] sample game=1 step=1806 ai_enumerated=390 selected_ready=389 matched=1 query_truncated=0 cache_overflow=0
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 players_status=0 players=1
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 entity=1 stamina_status=0 current=112 maximum=138
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=0ea7a50a09000000
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655753f
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000001400
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=04
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=098cdb8f06000000
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=07
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=03
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 ai_candidate=7827 player_slot_mask=1 primary_slot_mask=0 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 ai_enumerated=390 selected_ready=389 matched=1 query_truncated=0 cache_overflow=0
+13:34:14.857Z info  [hitmanrec.stamina-probe] sample game=1 step=1822 sprint_free_mask=0 ai_complete=1 skipped_sprint_adds=0
+13:34:15.124Z info  [hitmanrec.stamina-probe] sample game=1 step=1838 entity=1 stamina_status=0 current=110 maximum=138
+13:34:15.124Z info  [hitmanrec.stamina-probe] sample game=1 step=1838 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=eec197a909000000
+13:34:15.390Z info  [hitmanrec.stamina-probe] sample game=1 step=1854 entity=1 stamina_status=0 current=108 maximum=138
+13:34:15.390Z info  [hitmanrec.stamina-probe] sample game=1 step=1854 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=9ec47cb909000000
+13:34:15.640Z info  [hitmanrec.stamina-probe] sample game=1 step=1869 entity=1 stamina_status=0 current=106 maximum=138
+13:34:15.640Z info  [hitmanrec.stamina-probe] sample game=1 step=1869 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=237763c809000000
+13:34:15.640Z info  [hitmanrec.stamina-probe] sample game=1 step=1869 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:34:15.906Z info  [hitmanrec.stamina-probe] sample game=1 step=1885 entity=1 stamina_status=0 current=104 maximum=138
+13:34:15.906Z info  [hitmanrec.stamina-probe] sample game=1 step=1885 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=d37948d809000000
+13:34:16.173Z info  [hitmanrec.stamina-probe] sample game=1 step=1901 entity=1 stamina_status=0 current=102 maximum=138
+13:34:16.173Z info  [hitmanrec.stamina-probe] sample game=1 step=1901 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=837c2de809000000
+13:34:16.439Z info  [hitmanrec.stamina-probe] sample game=1 step=1917 entity=1 stamina_status=0 current=100 maximum=138
+13:34:16.439Z info  [hitmanrec.stamina-probe] sample game=1 step=1917 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=337f12f809000000
+13:34:16.690Z info  [hitmanrec.stamina-probe] sample game=1 step=1932 entity=1 stamina_status=0 current=98 maximum=138
+13:34:16.690Z info  [hitmanrec.stamina-probe] sample game=1 step=1932 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=b831f9060a000000
+13:34:16.690Z info  [hitmanrec.stamina-probe] sample game=1 step=1932 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655353f
+13:34:16.940Z info  [hitmanrec.stamina-probe] sample game=1 step=1947 entity=1 stamina_status=0 current=96 maximum=138
+13:34:16.940Z info  [hitmanrec.stamina-probe] sample game=1 step=1947 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=3de4df150a000000
+13:34:16.940Z info  [hitmanrec.stamina-probe] sample game=1 step=1947 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655153f
+13:34:17.206Z info  [hitmanrec.stamina-probe] sample game=1 step=1963 entity=1 stamina_status=0 current=94 maximum=138
+13:34:17.206Z info  [hitmanrec.stamina-probe] sample game=1 step=1963 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=ede6c4250a000000
+13:34:17.457Z info  [hitmanrec.stamina-probe] sample game=1 step=1978 entity=1 stamina_status=0 current=92 maximum=138
+13:34:17.457Z info  [hitmanrec.stamina-probe] sample game=1 step=1978 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=7299ab340a000000
+13:34:17.457Z info  [hitmanrec.stamina-probe] sample game=1 step=1978 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=acaaea3e
+13:34:17.724Z info  [hitmanrec.stamina-probe] sample game=1 step=1994 entity=1 stamina_status=0 current=90 maximum=138
+13:34:17.724Z info  [hitmanrec.stamina-probe] sample game=1 step=1994 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=229c90440a000000
+13:34:17.989Z info  [hitmanrec.stamina-probe] sample game=1 step=2010 entity=1 stamina_status=0 current=87 maximum=138
+13:34:17.989Z info  [hitmanrec.stamina-probe] sample game=1 step=2010 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=d29e75540a000000
+13:34:17.989Z info  [hitmanrec.stamina-probe] sample game=1 step=2010 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:17.989Z info  [hitmanrec.stamina-probe] sample game=1 step=2010 ai_enumerated=392 selected_ready=391 matched=1 query_truncated=0 cache_overflow=0
+13:34:18.239Z info  [hitmanrec.stamina-probe] sample game=1 step=2025 entity=1 stamina_status=0 current=85 maximum=138
+13:34:18.239Z info  [hitmanrec.stamina-probe] sample game=1 step=2025 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=57515c630a000000
+13:34:18.239Z info  [hitmanrec.stamina-probe] sample game=1 step=2025 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=0000003f
+13:34:18.240Z info  [hitmanrec.stamina-probe] sample game=1 step=2025 ai_enumerated=394 selected_ready=393 matched=1 query_truncated=0 cache_overflow=0
+13:34:18.490Z info  [hitmanrec.stamina-probe] sample game=1 step=2040 entity=1 stamina_status=0 current=82 maximum=138
+13:34:18.490Z info  [hitmanrec.stamina-probe] sample game=1 step=2040 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=dc0343720a000000
+13:34:18.490Z info  [hitmanrec.stamina-probe] sample game=1 step=2040 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:18.490Z info  [hitmanrec.stamina-probe] sample game=1 step=2040 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100800000001400
+13:34:18.740Z info  [hitmanrec.stamina-probe] sample game=1 step=2055 entity=1 stamina_status=0 current=80 maximum=138
+13:34:18.740Z info  [hitmanrec.stamina-probe] sample game=1 step=2055 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=61b629810a000000
+13:34:18.740Z info  [hitmanrec.stamina-probe] sample game=1 step=2055 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=0000003f
+13:34:19.006Z info  [hitmanrec.stamina-probe] sample game=1 step=2071 entity=1 stamina_status=0 current=77 maximum=138
+13:34:19.006Z info  [hitmanrec.stamina-probe] sample game=1 step=2071 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=11b90e910a000000
+13:34:19.006Z info  [hitmanrec.stamina-probe] sample game=1 step=2071 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3e
+13:34:19.007Z info  [hitmanrec.stamina-probe] sample game=1 step=2071 ai_enumerated=393 selected_ready=392 matched=1 query_truncated=0 cache_overflow=0
+13:34:19.257Z info  [hitmanrec.stamina-probe] sample game=1 step=2086 entity=1 stamina_status=0 current=75 maximum=138
+13:34:19.257Z info  [hitmanrec.stamina-probe] sample game=1 step=2086 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=966bf59f0a000000
+13:34:19.257Z info  [hitmanrec.stamina-probe] sample game=1 step=2086 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:19.257Z info  [hitmanrec.stamina-probe] sample game=1 step=2086 ai_candidate=7827 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:19.257Z info  [hitmanrec.stamina-probe] sample game=1 step=2086 ai_candidate=7909 player_slot_mask=1 primary_slot_mask=0 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:19.257Z info  [hitmanrec.stamina-probe] sample game=1 step=2086 ai_enumerated=392 selected_ready=391 matched=2 query_truncated=0 cache_overflow=0
+13:34:19.524Z info  [hitmanrec.stamina-probe] sample game=1 step=2102 entity=1 stamina_status=0 current=72 maximum=138
+13:34:19.524Z info  [hitmanrec.stamina-probe] sample game=1 step=2102 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=466edaaf0a000000
+13:34:19.524Z info  [hitmanrec.stamina-probe] sample game=1 step=2102 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:19.524Z info  [hitmanrec.stamina-probe] sample game=1 step=2102 ai_enumerated=386 selected_ready=385 matched=2 query_truncated=0 cache_overflow=0
+13:34:19.774Z info  [hitmanrec.stamina-probe] sample game=1 step=2117 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=cb20c1be0a000000
+13:34:19.774Z info  [hitmanrec.stamina-probe] sample game=1 step=2117 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:19.774Z info  [hitmanrec.stamina-probe] sample game=1 step=2117 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:19.774Z info  [hitmanrec.stamina-probe] sample game=1 step=2117 ai_enumerated=368 selected_ready=367 matched=2 query_truncated=0 cache_overflow=0
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 players_status=0 players=1
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 entity=1 stamina_status=0 current=72 maximum=138
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=7b23a6ce0a000000
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100800000001400
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=098cdb8f06000000
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=07
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=03
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 ai_candidate=7826 player_slot_mask=1 primary_slot_mask=0 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 ai_candidate=7827 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 ai_candidate=7909 player_slot_mask=1 primary_slot_mask=0 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 ai_enumerated=368 selected_ready=367 matched=3 query_truncated=0 cache_overflow=0
+13:34:20.039Z info  [hitmanrec.stamina-probe] sample game=1 step=2133 sprint_free_mask=0 ai_complete=1 skipped_sprint_adds=0
+13:34:20.290Z info  [hitmanrec.stamina-probe] sample game=1 step=2148 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=00d68cdd0a000000
+13:34:20.290Z info  [hitmanrec.stamina-probe] sample game=1 step=2148 ai_enumerated=369 selected_ready=368 matched=3 query_truncated=0 cache_overflow=0
+13:34:20.540Z info  [hitmanrec.stamina-probe] sample game=1 step=2163 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=858873ec0a000000
+13:34:20.540Z info  [hitmanrec.stamina-probe] sample game=1 step=2163 ai_enumerated=370 selected_ready=369 matched=3 query_truncated=0 cache_overflow=0
+13:34:20.791Z info  [hitmanrec.stamina-probe] sample game=1 step=2178 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=db2870ee0a000000
+13:34:20.791Z info  [hitmanrec.stamina-probe] sample game=1 step=2178 ai_candidate=7826 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:20.791Z info  [hitmanrec.stamina-probe] sample game=1 step=2178 ai_candidate=7909 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:20.791Z info  [hitmanrec.stamina-probe] sample game=1 step=2178 ai_enumerated=371 selected_ready=370 matched=3 query_truncated=0 cache_overflow=0
+13:34:21.057Z info  [hitmanrec.stamina-probe] sample game=1 step=2194 entity=1 stamina_status=0 current=74 maximum=138
+13:34:21.323Z info  [hitmanrec.stamina-probe] sample game=1 step=2210 entity=1 stamina_status=0 current=76 maximum=138
+13:34:21.590Z info  [hitmanrec.stamina-probe] sample game=1 step=2226 entity=1 stamina_status=0 current=79 maximum=138
+13:34:21.857Z info  [hitmanrec.stamina-probe] sample game=1 step=2242 entity=1 stamina_status=0 current=81 maximum=138
+13:34:22.107Z info  [hitmanrec.stamina-probe] sample game=1 step=2257 entity=1 stamina_status=0 current=84 maximum=138
+13:34:22.357Z info  [hitmanrec.stamina-probe] sample game=1 step=2272 entity=1 stamina_status=0 current=87 maximum=138
+13:34:22.624Z info  [hitmanrec.stamina-probe] sample game=1 step=2288 entity=1 stamina_status=0 current=90 maximum=138
+13:34:22.890Z info  [hitmanrec.stamina-probe] sample game=1 step=2304 entity=1 stamina_status=0 current=93 maximum=138
+13:34:23.156Z info  [hitmanrec.stamina-probe] sample game=1 step=2320 entity=1 stamina_status=0 current=96 maximum=138
+13:34:23.156Z info  [hitmanrec.stamina-probe] sample game=1 step=2320 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=e4b26a880b000000
+13:34:23.156Z info  [hitmanrec.stamina-probe] sample game=1 step=2320 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100800100001400
+13:34:23.423Z info  [hitmanrec.stamina-probe] sample game=1 step=2336 entity=1 stamina_status=0 current=99 maximum=138
+13:34:23.423Z info  [hitmanrec.stamina-probe] sample game=1 step=2336 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=94b54f980b000000
+13:34:23.423Z info  [hitmanrec.stamina-probe] sample game=1 step=2336 ai_candidate=7990 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=1
+13:34:23.424Z info  [hitmanrec.stamina-probe] sample game=1 step=2336 ai_enumerated=372 selected_ready=371 matched=4 query_truncated=0 cache_overflow=0
+13:34:23.690Z info  [hitmanrec.stamina-probe] sample game=1 step=2352 entity=1 stamina_status=0 current=101 maximum=138
+13:34:23.690Z info  [hitmanrec.stamina-probe] sample game=1 step=2352 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=44b834a80b000000
+13:34:23.690Z info  [hitmanrec.stamina-probe] sample game=1 step=2352 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3e
+13:34:23.690Z info  [hitmanrec.stamina-probe] sample game=1 step=2352 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=04
+13:34:23.690Z info  [hitmanrec.stamina-probe] sample game=1 step=2352 ai_candidate=7990 target_observation=lost
+13:34:23.690Z info  [hitmanrec.stamina-probe] sample game=1 step=2352 ai_enumerated=371 selected_ready=370 matched=3 query_truncated=0 cache_overflow=0
+13:34:23.957Z info  [hitmanrec.stamina-probe] sample game=1 step=2368 entity=1 stamina_status=0 current=99 maximum=138
+13:34:23.957Z info  [hitmanrec.stamina-probe] sample game=1 step=2368 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=f4ba19b80b000000
+13:34:23.957Z info  [hitmanrec.stamina-probe] sample game=1 step=2368 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:34:24.207Z info  [hitmanrec.stamina-probe] sample game=1 step=2383 entity=1 stamina_status=0 current=96 maximum=138
+13:34:24.207Z info  [hitmanrec.stamina-probe] sample game=1 step=2383 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=796d00c70b000000
+13:34:24.207Z info  [hitmanrec.stamina-probe] sample game=1 step=2383 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:24.474Z info  [hitmanrec.stamina-probe] sample game=1 step=2399 entity=1 stamina_status=0 current=93 maximum=138
+13:34:24.474Z info  [hitmanrec.stamina-probe] sample game=1 step=2399 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=2970e5d60b000000
+13:34:24.474Z info  [hitmanrec.stamina-probe] sample game=1 step=2399 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:24.739Z info  [hitmanrec.stamina-probe] sample game=1 step=2415 entity=1 stamina_status=0 current=91 maximum=138
+13:34:24.739Z info  [hitmanrec.stamina-probe] sample game=1 step=2415 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=d972cae60b000000
+13:34:24.739Z info  [hitmanrec.stamina-probe] sample game=1 step=2415 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:24.990Z info  [hitmanrec.stamina-probe] sample game=1 step=2430 entity=1 stamina_status=0 current=88 maximum=138
+13:34:24.990Z info  [hitmanrec.stamina-probe] sample game=1 step=2430 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=5e25b1f50b000000
+13:34:24.990Z info  [hitmanrec.stamina-probe] sample game=1 step=2430 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3e
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 players_status=0 players=1
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 entity=1 stamina_status=0 current=86 maximum=138
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=e3d797040c000000
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100800100001400
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=04
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=098cdb8f06000000
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=07
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=03
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 ai_candidate=7826 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 ai_candidate=7827 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 ai_candidate=7909 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 ai_enumerated=371 selected_ready=370 matched=3 query_truncated=0 cache_overflow=0
+13:34:25.241Z info  [hitmanrec.stamina-probe] sample game=1 step=2445 sprint_free_mask=0 ai_complete=1 skipped_sprint_adds=0
+13:34:25.507Z info  [hitmanrec.stamina-probe] sample game=1 step=2461 entity=1 stamina_status=0 current=83 maximum=138
+13:34:25.507Z info  [hitmanrec.stamina-probe] sample game=1 step=2461 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=93da7c140c000000
+13:34:25.507Z info  [hitmanrec.stamina-probe] sample game=1 step=2461 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:25.774Z info  [hitmanrec.stamina-probe] sample game=1 step=2477 entity=1 stamina_status=0 current=80 maximum=138
+13:34:25.774Z info  [hitmanrec.stamina-probe] sample game=1 step=2477 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=43dd61240c000000
+13:34:25.774Z info  [hitmanrec.stamina-probe] sample game=1 step=2477 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:26.040Z info  [hitmanrec.stamina-probe] sample game=1 step=2493 entity=1 stamina_status=0 current=78 maximum=138
+13:34:26.041Z info  [hitmanrec.stamina-probe] sample game=1 step=2493 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=f3df46340c000000
+13:34:26.041Z info  [hitmanrec.stamina-probe] sample game=1 step=2493 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:26.307Z info  [hitmanrec.stamina-probe] sample game=1 step=2509 entity=1 stamina_status=0 current=75 maximum=138
+13:34:26.307Z info  [hitmanrec.stamina-probe] sample game=1 step=2509 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=a3e22b440c000000
+13:34:26.307Z info  [hitmanrec.stamina-probe] sample game=1 step=2509 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:26.573Z info  [hitmanrec.stamina-probe] sample game=1 step=2525 entity=1 stamina_status=0 current=72 maximum=138
+13:34:26.573Z info  [hitmanrec.stamina-probe] sample game=1 step=2525 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=53e510540c000000
+13:34:26.573Z info  [hitmanrec.stamina-probe] sample game=1 step=2525 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:26.840Z info  [hitmanrec.stamina-probe] sample game=1 step=2541 entity=1 stamina_status=0 current=70 maximum=138
+13:34:26.840Z info  [hitmanrec.stamina-probe] sample game=1 step=2541 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=03e8f5630c000000
+13:34:26.840Z info  [hitmanrec.stamina-probe] sample game=1 step=2541 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:27.106Z info  [hitmanrec.stamina-probe] sample game=1 step=2557 entity=1 stamina_status=0 current=67 maximum=138
+13:34:27.106Z info  [hitmanrec.stamina-probe] sample game=1 step=2557 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=b3eada730c000000
+13:34:27.106Z info  [hitmanrec.stamina-probe] sample game=1 step=2557 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:27.357Z info  [hitmanrec.stamina-probe] sample game=1 step=2572 entity=1 stamina_status=0 current=65 maximum=138
+13:34:27.357Z info  [hitmanrec.stamina-probe] sample game=1 step=2572 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=389dc1820c000000
+13:34:27.357Z info  [hitmanrec.stamina-probe] sample game=1 step=2572 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:34:27.607Z info  [hitmanrec.stamina-probe] sample game=1 step=2587 entity=1 stamina_status=0 current=62 maximum=138
+13:34:27.607Z info  [hitmanrec.stamina-probe] sample game=1 step=2587 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=bd4fa8910c000000
+13:34:27.607Z info  [hitmanrec.stamina-probe] sample game=1 step=2587 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:27.873Z info  [hitmanrec.stamina-probe] sample game=1 step=2603 entity=1 stamina_status=0 current=61 maximum=138
+13:34:27.873Z info  [hitmanrec.stamina-probe] sample game=1 step=2603 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=6d528da10c000000
+13:34:27.873Z info  [hitmanrec.stamina-probe] sample game=1 step=2603 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:27.873Z info  [hitmanrec.stamina-probe] sample game=1 step=2603 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801700002400
+13:34:27.873Z info  [hitmanrec.stamina-probe] sample game=1 step=2603 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=00
+13:34:27.873Z info  [hitmanrec.stamina-probe] sample game=1 step=2603 ai_candidate=7908 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:28.123Z info  [hitmanrec.stamina-probe] sample game=1 step=2618 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=f20474b00c000000
+13:34:28.123Z info  [hitmanrec.stamina-probe] sample game=1 step=2618 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801b00002400
+13:34:28.390Z info  [hitmanrec.stamina-probe] sample game=1 step=2634 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=a20759c00c000000
+13:34:28.390Z info  [hitmanrec.stamina-probe] sample game=1 step=2634 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100800100001400
+13:34:28.390Z info  [hitmanrec.stamina-probe] sample game=1 step=2634 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:28.603Z info  [hitmanrec.stamina-probe] event game=1 after_step=2634 type=keen::ecs::HitEvent rootSourceId=921e0000 targetId=01000000 rootTargetId=01000000 sourceId=921e0000 weaponPideId=00000000 flags=00000000 healthChange=fcffffff staminaChange=00000000 damageTypes=0200 targetFaction=07 weaponCategory=00000000 attackCategory=01 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=a6a1d9dd0b000000 target_faction_component_status=0 faction_raw=07
+13:34:28.640Z info  [hitmanrec.stamina-probe] sample game=1 step=2649 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=27ba3fcf0c000000
+13:34:28.640Z info  [hitmanrec.stamina-probe] sample game=1 step=2649 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801700003400
+13:34:28.640Z info  [hitmanrec.stamina-probe] sample game=1 step=2649 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=0b
+13:34:28.640Z info  [hitmanrec.stamina-probe] sample game=1 step=2649 ai_candidate=7996 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=1
+13:34:28.641Z info  [hitmanrec.stamina-probe] sample game=1 step=2649 ai_enumerated=372 selected_ready=371 matched=5 query_truncated=0 cache_overflow=0
+13:34:28.907Z info  [hitmanrec.stamina-probe] sample game=1 step=2665 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=d7bc24df0c000000
+13:34:28.907Z info  [hitmanrec.stamina-probe] sample game=1 step=2665 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801b00003400
+13:34:28.908Z info  [hitmanrec.stamina-probe] sample game=1 step=2665 ai_candidate=7996 target_observation=lost
+13:34:28.908Z info  [hitmanrec.stamina-probe] sample game=1 step=2665 ai_enumerated=371 selected_ready=370 matched=4 query_truncated=0 cache_overflow=0
+13:34:29.174Z info  [hitmanrec.stamina-probe] sample game=1 step=2681 entity=1 stamina_status=0 current=62 maximum=138
+13:34:29.174Z info  [hitmanrec.stamina-probe] sample game=1 step=2681 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=87bf09ef0c000000
+13:34:29.174Z info  [hitmanrec.stamina-probe] sample game=1 step=2681 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801700003404
+13:34:29.440Z info  [hitmanrec.stamina-probe] sample game=1 step=2697 entity=1 stamina_status=0 current=64 maximum=138
+13:34:29.440Z info  [hitmanrec.stamina-probe] sample game=1 step=2697 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=37c2eefe0c000000
+13:34:29.440Z info  [hitmanrec.stamina-probe] sample game=1 step=2697 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801b00003400
+13:34:29.690Z info  [hitmanrec.stamina-probe] sample game=1 step=2712 entity=1 stamina_status=0 current=67 maximum=138
+13:34:29.690Z info  [hitmanrec.stamina-probe] sample game=1 step=2712 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=bc74d50d0d000000
+13:34:29.853Z info  [hitmanrec.stamina-probe] event game=1 after_step=2712 type=keen::ecs::HitEvent rootSourceId=e41e0000 targetId=01000000 rootTargetId=01000000 sourceId=e41e0000 weaponPideId=00000000 flags=00000000 healthChange=fcffffff staminaChange=00000000 damageTypes=0200 targetFaction=07 weaponCategory=00000000 attackCategory=01 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=3f1e5b280c000000 target_faction_component_status=0 faction_raw=07
+13:34:29.941Z info  [hitmanrec.stamina-probe] sample game=1 step=2727 entity=1 stamina_status=0 current=69 maximum=138
+13:34:29.941Z info  [hitmanrec.stamina-probe] sample game=1 step=2727 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=4127bc1c0d000000
+13:34:29.941Z info  [hitmanrec.stamina-probe] sample game=1 step=2727 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801700003400
+13:34:30.207Z info  [hitmanrec.stamina-probe] sample game=1 step=2743 entity=1 stamina_status=0 current=72 maximum=138
+13:34:30.207Z info  [hitmanrec.stamina-probe] sample game=1 step=2743 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=f129a12c0d000000
+13:34:30.207Z info  [hitmanrec.stamina-probe] sample game=1 step=2743 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801b00003400
+13:34:30.271Z info  [hitmanrec.stamina-probe] event game=1 after_step=2743 type=keen::ecs::HitEvent rootSourceId=01000000 targetId=01000000 rootTargetId=01000000 sourceId=811e0000 weaponPideId=00000000 flags=00400000 healthChange=10000000 staminaChange=00000000 damageTypes=0000 targetFaction=07 weaponCategory=00000000 attackCategory=04 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=72f230410c000000 target_faction_component_status=0 faction_raw=07
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 players_status=0 players=1
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 entity=1 stamina_status=0 current=75 maximum=138
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=76dc873b0d000000
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801b00003400
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=0b
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=098cdb8f06000000
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=07
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=03
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 ai_candidate=7826 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 ai_candidate=7827 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 ai_candidate=7908 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 ai_candidate=7909 player_slot_mask=1 primary_slot_mask=1 faction_status=0 faction_raw=06 enemy_component_status=0
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 ai_enumerated=371 selected_ready=370 matched=4 query_truncated=0 cache_overflow=0
+13:34:30.457Z info  [hitmanrec.stamina-probe] sample game=1 step=2758 sprint_free_mask=0 ai_complete=1 skipped_sprint_adds=0
+13:34:30.724Z info  [hitmanrec.stamina-probe] sample game=1 step=2774 entity=1 stamina_status=0 current=78 maximum=138
+13:34:30.724Z info  [hitmanrec.stamina-probe] sample game=1 step=2774 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=26df6c4b0d000000
+13:34:30.724Z info  [hitmanrec.stamina-probe] sample game=1 step=2774 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801700003404
+13:34:30.920Z info  [hitmanrec.stamina-probe] event game=1 after_step=2774 type=keen::ecs::HitEvent rootSourceId=01000000 targetId=e51e0000 rootTargetId=e51e0000 sourceId=01000000 weaponPideId=3b1e0000 flags=40200000 healthChange=b5ffffff staminaChange=00000000 damageTypes=0800 targetFaction=06 weaponCategory=569f0597 attackCategory=04 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=ff28ef670c000000 target_faction_component_status=0 faction_raw=06
+13:34:30.937Z info  [hitmanrec.stamina-probe] event game=1 after_step=2774 type=keen::ecs::EntityDiedEvent deadEntityId=e51e0000 timeStamp=0000000000000000
+13:34:30.937Z info  [hitmanrec.stamina-probe] event game=1 after_step=2774 type=keen::ecs::ResourceChangeEvent targetEntityId=01000000 staminaChange=0100000000000000 healthChange=0300000000000000 timeStamp=0000000000000000
+13:34:30.970Z info  [hitmanrec.stamina-probe] event game=1 after_step=2774 type=keen::ecs::ResourceChangeEvent targetEntityId=01000000 staminaChange=0000000000000000 healthChange=3200000000000000 timeStamp=0000000000000000
+13:34:30.988Z info  [hitmanrec.stamina-probe] event game=1 after_step=2774 type=keen::ecs::HitEvent rootSourceId=01000000 targetId=931e0000 rootTargetId=931e0000 sourceId=01000000 weaponPideId=3b1e0000 flags=60000000 healthChange=d0ffffff staminaChange=00000000 damageTypes=0800 targetFaction=06 weaponCategory=569f0597 attackCategory=04 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=ab69e86b0c000000 target_faction_component_status=0 faction_raw=06
+13:34:30.991Z info  [hitmanrec.stamina-probe] sample game=1 step=2790 entity=1 stamina_status=0 current=83 maximum=138
+13:34:30.991Z info  [hitmanrec.stamina-probe] sample game=1 step=2790 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=d6e1515b0d000000
+13:34:30.991Z info  [hitmanrec.stamina-probe] sample game=1 step=2790 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801b00003400
+13:34:30.991Z info  [hitmanrec.stamina-probe] sample game=1 step=2790 ai_candidate=7909 target_observation=lost
+13:34:31.004Z info  [hitmanrec.stamina-probe] event game=1 after_step=2790 type=keen::ecs::ResourceChangeEvent targetEntityId=01000000 staminaChange=0100000000000000 healthChange=0300000000000000 timeStamp=0000000000000000
+13:34:31.258Z info  [hitmanrec.stamina-probe] sample game=1 step=2806 entity=1 stamina_status=0 current=86 maximum=138
+13:34:31.258Z info  [hitmanrec.stamina-probe] sample game=1 step=2806 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=86e4366b0d000000
+13:34:31.258Z info  [hitmanrec.stamina-probe] sample game=1 step=2806 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100800100001400
+13:34:31.258Z info  [hitmanrec.stamina-probe] sample game=1 step=2806 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:31.523Z info  [hitmanrec.stamina-probe] sample game=1 step=2822 entity=1 stamina_status=0 current=89 maximum=138
+13:34:31.523Z info  [hitmanrec.stamina-probe] sample game=1 step=2822 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=36e71b7b0d000000
+13:34:31.773Z info  [hitmanrec.stamina-probe] sample game=1 step=2837 cost_trace_unmatched=1 dropped=0
+13:34:31.773Z info  [hitmanrec.stamina-probe] sample game=1 step=2837 entity=1 stamina_status=0 current=92 maximum=138
+13:34:31.773Z info  [hitmanrec.stamina-probe] sample game=1 step=2837 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=bb99028a0d000000
+13:34:32.024Z info  [hitmanrec.stamina-probe] sample game=1 step=2852 cost_trace entity=1 delta=-20 caller_return_rva=2243343 forwarded_unchanged=true
+13:34:32.024Z info  [hitmanrec.stamina-probe] sample game=1 step=2852 entity=1 stamina_status=0 current=72 maximum=138
+13:34:32.024Z info  [hitmanrec.stamina-probe] sample game=1 step=2852 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=404ce9980d000000
+13:34:32.024Z info  [hitmanrec.stamina-probe] sample game=1 step=2852 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=00
+13:34:32.024Z info  [hitmanrec.stamina-probe] sample game=1 step=2852 ai_candidate=8011 player_slot_mask=1 primary_slot_mask=0 faction_status=0 faction_raw=07 enemy_component_status=1
+13:34:32.024Z info  [hitmanrec.stamina-probe] sample game=1 step=2852 ai_enumerated=372 selected_ready=371 matched=4 query_truncated=0 cache_overflow=0
+13:34:32.274Z info  [hitmanrec.stamina-probe] sample game=1 step=2867 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=c5fecfa70d000000
+13:34:32.274Z info  [hitmanrec.stamina-probe] sample game=1 step=2867 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=07
+13:34:32.287Z info  [hitmanrec.stamina-probe] event game=1 after_step=2867 type=keen::ecs::HitEvent rootSourceId=01000000 targetId=01000000 rootTargetId=01000000 sourceId=811e0000 weaponPideId=00000000 flags=00400000 healthChange=10000000 staminaChange=00000000 damageTypes=0000 targetFaction=07 weaponCategory=00000000 attackCategory=04 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=c5d664b90c000000 target_faction_component_status=0 faction_raw=07
+13:34:32.539Z info  [hitmanrec.stamina-probe] sample game=1 step=2883 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=7501b5b70d000000
+13:34:32.539Z info  [hitmanrec.stamina-probe] sample game=1 step=2883 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801700003400
+13:34:32.539Z info  [hitmanrec.stamina-probe] sample game=1 step=2883 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=0b
+13:34:32.540Z info  [hitmanrec.stamina-probe] sample game=1 step=2883 ai_candidate=8011 target_observation=lost
+13:34:32.540Z info  [hitmanrec.stamina-probe] sample game=1 step=2883 ai_enumerated=371 selected_ready=370 matched=3 query_truncated=0 cache_overflow=0
+13:34:32.790Z info  [hitmanrec.stamina-probe] sample game=1 step=2898 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=fab39bc60d000000
+13:34:32.790Z info  [hitmanrec.stamina-probe] sample game=1 step=2898 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100801b00003400
+13:34:32.904Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::HitEvent rootSourceId=01000000 targetId=4e05648d rootTargetId=4e05648d sourceId=01000000 weaponPideId=3b1e0000 flags=00000000 healthChange=fbffffff staminaChange=00000000 damageTypes=0002 targetFaction=00 weaponCategory=569f0597 attackCategory=04 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=fc6c26de0c000000 target_faction_component_status=1
+13:34:32.937Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::HitEvent rootSourceId=01000000 targetId=931e0000 rootTargetId=931e0000 sourceId=01000000 weaponPideId=3b1e0000 flags=40200000 healthChange=99ffffff staminaChange=00000000 damageTypes=0800 targetFaction=06 weaponCategory=569f0597 attackCategory=04 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=520d23e00c000000 target_faction_component_status=0 faction_raw=06
+13:34:32.954Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::ResourceChangeEvent targetEntityId=01000000 staminaChange=0100000000000000 healthChange=0300000000000000 timeStamp=0000000000000000
+13:34:32.954Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::EntityDiedEvent deadEntityId=931e0000 timeStamp=0000000000000000
+13:34:32.987Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::ResourceChangeEvent targetEntityId=01000000 staminaChange=0000000000000000 healthChange=3200000000000000 timeStamp=0000000000000000
+13:34:33.004Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::HitEvent rootSourceId=01000000 targetId=e41e0000 rootTargetId=e41e0000 sourceId=01000000 weaponPideId=3b1e0000 flags=40200000 healthChange=81ffffff staminaChange=00000000 damageTypes=0800 targetFaction=06 weaponCategory=569f0597 attackCategory=04 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=fe4d1ce40c000000 target_faction_component_status=0 faction_raw=06
+13:34:33.004Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::HitEvent rootSourceId=01000000 targetId=921e0000 rootTargetId=921e0000 sourceId=01000000 weaponPideId=3b1e0000 flags=40200000 healthChange=7effffff staminaChange=00000000 damageTypes=0800 targetFaction=06 weaponCategory=569f0597 attackCategory=04 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=fe4d1ce40c000000 target_faction_component_status=0 faction_raw=06
+13:34:33.020Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::EntityDiedEvent deadEntityId=921e0000 timeStamp=0000000000000000
+13:34:33.020Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::EntityDiedEvent deadEntityId=e41e0000 timeStamp=0000000000000000
+13:34:33.020Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::HitEvent rootSourceId=01000000 targetId=8406648d rootTargetId=8406648d sourceId=01000000 weaponPideId=3b1e0000 flags=00200000 healthChange=fbffffff staminaChange=00000000 damageTypes=0002 targetFaction=00 weaponCategory=569f0597 attackCategory=04 hasMiningVolume=00 miningRemovedVolume=00000000 timeStamp=299e1ae50c000000 target_faction_component_status=1
+13:34:33.020Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::ResourceChangeEvent targetEntityId=01000000 staminaChange=0200000000000000 healthChange=0600000000000000 timeStamp=0000000000000000
+13:34:33.054Z info  [hitmanrec.stamina-probe] event game=1 after_step=2898 type=keen::ecs::ResourceChangeEvent targetEntityId=01000000 staminaChange=0000000000000000 healthChange=6400000000000000 timeStamp=0000000000000000
+13:34:33.057Z info  [hitmanrec.stamina-probe] sample game=1 step=2914 entity=1 stamina_status=0 current=75 maximum=138
+13:34:33.057Z info  [hitmanrec.stamina-probe] sample game=1 step=2914 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=29c685d30d000000
+13:34:33.057Z info  [hitmanrec.stamina-probe] sample game=1 step=2914 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100001a00003400
+13:34:33.057Z info  [hitmanrec.stamina-probe] sample game=1 step=2914 ai_candidate=7827 target_observation=lost
+13:34:33.057Z info  [hitmanrec.stamina-probe] sample game=1 step=2914 ai_candidate=7826 target_observation=lost
+13:34:33.057Z info  [hitmanrec.stamina-probe] sample game=1 step=2914 ai_candidate=7908 target_observation=lost
+13:34:33.057Z info  [hitmanrec.stamina-probe] sample game=1 step=2914 ai_enumerated=372 selected_ready=371 matched=0 query_truncated=0 cache_overflow=0
+13:34:33.324Z info  [hitmanrec.stamina-probe] sample game=1 step=2930 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000001400
+13:34:33.324Z info  [hitmanrec.stamina-probe] sample game=1 step=2930 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:33.857Z info  [hitmanrec.stamina-probe] sample game=1 step=2962 entity=1 stamina_status=0 current=76 maximum=138
+13:34:33.857Z info  [hitmanrec.stamina-probe] sample game=1 step=2962 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=babe2f060e000000
+13:34:33.857Z info  [hitmanrec.stamina-probe] sample game=1 step=2962 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:34:33.857Z info  [hitmanrec.stamina-probe] sample game=1 step=2962 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=04
+13:34:34.124Z info  [hitmanrec.stamina-probe] sample game=1 step=2978 entity=1 stamina_status=0 current=73 maximum=138
+13:34:34.124Z info  [hitmanrec.stamina-probe] sample game=1 step=2978 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=6ac114160e000000
+13:34:34.124Z info  [hitmanrec.stamina-probe] sample game=1 step=2978 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=0000003f
+13:34:34.391Z info  [hitmanrec.stamina-probe] sample game=1 step=2994 entity=1 stamina_status=0 current=70 maximum=138
+13:34:34.391Z info  [hitmanrec.stamina-probe] sample game=1 step=2994 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=1ac4f9250e000000
+13:34:34.391Z info  [hitmanrec.stamina-probe] sample game=1 step=2994 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3e
+13:34:34.659Z info  [hitmanrec.stamina-probe] sample game=1 step=3010 entity=1 stamina_status=0 current=68 maximum=138
+13:34:34.659Z info  [hitmanrec.stamina-probe] sample game=1 step=3010 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=cac6de350e000000
+13:34:34.659Z info  [hitmanrec.stamina-probe] sample game=1 step=3010 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:34:34.924Z info  [hitmanrec.stamina-probe] sample game=1 step=3026 entity=1 stamina_status=0 current=65 maximum=138
+13:34:34.924Z info  [hitmanrec.stamina-probe] sample game=1 step=3026 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=7ac9c3450e000000
+13:34:34.924Z info  [hitmanrec.stamina-probe] sample game=1 step=3026 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=0000003f
+13:34:35.190Z info  [hitmanrec.stamina-probe] sample game=1 step=3042 entity=1 stamina_status=0 current=62 maximum=138
+13:34:35.190Z info  [hitmanrec.stamina-probe] sample game=1 step=3042 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=2acca8550e000000
+13:34:35.190Z info  [hitmanrec.stamina-probe] sample game=1 step=3042 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3e
+13:34:35.442Z info  [hitmanrec.stamina-probe] sample game=1 step=3057 entity=1 stamina_status=0 current=60 maximum=138
+13:34:35.442Z info  [hitmanrec.stamina-probe] sample game=1 step=3057 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=af7e8f640e000000
+13:34:35.442Z info  [hitmanrec.stamina-probe] sample game=1 step=3057 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 players_status=0 players=1
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 entity=1 stamina_status=0 current=57 maximum=138
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=5f8174740e000000
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000001400
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=04
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=098cdb8f06000000
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=07
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=03
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 ai_enumerated=372 selected_ready=371 matched=0 query_truncated=0 cache_overflow=0
+13:34:35.707Z info  [hitmanrec.stamina-probe] sample game=1 step=3073 sprint_free_mask=0 ai_complete=1 skipped_sprint_adds=0
+13:34:35.974Z info  [hitmanrec.stamina-probe] sample game=1 step=3089 entity=1 stamina_status=0 current=54 maximum=138
+13:34:35.974Z info  [hitmanrec.stamina-probe] sample game=1 step=3089 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=0f8459840e000000
+13:34:35.974Z info  [hitmanrec.stamina-probe] sample game=1 step=3089 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:35.974Z info  [hitmanrec.stamina-probe] sample game=1 step=3089 ai_enumerated=371 selected_ready=370 matched=0 query_truncated=0 cache_overflow=0
+13:34:36.241Z info  [hitmanrec.stamina-probe] sample game=1 step=3105 entity=1 stamina_status=0 current=52 maximum=138
+13:34:36.241Z info  [hitmanrec.stamina-probe] sample game=1 step=3105 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=bf863e940e000000
+13:34:36.241Z info  [hitmanrec.stamina-probe] sample game=1 step=3105 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:36.241Z info  [hitmanrec.stamina-probe] sample game=1 step=3105 ai_enumerated=370 selected_ready=369 matched=0 query_truncated=0 cache_overflow=0
+13:34:36.507Z info  [hitmanrec.stamina-probe] sample game=1 step=3121 entity=1 stamina_status=0 current=49 maximum=138
+13:34:36.507Z info  [hitmanrec.stamina-probe] sample game=1 step=3121 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=6f8923a40e000000
+13:34:36.507Z info  [hitmanrec.stamina-probe] sample game=1 step=3121 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:36.774Z info  [hitmanrec.stamina-probe] sample game=1 step=3137 entity=1 stamina_status=0 current=46 maximum=138
+13:34:36.774Z info  [hitmanrec.stamina-probe] sample game=1 step=3137 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=1f8c08b40e000000
+13:34:36.774Z info  [hitmanrec.stamina-probe] sample game=1 step=3137 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:37.040Z info  [hitmanrec.stamina-probe] sample game=1 step=3153 entity=1 stamina_status=0 current=44 maximum=138
+13:34:37.040Z info  [hitmanrec.stamina-probe] sample game=1 step=3153 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=cf8eedc30e000000
+13:34:37.040Z info  [hitmanrec.stamina-probe] sample game=1 step=3153 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:37.291Z info  [hitmanrec.stamina-probe] sample game=1 step=3168 entity=1 stamina_status=0 current=41 maximum=138
+13:34:37.291Z info  [hitmanrec.stamina-probe] sample game=1 step=3168 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=5441d4d20e000000
+13:34:37.291Z info  [hitmanrec.stamina-probe] sample game=1 step=3168 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3e
+13:34:37.557Z info  [hitmanrec.stamina-probe] sample game=1 step=3184 entity=1 stamina_status=0 current=39 maximum=138
+13:34:37.557Z info  [hitmanrec.stamina-probe] sample game=1 step=3184 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=0444b9e20e000000
+13:34:37.557Z info  [hitmanrec.stamina-probe] sample game=1 step=3184 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:34:37.807Z info  [hitmanrec.stamina-probe] sample game=1 step=3199 entity=1 stamina_status=0 current=36 maximum=138
+13:34:37.807Z info  [hitmanrec.stamina-probe] sample game=1 step=3199 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=89f69ff10e000000
+13:34:37.807Z info  [hitmanrec.stamina-probe] sample game=1 step=3199 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:38.057Z info  [hitmanrec.stamina-probe] sample game=1 step=3214 entity=1 stamina_status=0 current=34 maximum=138
+13:34:38.057Z info  [hitmanrec.stamina-probe] sample game=1 step=3214 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=0ea986000f000000
+13:34:38.057Z info  [hitmanrec.stamina-probe] sample game=1 step=3214 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:34:38.057Z info  [hitmanrec.stamina-probe] sample game=1 step=3214 ai_enumerated=367 selected_ready=366 matched=0 query_truncated=0 cache_overflow=0
+13:34:38.323Z info  [hitmanrec.stamina-probe] sample game=1 step=3230 entity=1 stamina_status=0 current=31 maximum=138
+13:34:38.323Z info  [hitmanrec.stamina-probe] sample game=1 step=3230 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=beab6b100f000000
+13:34:38.323Z info  [hitmanrec.stamina-probe] sample game=1 step=3230 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=0000003f
+13:34:38.574Z info  [hitmanrec.stamina-probe] sample game=1 step=3245 entity=1 stamina_status=0 current=28 maximum=138
+13:34:38.574Z info  [hitmanrec.stamina-probe] sample game=1 step=3245 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=435e521f0f000000
+13:34:38.574Z info  [hitmanrec.stamina-probe] sample game=1 step=3245 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:38.840Z info  [hitmanrec.stamina-probe] sample game=1 step=3261 entity=1 stamina_status=0 current=26 maximum=138
+13:34:38.840Z info  [hitmanrec.stamina-probe] sample game=1 step=3261 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=f360372f0f000000
+13:34:38.840Z info  [hitmanrec.stamina-probe] sample game=1 step=3261 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:39.090Z info  [hitmanrec.stamina-probe] sample game=1 step=3276 entity=1 stamina_status=0 current=23 maximum=138
+13:34:39.090Z info  [hitmanrec.stamina-probe] sample game=1 step=3276 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=78131e3e0f000000
+13:34:39.090Z info  [hitmanrec.stamina-probe] sample game=1 step=3276 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3e
+13:34:39.357Z info  [hitmanrec.stamina-probe] sample game=1 step=3292 entity=1 stamina_status=0 current=21 maximum=138
+13:34:39.357Z info  [hitmanrec.stamina-probe] sample game=1 step=3292 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=2816034e0f000000
+13:34:39.357Z info  [hitmanrec.stamina-probe] sample game=1 step=3292 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:34:39.607Z info  [hitmanrec.stamina-probe] sample game=1 step=3307 entity=1 stamina_status=0 current=18 maximum=138
+13:34:39.607Z info  [hitmanrec.stamina-probe] sample game=1 step=3307 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=adc8e95c0f000000
+13:34:39.607Z info  [hitmanrec.stamina-probe] sample game=1 step=3307 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:39.858Z info  [hitmanrec.stamina-probe] sample game=1 step=3322 entity=1 stamina_status=0 current=16 maximum=138
+13:34:39.858Z info  [hitmanrec.stamina-probe] sample game=1 step=3322 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=327bd06b0f000000
+13:34:39.858Z info  [hitmanrec.stamina-probe] sample game=1 step=3322 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:34:40.124Z info  [hitmanrec.stamina-probe] sample game=1 step=3338 entity=1 stamina_status=0 current=13 maximum=138
+13:34:40.124Z info  [hitmanrec.stamina-probe] sample game=1 step=3338 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=e27db57b0f000000
+13:34:40.124Z info  [hitmanrec.stamina-probe] sample game=1 step=3338 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=0000003f
+13:34:40.391Z info  [hitmanrec.stamina-probe] sample game=1 step=3354 entity=1 stamina_status=0 current=10 maximum=138
+13:34:40.391Z info  [hitmanrec.stamina-probe] sample game=1 step=3354 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=92809a8b0f000000
+13:34:40.391Z info  [hitmanrec.stamina-probe] sample game=1 step=3354 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3e
+13:34:40.641Z info  [hitmanrec.stamina-probe] sample game=1 step=3369 entity=1 stamina_status=0 current=8 maximum=138
+13:34:40.641Z info  [hitmanrec.stamina-probe] sample game=1 step=3369 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=1733819a0f000000
+13:34:40.641Z info  [hitmanrec.stamina-probe] sample game=1 step=3369 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaa2a3f
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 players_status=0 players=1
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 entity=1 stamina_status=0 current=5 maximum=138
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=c73566aa0f000000
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=abaaaa3e
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000001400
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=04
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=098cdb8f06000000
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=07
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=03
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 ai_enumerated=367 selected_ready=366 matched=0 query_truncated=0 cache_overflow=0
+13:34:40.907Z info  [hitmanrec.stamina-probe] sample game=1 step=3385 sprint_free_mask=0 ai_complete=1 skipped_sprint_adds=0
+13:34:41.157Z info  [hitmanrec.stamina-probe] sample game=1 step=3400 entity=1 stamina_status=0 current=3 maximum=138
+13:34:41.157Z info  [hitmanrec.stamina-probe] sample game=1 step=3400 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=4ce84cb90f000000
+13:34:41.157Z info  [hitmanrec.stamina-probe] sample game=1 step=3400 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=5655553f
+13:34:41.424Z info  [hitmanrec.stamina-probe] sample game=1 step=3416 entity=1 stamina_status=0 current=0 maximum=138
+13:34:41.424Z info  [hitmanrec.stamina-probe] sample game=1 step=3416 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=fcea31c90f000000
+13:34:41.424Z info  [hitmanrec.stamina-probe] sample game=1 step=3416 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:41.424Z info  [hitmanrec.stamina-probe] sample game=1 step=3416 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=4100000000001400
+13:34:41.424Z info  [hitmanrec.stamina-probe] sample game=1 step=3416 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=03
+13:34:41.691Z info  [hitmanrec.stamina-probe] sample game=1 step=3432 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=aced16d90f000000
+13:34:41.957Z info  [hitmanrec.stamina-probe] sample game=1 step=3448 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=5cf0fbe80f000000
+13:34:42.223Z info  [hitmanrec.stamina-probe] sample game=1 step=3464 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=0cf3e0f80f000000
+13:34:42.474Z info  [hitmanrec.stamina-probe] sample game=1 step=3479 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=ba14d00210000000
+13:34:42.740Z info  [hitmanrec.stamina-probe] sample game=1 step=3495 entity=1 stamina_status=0 current=1 maximum=138
+13:34:42.740Z info  [hitmanrec.stamina-probe] sample game=1 step=3495 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000001400
+13:34:42.991Z info  [hitmanrec.stamina-probe] sample game=1 step=3510 entity=1 stamina_status=0 current=2 maximum=138
+13:34:43.241Z info  [hitmanrec.stamina-probe] sample game=1 step=3525 entity=1 stamina_status=0 current=4 maximum=138
+13:34:43.492Z info  [hitmanrec.stamina-probe] sample game=1 step=3540 entity=1 stamina_status=0 current=7 maximum=138
+13:34:43.492Z info  [hitmanrec.stamina-probe] sample game=1 step=3540 ai_enumerated=368 selected_ready=367 matched=0 query_truncated=0 cache_overflow=0
+13:34:43.742Z info  [hitmanrec.stamina-probe] sample game=1 step=3555 entity=1 stamina_status=0 current=9 maximum=138
+13:34:43.742Z info  [hitmanrec.stamina-probe] sample game=1 step=3555 ai_enumerated=386 selected_ready=385 matched=0 query_truncated=0 cache_overflow=0
+13:34:44.007Z info  [hitmanrec.stamina-probe] sample game=1 step=3571 entity=1 stamina_status=0 current=13 maximum=138
+13:34:44.007Z info  [hitmanrec.stamina-probe] sample game=1 step=3571 ai_enumerated=391 selected_ready=390 matched=0 query_truncated=0 cache_overflow=0
+13:34:44.258Z info  [hitmanrec.stamina-probe] sample game=1 step=3586 entity=1 stamina_status=0 current=15 maximum=138
+13:34:44.525Z info  [hitmanrec.stamina-probe] sample game=1 step=3602 entity=1 stamina_status=0 current=18 maximum=138
+13:34:44.791Z info  [hitmanrec.stamina-probe] sample game=1 step=3618 entity=1 stamina_status=0 current=21 maximum=138
+13:34:44.791Z info  [hitmanrec.stamina-probe] sample game=1 step=3618 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000000400
+13:34:44.791Z info  [hitmanrec.stamina-probe] sample game=1 step=3618 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=00
+13:34:45.058Z info  [hitmanrec.stamina-probe] sample game=1 step=3634 entity=1 stamina_status=0 current=24 maximum=138
+13:34:45.058Z info  [hitmanrec.stamina-probe] sample game=1 step=3634 ai_enumerated=390 selected_ready=389 matched=0 query_truncated=0 cache_overflow=0
+13:34:45.324Z info  [hitmanrec.stamina-probe] sample game=1 step=3650 entity=1 stamina_status=0 current=28 maximum=138
+13:34:45.574Z info  [hitmanrec.stamina-probe] sample game=1 step=3665 entity=1 stamina_status=0 current=30 maximum=138
+13:34:45.824Z info  [hitmanrec.stamina-probe] sample game=1 step=3680 entity=1 stamina_status=0 current=33 maximum=138
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 players_status=0 players=1
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 entity=1 stamina_status=0 current=36 maximum=138
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::CombatStance.combatStanceDuration status=0 raw_le=00286bee00000000
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::CombatStance.combatStanceEndTime status=0 raw_le=ba14d00210000000
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::ClientLocomotion.inCombatStance status=0 raw_le=01
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::ControlCombatTarget.targetId status=0 raw_le=00000000
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::StaminaDepletion.accumulatedValue status=0 raw_le=00000000
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::NetworkStamina.stamina status=1
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::Actor.currentState status=0 raw_le=0100000000000400
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::ActorInput.sequenceTriggerId status=0 raw_le=00000000
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::ActorInput.locomotionSpeed status=0 raw_le=00
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::ClientLocomotion.currentGait status=0 raw_le=00
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::DynamicLocomotion.state status=0 raw_le=00
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::DynamicLocomotion.jumpCount status=0 raw_le=00
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::DynamicLocomotion.lastJumpTime status=0 raw_le=098cdb8f06000000
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.primaryAnimationSet status=0 raw_le=07
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 slot=0 entity=1 keen::ecs::EquipmentAnimationSets.secondaryAnimationSet status=0 raw_le=03
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 ai_enumerated=390 selected_ready=389 matched=0 query_truncated=0 cache_overflow=0
+13:34:46.075Z info  [hitmanrec.stamina-probe] sample game=1 step=3695 sprint_free_mask=1 ai_complete=1 skipped_sprint_adds=0
+13:34:46.349Z info  [hitmanrec.stamina-probe] sample game=1 step=3708 players_status=0 players=0
+13:34:46.349Z info  [hitmanrec.stamina-probe] sample game=1 step=3708 ai_enumerated=387 selected_ready=387 matched=0 query_truncated=0 cache_overflow=0
