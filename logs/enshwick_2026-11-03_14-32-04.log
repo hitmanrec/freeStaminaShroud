@@ -1,0 +1,61 @@
+14:32:04.010Z info  [enshwick] Enshwick 1.0.0-alpha.11 starting on Wine 11.0, 28 logical processors
+14:32:04.010Z info  [enshwick] 106 powrprof.dll exports are missing on this system
+14:32:04.031Z info  [enshwick] 12658 types and 770 systems reflected
+14:32:04.089Z info  [enshwick] 9 of 9 attribute slots read from the game's data
+14:32:04.140Z info  [enshwick] engine routes read in 2 ms, found 720 entries in 48 ms
+14:32:04.140Z warn  [enshwick] game build e378da3d6079c049b30cd1604a0e7846/205 has no build table yet: 891 entries found by engine routes or their code patterns, 3 missing; features and mods that need a missing one stay off until a loader build carries its table (E1005, see https://enshwick.com/errors/e1005/)
+14:32:04.141Z warn  [enshwick] loader feature ui partly off: missing ui.no_construct, ui.scroll_state_size; the game runs it vanilla (E1005, see https://enshwick.com/errors/e1005/)
+14:32:04.158Z info  [enshwick] crash blame runs before the crash filter at 0x6ffffbcfb334, which another module set
+14:32:04.160Z info  [enshwick] hitmanrec.stamina-probe 0.4.3 initialised
+14:32:04.160Z info  [enshwick] 0 texts from mods
+14:32:04.161Z info  [enshwick] knowledge guard on: refusing what a vanilla client never asks for
+14:32:04.161Z info  [enshwick] game events: 4 subscriptions
+14:32:04.161Z info  [enshwick] chat lines on
+14:32:04.161Z info  [enshwick] own channel ready on game channel 14
+14:32:04.161Z info  [enshwick] interaction filters on
+14:32:04.161Z warn  [enshwick] scrolling on the Mods screen (lists page) off on build e378da3d6079c049b30cd1604a0e7846/205, carried table 1.0 client (26320373): ui.scroll_state_size is not found by the carried table's patterns
+14:32:04.161Z info  [enshwick] interface: 0 frame and 0 HUD callbacks from mods
+14:32:05.162Z info  [enshwick] arming 1001 ms after the loader started
+14:32:05.167Z info  [enshwick] 26 hook targets armed
+14:32:05.172Z info  [enshwick] ready: 1 of 1 mods running
+14:32:05.172Z info  [enshwick] join check: a player in the world has 30 s to say hello, then 10 s to read the note, where the world requires Enshwick
+14:32:06.522Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world0, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world0.ksd
+14:32:06.522Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world1, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world1.ksd
+14:32:06.522Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world2, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world2.ksd
+14:32:06.522Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world3, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world3.ksd
+14:32:06.522Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world4, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world4.ksd
+14:32:06.522Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world5, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world5.ksd
+14:32:06.522Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world6, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world6.ksd
+14:32:06.522Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world7, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world7.ksd
+14:32:06.522Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world8, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world8.ksd
+14:32:06.522Z info  [enshwick] world key C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world9, from C:/users/steamuser/Saved Games/keen games/Enshrouded/default/world9.ksd
+14:32:06.522Z info  [enshwick] world key world0, from world0.ksd
+14:32:06.557Z info  [enshwick] world key world1, from world1.ksd
+14:32:06.613Z info  [enshwick] world key world2, from world2.ksd
+14:32:06.613Z info  [enshwick] world key world3, from world3.ksd
+14:32:06.613Z info  [enshwick] world key world4, from world4.ksd
+14:32:06.613Z info  [enshwick] world key world5, from world5.ksd
+14:32:06.613Z info  [enshwick] world key world6, from world6.ksd
+14:32:06.613Z info  [enshwick] world key world7, from world7.ksd
+14:32:06.613Z info  [enshwick] world key world8, from world8.ksd
+14:32:06.613Z info  [enshwick] world key world9, from world9.ksd
+14:32:17.071Z info  [enshwick] this client hosts a game on thread 1056: server mods act
+14:32:17.071Z info  [enshwick] survivors: CurrentTransform is component type 133, NpcCommon 401
+14:32:28.533Z info  [enshwick] world settings: world world0
+14:32:28.533Z info  [enshwick] since this world last loaded: game 1.0 client (26320373) -> build e378da3d6079c049b30cd1604a0e7846/205, carried table 1.0 client (26320373)
+14:32:28.533Z info  [enshwick] since this world last loaded: hitmanrec.stamina-probe 0.4.2 -> 0.4.3
+14:32:28.590Z info  [enshwick] this client hosts a game on thread 1056: server mods act
+14:32:28.835Z info  [enshwick] hosted games: lobby 109775243342186070 names Enshwick, mods 
+14:32:28.896Z info  [enshwick] own channel: the session takes 1148 bytes a packet, 8192 and 16384 for long messages
+14:32:28.896Z info  [enshwick] own channel: socket open for a39c0ec6346e0ebc
+14:32:29.031Z info  [enshwick] join check: the host is a39c0ec6346e0ebc
+14:32:29.031Z info  [enshwick] mod messages: the client of a39c0ec6346e0ebc said hello
+14:32:29.070Z info  [enshwick] mod messages: the server answered
+14:32:55.900Z info  [enshwick] own channel: the session takes 1148 bytes a packet, 8192 and 16384 for long messages
+14:32:55.900Z info  [enshwick] own channel: socket open for 80c3dfe5559dd43b
+14:33:08.798Z info  [enshwick] knowledge guard: refused id 0xf5124d89 (kind 0, value 1, scope 0) asked for by player 1, reason 3
+14:33:31.402Z info  [enshwick] own channel: the session takes 1148 bytes a packet, 8192 and 16384 for long messages
+14:33:31.402Z info  [enshwick] own channel: socket open for b9d7f9504bdc8ea8
+14:33:32.049Z info  [enshwick] knowledge guard: refused id 0xf5124d89 (kind 0, value 1, scope 0) asked for by player 2, reason 3
+14:33:46.350Z info  [enshwick] knowledge guard: refused id 0xf5124d89 (kind 0, value 1, scope 0) asked for by player 3, reason 3
+14:34:52.425Z info  [enshwick] the hosted game stopped; server mods rest until the next
