@@ -3,8 +3,11 @@
 ## Current deliverable
 
 The portable C++17 stamina policy and its executable tests are implemented.
-There is no Enshrouded loader integration or installable mod yet. Policy tests
-do not demonstrate that game hooks or multiplayer replication work.
+A separate read-only Enshwick C diagnostic DLL now logs per-player combat
+candidates. See [Arch/Proton instructions](arch-proton.md) for building and
+installing it. It does not apply the stamina policy or install game hooks.
+Neither policy tests nor fake-host tests demonstrate live game behavior or
+multiplayer replication.
 
 Run `sh scripts/test.sh` from the repository, or invoke it by absolute path.
 It needs a C++17 compiler and no downloaded dependencies. Build outputs stay

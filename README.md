@@ -4,6 +4,14 @@ An Enshrouded mod in development: free sprinting and jumping outside combat,
 plus free axe tree-cutting and pickaxe ore-mining regardless of combat. Enemy
 attacks retain their normal stamina costs.
 
-Development has started with a portable, tested stamina policy. There is no
-installable game mod yet. See [the implementation notes](docs/implementation.md)
-for the current rules, build command, and remaining game integration work.
+The repository includes a portable stamina policy and an Enshwick diagnostic
+mod that logs combat-state candidates without changing stamina. The stamina
+gameplay mod is not implemented yet; the diagnostic DLL still needs in-game
+validation.
+
+- [Сборка и установка диагностики на Arch Linux / Proton](docs/arch-proton.md)
+- [Исследование API и существующих модов](docs/research.md)
+- [Stamina rules and integration plan](docs/implementation.md)
+
+Run all local checks with `sh scripts/test-all.sh`. Build the Windows diagnostic
+DLL on Linux with `sh scripts/build-probe.sh` (requires Zig and a native C compiler).

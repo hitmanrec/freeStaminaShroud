@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+repo_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+mkdir -p "$repo_dir/.build"
+"${CC:-cc}" -std=c11 -Wall -Wextra -Werror -pedantic \
+    -I "$repo_dir/third_party/enshwick" "$repo_dir/tests/probe_test.c" \
+    -o "$repo_dir/.build/probe_test"
+"$repo_dir/.build/probe_test"
