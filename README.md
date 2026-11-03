@@ -10,6 +10,7 @@ gameplay mod is not implemented yet; the diagnostic DLL still needs in-game
 validation.
 
 - [Сборка и установка диагностики на Arch Linux / Proton](docs/arch-proton.md)
+- [Одиночный сценарий и метки действий для диагностики 0.2.0](docs/solo-diagnostics.md)
 - [Исследование API и существующих модов](docs/research.md)
 - [Stamina rules and integration plan](docs/implementation.md)
 

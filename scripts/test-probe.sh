@@ -6,3 +6,7 @@ mkdir -p "$repo_dir/.build"
     -I "$repo_dir/third_party/enshwick" "$repo_dir/tests/probe_test.c" \
     -o "$repo_dir/.build/probe_test"
 "$repo_dir/.build/probe_test"
+"${CC:-cc}" -std=c11 -Wall -Wextra -Werror -pedantic \
+    -I "$repo_dir/third_party/enshwick" "$repo_dir/tests/diagnostics_test.c" \
+    -o "$repo_dir/.build/diagnostics_test"
+"$repo_dir/.build/diagnostics_test"

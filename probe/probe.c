@@ -3,13 +3,13 @@
 
 #define HEADER(T) {sizeof(T), ENSHWICK_ABI_MAJOR, ENSHWICK_ABI_MINOR}
 #define PLAYERS 16
-#define FIELD_COUNT 6
+#define FIELD_COUNT 15
 #define PERIOD_NS UINT64_C(250000000)
 
 static const EnshwickManifest manifest = {
     .header = HEADER(EnshwickManifest),
     .id = ENSHWICK_STR_INIT("hitmanrec.stamina-probe"),
-    .version = ENSHWICK_STR_INIT("0.1.0"),
+    .version = ENSHWICK_STR_INIT("0.2.0"),
     .side = EnshwickSide_SERVER,
     .name = ENSHWICK_STR_INIT("Stamina Combat Probe"),
     .description = ENSHWICK_STR_INIT("Read-only combat candidates; does not change stamina."),
@@ -33,6 +33,15 @@ static Field fields[FIELD_COUNT] = {
     {"keen::ecs::ControlCombatTarget", "targetId", 4, 0, 0, 0, 0},
     {"keen::ecs::StaminaDepletion", "accumulatedValue", 4, 0, 0, 0, 0},
     {"keen::ecs::NetworkStamina", "stamina", 2, 0, 0, 0, 0},
+    {"keen::ecs::Actor", "currentState", 8, 0, 0, 0, 0},
+    {"keen::ecs::ActorInput", "sequenceTriggerId", 4, 0, 0, 0, 0},
+    {"keen::ecs::ActorInput", "locomotionSpeed", 1, 0, 0, 0, 0},
+    {"keen::ecs::ClientLocomotion", "currentGait", 1, 0, 0, 0, 0},
+    {"keen::ecs::DynamicLocomotion", "state", 1, 0, 0, 0, 0},
+    {"keen::ecs::DynamicLocomotion", "jumpCount", 1, 0, 0, 0, 0},
+    {"keen::ecs::DynamicLocomotion", "lastJumpTime", 8, 0, 0, 0, 0},
+    {"keen::ecs::EquipmentAnimationSets", "primaryAnimationSet", 1, 0, 0, 0, 0},
+    {"keen::ecs::EquipmentAnimationSets", "secondaryAnimationSet", 1, 0, 0, 0, 0},
 };
 typedef struct {
     EnshwickEntity entity;
@@ -81,6 +90,8 @@ static void prefix(Line *l, const EnshwickTickData *tick) {
     text(l, " step="); number(l, tick->step);
 }
 
+#include "diagnostics.h"
+
 static void tick(EnshwickEvent event, const void *data, void *user) {
     (void)user;
     if (event != EnshwickEvent_TICKED || !data) return;
@@ -88,9 +99,11 @@ static void tick(EnshwickEvent event, const void *data, void *user) {
     if (t->header.size < sizeof(*t) || t->header.abi_major != ENSHWICK_ABI_MAJOR) return;
     if (game != t->game) {
         clear_cache(); game = t->game; samples = 0;
+        reset_diagnostics();
         previous_status = previous_count = UINT32_MAX;
     }
     const int heartbeat = (++samples % 20 == 1);
+    event_window();
     EnshwickPlayerInfo players[PLAYERS];
     for (unsigned p = 0; p < PLAYERS; ++p) {
         players[p].header = (EnshwickHeader)HEADER(EnshwickPlayerInfo);
@@ -115,6 +128,7 @@ static void tick(EnshwickEvent event, const void *data, void *user) {
             c->entity = player->entity;
             for (unsigned f = 0; f < FIELD_COUNT; ++f) c->known[f] = 0;
         }
+        sample_stamina(t, player->slot, player->entity, heartbeat);
         for (unsigned f = 0; f < FIELD_COUNT; ++f) {
             Field *field = &fields[f];
             if (!field->available) continue;
@@ -146,9 +160,11 @@ static void tick(EnshwickEvent event, const void *data, void *user) {
                 for (unsigned b = 0; b < field->width; ++b) c->bytes[f][b] = value[b];
         }
     }
+    sample_targets(t, players, count, heartbeat);
     for (unsigned p = 0; p < PLAYERS; ++p)
         if (!cache[p].seen) {
             cache[p].entity = 0;
+            stamina_cache[p].known = 0;
             for (unsigned f = 0; f < FIELD_COUNT; ++f) cache[p].known[f] = 0;
         }
 }
@@ -166,7 +182,7 @@ EnshwickStatus enshwick_mod_init(const EnshwickHostApi *host, EnshwickModHandle 
     EnshwickBuildInfo build = {.header = HEADER(EnshwickBuildInfo)};
     api->build(&build);
     Line l = {{0}, 0};
-    text(&l, "probe=0.1.0 read_only=true loader=");
+    text(&l, "probe=0.2.0 read_only=true loader=");
     for (size_t i = 0; i < host->host_version.len && l.used < sizeof(l.text); ++i)
         l.text[l.used++] = (char)host->host_version.ptr[i];
     text(&l, " binary_side="); number(&l, build.side);
@@ -192,6 +208,7 @@ EnshwickStatus enshwick_mod_init(const EnshwickHostApi *host, EnshwickModHandle 
         }
         emit(&line);
     }
+    init_diagnostics();
     EnshwickTickHandle handle = 0;
     return api->subscribe_tick(self, PERIOD_NS, tick, 0, &handle);
 }

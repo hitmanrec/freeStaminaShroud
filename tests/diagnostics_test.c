@@ -1,0 +1,157 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "../probe/probe.c"
+
+static unsigned checks, calls;
+static char logs[262144];
+static size_t used;
+static EnshwickHostApi fake;
+static EnshwickEventFn callback;
+static EnshwickGameEventFn event_callbacks[EVENT_COUNT];
+static void *event_users[EVENT_COUNT];
+static uint8_t stamina[40], selected[128], faction_value = 6;
+static uint32_t ai_total = 1;
+static EnshwickStatus ai_status = EnshwickStatus_OK;
+static int invalid_constant;
+#define CHECK(x) do { ++checks; if (!(x)) { fprintf(stderr,"FAIL %d: %s\n",__LINE__,#x); exit(1); } } while (0)
+static int eq(EnshwickStr a, const char *b) { return a.len == strlen(b) && memcmp(a.ptr,b,a.len)==0; }
+static void put(uint8_t *p, uint64_t n, unsigned width) { for(unsigned i=0;i<width;++i)p[i]=(uint8_t)(n>>(8*i)); }
+static void log_line(EnshwickModHandle me, EnshwickLevel level, EnshwickStr message) {
+    (void)me;(void)level; CHECK(used + message.len + 2 < sizeof(logs));
+    memcpy(logs+used,message.ptr,message.len);used+=message.len;logs[used++]='\n';logs[used]=0;++calls;
+}
+static void build(EnshwickBuildInfo *out) { out->side=EnshwickSide_CLIENT; }
+static EnshwickStatus hash(EnshwickStr name,uint32_t *out) {
+    if(eq(name,"keen::ecs::Stamina"))*out=10;
+    else if(eq(name,"keen::ecs::Faction"))*out=11;
+    else if(eq(name,"keen::ecs::SelectedTargets"))*out=12;
+    else if(eq(name,"keen::ecs::Enemy01BehaviorState"))*out=13;
+    else return EnshwickStatus_MISSING;
+    return EnshwickStatus_OK;
+}
+static EnshwickStatus type_size(EnshwickStr name,uint32_t *out) {
+    if(eq(name,"keen::ecs::Stamina"))*out=40;
+    else if(eq(name,"keen::ecs::Faction"))*out=1;
+    else if(eq(name,"keen::ecs::SelectedTargets"))*out=128;
+    else if(eq(name,"keen::ecs::TargetInfo"))*out=8;
+    else {
+        for(unsigned i=0;i<EVENT_COUNT;++i)if(eq(name,events[i].name)){*out=256;return EnshwickStatus_OK;}
+        return EnshwickStatus_MISSING;
+    }
+    return EnshwickStatus_OK;
+}
+static EnshwickStatus offset(EnshwickStr type,EnshwickStr field,uint64_t *out) {
+    if(eq(type,"keen::ecs::Faction") && eq(field,"faction"))*out=0;
+    else if(eq(type,"keen::ecs::SelectedTargets") && eq(field,"targets"))*out=0;
+    else if(eq(type,"keen::ecs::TargetInfo") && eq(field,"targetEntityId"))*out=0;
+    else if(eq(type,"keen::ecs::TargetInfo") && eq(field,"targetRootEntityId"))*out=4;
+    else {
+        for(unsigned i=0;i<EVENT_COUNT;++i)if(eq(type,events[i].name)) {
+            uint64_t position=0;
+            for(unsigned j=0;j<16 && events[i].fields[j].name;++j) {
+                if(eq(field,events[i].fields[j].name)){*out=position;return EnshwickStatus_OK;}
+                position+=events[i].fields[j].width;
+            }
+        }
+        return EnshwickStatus_MISSING;
+    }
+    return EnshwickStatus_OK;
+}
+static EnshwickStatus constant(EnshwickModHandle me,EnshwickStr name,uint64_t *out) {
+    (void)me;
+    if(eq(name,"ecs.level_data_offset"))*out=invalid_constant?UINT64_MAX:4;
+    else if(eq(name,"ecs.level_flags"))*out=6;
+    else if(eq(name,"ecs.attribute_count"))*out=7;
+    else if(eq(name,"attribute.stamina"))*out=0x04b6aa8b;
+    else if(eq(name,"attribute.stamina_max_slot"))*out=2;
+    else return EnshwickStatus_MISSING;
+    return EnshwickStatus_OK;
+}
+static EnshwickStatus component(EnshwickModHandle me,EnshwickEntity entity,uint32_t type,const void **out) {
+    (void)me;
+    if(type==10 && entity==1)*out=stamina;
+    else if(type==12 && entity==100)*out=selected;
+    else if(type==11 && entity==100)*out=&faction_value;
+    else return EnshwickStatus_MISSING;
+    return EnshwickStatus_OK;
+}
+static EnshwickStatus player(EnshwickModHandle me,EnshwickEntity entity,EnshwickPlayerInfo *out) {
+    (void)me;if(entity!=1)return EnshwickStatus_MISSING;
+    out->entity=1;out->slot=0;return EnshwickStatus_OK;
+}
+static EnshwickStatus players(EnshwickModHandle me,EnshwickPlayerInfo *out,uint32_t capacity,uint32_t *count) {
+    (void)me;CHECK(capacity>0);*count=1;out[0].entity=1;out[0].slot=0;return EnshwickStatus_OK;
+}
+static EnshwickStatus entities(EnshwickModHandle me,uint32_t type,EnshwickEntityPlace *out,uint32_t capacity,uint32_t *count) {
+    (void)me;CHECK(type==12);CHECK(capacity==AI_LIMIT);*count=ai_total;
+    for(unsigned i=0;i<ai_total && i<capacity;++i)out[i].entity=i+100;
+    return ai_status;
+}
+static EnshwickStatus subscribe(EnshwickModHandle me,uint64_t period,EnshwickEventFn fn,void *user,EnshwickTickHandle *out) {
+    (void)me;(void)user;CHECK(period==PERIOD_NS);callback=fn;*out=1;return EnshwickStatus_OK;
+}
+static EnshwickStatus event_catalog(EnshwickModHandle me,EnshwickEventTypeInfo *out,uint32_t capacity,uint32_t *count) {
+    (void)me;CHECK(capacity>=EVENT_COUNT);*count=EVENT_COUNT;
+    for(unsigned i=0;i<EVENT_COUNT;++i){out[i].name=str(events[i].name);out[i].hash=1000+i;out[i].size=256;}
+    return EnshwickStatus_OK;
+}
+static EnshwickStatus subscribe_event(EnshwickModHandle me,uint32_t hash_value,EnshwickGameEventFn fn,void *user) {
+    (void)me;CHECK(hash_value>=1000 && hash_value<1000+EVENT_COUNT);
+    event_callbacks[hash_value-1000]=fn;event_users[hash_value-1000]=user;return EnshwickStatus_OK;
+}
+static void sample(uint64_t world,uint64_t step) {
+    EnshwickTickData t={.header=HEADER(EnshwickTickData),.game=world,.step=step};callback(EnshwickEvent_TICKED,&t,0);
+}
+int main(void) {
+    CHECK(same_name(str("HitEvent"), "keen::ecs::HitEvent"));
+    CHECK(same_name(str("ecs::HitEvent"), "keen::ecs::HitEvent"));
+    CHECK(!same_name(str("OtherEvent"), "keen::ecs::HitEvent"));
+    fake.header=(EnshwickHeader)HEADER(EnshwickHostApi);
+    fake.log=log_line;fake.build=build;fake.type_hash=hash;fake.type_size=type_size;
+    fake.field_offset=offset;fake.constant=constant;fake.component=component;
+    fake.players=players;fake.player=player;fake.entities=entities;fake.subscribe_tick=subscribe;
+    fake.event_types=event_catalog;fake.game_event=subscribe_event;
+    put(stamina,0x04b6aa8b,4);put(stamina+4,8,2);stamina[6]=1;stamina[7]=8;
+    put(stamina+8,100,4);put(stamina+16,120,4);put(selected,1,4);
+    CHECK(enshwick_mod_init(&fake,1)==EnshwickStatus_OK);
+    CHECK(stamina_layout.available && ai_available);
+    for(unsigned i=0;i<EVENT_COUNT;++i)CHECK(event_callbacks[i]!=0);
+    sample(1,1);
+    CHECK(strstr(logs,"stamina_status=0 current=100 maximum=120")!=0);
+    CHECK(strstr(logs,"ai_candidate=100 player_slot_mask=1 primary_slot_mask=1")!=0);
+    put(stamina+8,90,4);sample(1,2);
+    CHECK(strstr(logs,"stamina_status=0 current=90 maximum=120")!=0);
+    uint32_t current=0,maximum=0;
+    put(stamina+4,39,2);CHECK(read_stamina(1,&current,&maximum)==EnshwickStatus_BAD_ARGS);
+    put(stamina+4,8,2);stamina[6]=0;CHECK(read_stamina(1,&current,&maximum)==EnshwickStatus_NOT_LOADED);stamina[6]=1;
+    // A failed enumeration must not claim a previously observed target was lost.
+    ai_status=EnshwickStatus_MISSING;unsigned before=calls;sample(1,3);CHECK(calls==before);
+    ai_status=EnshwickStatus_OK;put(selected,0,4);sample(1,4);
+    CHECK(strstr(logs,"ai_candidate=100 target_observation=lost")!=0);
+    ai_total=AI_LIMIT+1;sample(1,5);CHECK(strstr(logs,"query_truncated=1")!=0);ai_total=1;
+    uint8_t hit[256]={0};
+    put(hit+events[0].fields[0].offset,1,4);
+    put(hit+events[0].fields[1].offset,100,4);put(hit+events[0].fields[2].offset,100,4);
+    EnshwickGameEventData event={.header=HEADER(EnshwickGameEventData),.type_hash=1000,.size=256,.data=hit};
+    event_callbacks[0](&event,event_users[0]);
+    CHECK(strstr(logs,"type=keen::ecs::HitEvent rootSourceId=01000000")!=0);
+    CHECK(strstr(logs,"target_faction_component_status=0 faction_raw=06")!=0);
+    // Ignore unrelated hits. A wrong-sized event never reaches field reads.
+    put(hit+events[0].fields[0].offset,200,4);before=calls;
+    event_callbacks[0](&event,event_users[0]);CHECK(calls==before);
+    put(hit+events[0].fields[0].offset,1,4);event.size=1;
+    event_callbacks[0](&event,event_users[0]);CHECK(strstr(logs,"event_size_mismatch status=4")!=0);event.size=256;
+    // Optional fields outside the event buffer are not dereferenced.
+    uint64_t saved=events[0].fields[4].offset;events[0].fields[4].offset=UINT64_MAX;
+    event_callbacks[0](&event,event_users[0]);CHECK(strstr(logs,"weaponPideId=unavailable")!=0);events[0].fields[4].offset=saved;
+    event_window();
+    for(unsigned i=0;i<EVENT_LIMIT+3;++i)event_callbacks[0](&event,event_users[0]);
+    CHECK(event_dropped==3);event_window();CHECK(strstr(logs,"event_rate_limit dropped=3")!=0);
+    sample(2,1);CHECK(game==2 && samples==1);
+    invalid_constant=1;init_stamina();CHECK(!stamina_layout.available);
+    CHECK(strstr(logs,"stamina_schema status=4")!=0);
+    CHECK(little(stamina+8,4)==90); // Diagnostics did not alter the meter.
+    printf("Extended diagnostics tests: %u checks passed\n",checks);
+    return 0;
+}
