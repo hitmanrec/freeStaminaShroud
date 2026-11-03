@@ -75,9 +75,14 @@ int main(void){
     invoke(&meters[1],-4,COST_ROOT,TOOL_RETURN,0,ACTION_FREE_TOOL);CHECK(meters[1]==100);
     // Switch to a two-handed combat weapon between ticks: classify live item,
     // not old animation or old equipment snapshot.
-    put32(slots[0]+176,102);invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_ITEM);
-    put32(slots[0]+176,101);animations[0]=7;invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_ITEM);
-    animations[0]=4;fail_info=1;invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_ITEM);fail_info=0;
+    put32(slots[0]+176,102);invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_ITEM_CATEGORY);
+    put32(slots[0]+176,101);animations[0]=7;invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_ITEM_ANIMATION);
+    animations[0]=4;fail_info=1;invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_ITEM_LOOKUP);fail_info=0;
+    put32(slots[0]+176,REVIEWED_PICKAXE);animations[0]=7;fail_info=1;
+    invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,0,ACTION_FREE_TOOL);
+    put32(slots[0]+176,REVIEWED_PICKAXE+1);
+    invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_ITEM_LOOKUP);
+    put32(slots[0]+176,101);animations[0]=4;fail_info=0;
     // Neither delta size nor an unknown caller/root grants free stamina.
     invoke(&meters[0],-3,COST_ROOT,0x1234,-3,ACTION_UNKNOWN);
     invoke(&meters[0],-3,123,TOOL_RETURN,-3,ACTION_UNKNOWN);
@@ -108,5 +113,25 @@ int main(void){
     fail_component=1;invoke(&meters[1],-10,COST_ROOT,JUMP_RETURN,-10,ACTION_PLAYER);fail_component=0;
     actions_ready=0;invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_UNKNOWN);actions_ready=1;
     reset_actions();invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_THREAD);
+    // Climb diagnostics bracket the original accumulation without modifying
+    // any saved register or calling the ECS from the mid-function callbacks.
+    reset_climb_trace();climb_trace_ready=1;sprint_test_time=100;
+    float accumulator=0.25f;
+    atomic_store(&sprint_players[0].pointer,(uintptr_t)&accumulator);
+    atomic_store(&sprint_players[0].lease,450);
+    EnshwickRegisters registers={.rax=(uintptr_t)&accumulator,.rbx=123,.rflags=0x202};
+    EnshwickRegisters saved=registers;reads=component_reads;
+    climb_measure(&registers,0);accumulator+=0.5f;climb_measure(&registers,(void *)(uintptr_t)1);
+    CHECK(!memcmp(&saved,&registers,sizeof(saved)));CHECK(component_reads==reads);
+    CHECK(atomic_load(&climb_trace[0].samples)==1 && atomic_load(&climb_trace[0].changed)==1);
+    CHECK(accumulator==0.75f && atomic_load(&climb_trace[0].owner_thread)==0);
+    climb_measure(&registers,0);climb_measure(&registers,(void *)(uintptr_t)1);
+    CHECK(atomic_load(&climb_trace[0].samples)==2 && atomic_load(&climb_trace[0].changed)==1);
+    climb_measure(&registers,0);climb_measure(&registers,0);
+    CHECK(atomic_load(&climb_trace[0].dropped)==1);
+    climb_measure(&registers,(void *)(uintptr_t)1);
+    sprint_test_time=451;climb_measure(&registers,0);
+    CHECK(atomic_load(&climb_trace[0].owner_thread)==0);
+    reset_climb_trace();CHECK(atomic_load(&climb_trace[0].samples)==0);
     printf("Direct action cost tests: %u checks passed\n",checks);return 0;
 }

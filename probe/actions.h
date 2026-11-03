@@ -3,7 +3,11 @@
 #define TOOL_RETURN UINT64_C(0x223b0f)
 #define JUMP_RETURN UINT64_C(0x2c97f9)
 enum { ACTION_UNKNOWN, ACTION_FREE_TOOL, ACTION_FREE_JUMP, ACTION_THREAD,
-       ACTION_PLAYER, ACTION_STALE, ACTION_ITEM, ACTION_COMBAT, ACTION_JUMP_TYPE };
+       ACTION_PLAYER, ACTION_STALE, ACTION_ITEM, ACTION_COMBAT, ACTION_JUMP_TYPE,
+       ACTION_ITEM_LOOKUP, ACTION_ITEM_CATEGORY, ACTION_ITEM_ANIMATION };
+// Stable item resource id, NOT the session weapon PIDE. Identified by repeated
+// mining HitEvents and same-actor cost records in the user's /205 sessions.
+#define REVIEWED_PICKAXE UINT32_C(2671192505)
 typedef struct { _Atomic(uintptr_t) attribute; _Atomic(uint32_t) entity; } ActionPlayer;
 static ActionPlayer action_players[PLAYERS];
 static _Atomic(uint32_t) action_thread;
@@ -64,14 +68,17 @@ static int32_t action_delta(void *attribute,int32_t delta,uint64_t caller,uint32
         *reason=ACTION_FREE_JUMP;return 0;
     }
     *reason=ACTION_ITEM;
-    if(!action_slot.available || !action_item_id.available || !api->item_info || !fields[13].available)return delta;
+    if(!action_slot.available || !action_item_id.available)return delta;
     if(api->component(self,entity,action_slot.hash,&live)!=EnshwickStatus_OK || !live)return delta;
     uint32_t item=(uint32_t)little((const uint8_t *)live+action_slot.offset+action_item_id.offset,4);
     *detail=item;
+    if(item==REVIEWED_PICKAXE){*reason=ACTION_FREE_TOOL;return 0;}
+    if(!api->item_info || !fields[13].available)return delta;
     EnshwickItemData info={.header=HEADER(EnshwickItemData)};
-    if(!item || api->item_info(self,item,&info)!=EnshwickStatus_OK || info.category!=3)return delta;
+    if(!item || api->item_info(self,item,&info)!=EnshwickStatus_OK){*reason=ACTION_ITEM_LOOKUP;return delta;}
+    if(info.category!=3){*reason=ACTION_ITEM_CATEGORY;return delta;}
     if(api->component(self,entity,fields[13].hash,&live)!=EnshwickStatus_OK || !live ||
-       ((const uint8_t *)live)[fields[13].offset]!=4)return delta;
+       ((const uint8_t *)live)[fields[13].offset]!=4){*reason=ACTION_ITEM_ANIMATION;return delta;}
     // Tools + TwoHanded excludes swords/axes classed as combat weapons (2).
     // No target/material/combat distinction: terrain, creatures and air count.
     *reason=ACTION_FREE_TOOL;return 0;
