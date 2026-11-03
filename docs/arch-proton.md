@@ -1,4 +1,4 @@
-# Sprint Preview 0.4.1: Arch Linux / Proton
+# Sprint Preview 0.4.2: Arch Linux / Proton
 
 Эта версия уже меняет расход: **спринт вне наблюдаемого боя становится
 бесплатным**. Прыжки, инструменты, плавание и планер пока работают как в игре.
@@ -103,7 +103,7 @@ WINEDLLOVERRIDES="powrprof=n,b" %command%
 через Host. В логе источника `hitmanrec.stamina-probe` должны быть:
 
 ```text
-probe=0.4.1 read_only=false sprint_preview=true ...
+probe=0.4.2 read_only=false sprint_preview=true ...
 sprint_patch_registered status=0
 sample ... sprint_free_mask=1 ai_complete=1 skipped_sprint_adds=...
 ```
@@ -116,10 +116,10 @@ sample ... sprint_free_mask=1 ai_complete=1 skipped_sprint_adds=...
 Если появляется `sprint_patch_guard`, `sprint_patch_site` или
 `sprint_patch_prologue` с ошибкой, проверку не обходите: сохраните лог.
 
-В 0.4.1 добавлены счётчики причин отказа. Для текущей проверки достаточно
+В 0.4.2 исправлен отказ по селектору движения, найденный в логах 0.4.1. Для текущей проверки достаточно
 15 секунд спринта в безопасном месте, затем постоять 6 секунд и выйти.
 Сохраните оба свежих лога. Повторять бой пока не нужно.
-[Подробности разбора и счётчиков](session-04-analysis.md).
+[Подробности разбора и счётчиков](session-041-analysis.md).
 
 Полный сценарий для последующей игровой проверки:
 

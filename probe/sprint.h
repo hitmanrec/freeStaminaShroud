@@ -19,6 +19,12 @@ static _Atomic(uint32_t) sprint_selector_mask, sprint_matched_selector_mask;
 static void sprint_count(unsigned index) {
     atomic_fetch_add_explicit(&sprint_counters[index],1,memory_order_relaxed);
 }
+static int sprint_selector_supported(uint32_t selector) {
+    // This predicate is used ONLY at the guarded sprint accumulation site.
+    // Hosted-server traces use 0 for ordinary ground sprint; 4 is the
+    // reflected Sprint value. Never extend this to a generic stamina hook.
+    return selector==0 || selector==4;
+}
 #ifdef _WIN32
 __declspec(dllimport) uint64_t __stdcall GetTickCount64(void);
 __declspec(dllimport) void *__stdcall VirtualAlloc(void *,size_t,uint32_t,uint32_t);
@@ -32,19 +38,19 @@ static uint64_t sprint_test_time;
 static uint64_t sprint_clock(void){return sprint_test_time;}
 #endif
 static int sprint_gate(uintptr_t accumulator,uint32_t actual_selector) {
-    // R14B is the selector captured by the original loop. 4=Sprint; exclude
-    // SwimSprint/DiveSprint and all other branches of this shared system.
+    // R14B is captured by the original loop. Exclude swimming/diving and
+    // unknown states; reaching this site already requires the game's checks.
     sprint_count(SPRINT_CALLS);
     uint32_t selector_bit=actual_selector<31?1u<<actual_selector:UINT32_C(0x80000000);
     atomic_fetch_or_explicit(&sprint_selector_mask,selector_bit,memory_order_relaxed);
-    if(actual_selector==4)sprint_count(SPRINT_SELECTOR_OK);
+    if(sprint_selector_supported(actual_selector))sprint_count(SPRINT_SELECTOR_OK);
     uint64_t now=sprint_clock();
     for(unsigned i=0;i<PLAYERS;++i) {
         SprintPlayer *p=&sprint_players[i];
         if(atomic_load_explicit(&p->pointer,memory_order_acquire)!=accumulator)continue;
         sprint_count(SPRINT_POINTER_OK);
         atomic_fetch_or_explicit(&sprint_matched_selector_mask,selector_bit,memory_order_relaxed);
-        if(actual_selector!=4){sprint_count(SPRINT_OTHER_SELECTOR);return 0;}
+        if(!sprint_selector_supported(actual_selector)){sprint_count(SPRINT_OTHER_SELECTOR);return 0;}
         if(now<atomic_load(&p->blocked_until)){sprint_count(SPRINT_BLOCKED);return 0;}
         if(!atomic_load_explicit(&p->allowed,memory_order_acquire)){
             sprint_count(SPRINT_NOT_ALLOWED);return 0;}

@@ -187,6 +187,8 @@ int main(void) {
     observed_ai_complete=1;observed_ai_mask=0;
     publish_sprint(&tick_data,&one,1,0);
     CHECK(sprint_gate((uintptr_t)stamina,4));
+    // Live 0.4.1 session: pointer matched, but ground sprint selector was 0.
+    CHECK(sprint_gate((uintptr_t)stamina,0));
     CHECK(!sprint_gate((uintptr_t)stamina,9));
     CHECK(!sprint_gate((uintptr_t)stamina+4,4));
     sprint_test_time=451;CHECK(!sprint_gate((uintptr_t)stamina,4));
@@ -195,6 +197,7 @@ int main(void) {
     CHECK(!sprint_gate((uintptr_t)stamina,4));
     observed_ai_complete=1;observed_ai_mask=1;publish_sprint(&tick_data,&one,1,0);
     CHECK(!sprint_gate((uintptr_t)stamina,4));
+    CHECK(!sprint_gate((uintptr_t)stamina,0));
     observed_ai_mask=0;sprint_test_time=10450;publish_sprint(&tick_data,&one,1,0);
     CHECK(!sprint_gate((uintptr_t)stamina,4));
     sprint_test_time=10451;publish_sprint(&tick_data,&one,1,0);
@@ -221,8 +224,8 @@ int main(void) {
     CHECK(atomic_load(&sprint_counters[SPRINT_NOT_ALLOWED])>0);
     CHECK(atomic_load(&sprint_counters[SPRINT_EXPIRED])==1);
     CHECK(atomic_load(&sprint_counters[SPRINT_BLOCKED])>0);
-    CHECK(atomic_load(&sprint_selector_mask)==((1u<<4)|(1u<<9)));
-    CHECK(atomic_load(&sprint_matched_selector_mask)==((1u<<4)|(1u<<9)));
+    CHECK(atomic_load(&sprint_selector_mask)==(1u|(1u<<4)|(1u<<9)));
+    CHECK(atomic_load(&sprint_matched_selector_mask)==(1u|(1u<<4)|(1u<<9)));
     publish_sprint(&tick_data,&one,1,1);
     CHECK(strstr(logs," sprint_gate calls=")!=0);
     CHECK(atomic_load(&sprint_counters[SPRINT_CALLS])==0);
