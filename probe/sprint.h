@@ -11,6 +11,14 @@ typedef struct {
 static SprintPlayer sprint_players[PLAYERS];
 static int sprint_installed;
 static _Atomic(uint32_t) sprint_skipped;
+enum { SPRINT_CALLS, SPRINT_SELECTOR_OK, SPRINT_POINTER_OK, SPRINT_OTHER_SELECTOR,
+       SPRINT_UNKNOWN_POINTER, SPRINT_NOT_ALLOWED, SPRINT_EXPIRED, SPRINT_BLOCKED,
+       SPRINT_COUNTERS };
+static _Atomic(uint32_t) sprint_counters[SPRINT_COUNTERS];
+static _Atomic(uint32_t) sprint_selector_mask, sprint_matched_selector_mask;
+static void sprint_count(unsigned index) {
+    atomic_fetch_add_explicit(&sprint_counters[index],1,memory_order_relaxed);
+}
 #ifdef _WIN32
 __declspec(dllimport) uint64_t __stdcall GetTickCount64(void);
 __declspec(dllimport) void *__stdcall VirtualAlloc(void *,size_t,uint32_t,uint32_t);
@@ -26,18 +34,28 @@ static uint64_t sprint_clock(void){return sprint_test_time;}
 static int sprint_gate(uintptr_t accumulator,uint32_t actual_selector) {
     // R14B is the selector captured by the original loop. 4=Sprint; exclude
     // SwimSprint/DiveSprint and all other branches of this shared system.
-    if(actual_selector!=4)return 0;
+    sprint_count(SPRINT_CALLS);
+    uint32_t selector_bit=actual_selector<31?1u<<actual_selector:UINT32_C(0x80000000);
+    atomic_fetch_or_explicit(&sprint_selector_mask,selector_bit,memory_order_relaxed);
+    if(actual_selector==4)sprint_count(SPRINT_SELECTOR_OK);
     uint64_t now=sprint_clock();
     for(unsigned i=0;i<PLAYERS;++i) {
         SprintPlayer *p=&sprint_players[i];
         if(atomic_load_explicit(&p->pointer,memory_order_acquire)!=accumulator)continue;
-        if(!atomic_load_explicit(&p->allowed,memory_order_acquire) ||
-           now>atomic_load(&p->lease) || now<atomic_load(&p->blocked_until))return 0;
+        sprint_count(SPRINT_POINTER_OK);
+        atomic_fetch_or_explicit(&sprint_matched_selector_mask,selector_bit,memory_order_relaxed);
+        if(actual_selector!=4){sprint_count(SPRINT_OTHER_SELECTOR);return 0;}
+        if(now<atomic_load(&p->blocked_until)){sprint_count(SPRINT_BLOCKED);return 0;}
+        if(!atomic_load_explicit(&p->allowed,memory_order_acquire)){
+            sprint_count(SPRINT_NOT_ALLOWED);return 0;}
+        if(now>atomic_load(&p->lease)){sprint_count(SPRINT_EXPIRED);return 0;}
         atomic_fetch_add_explicit(&sprint_skipped,1,memory_order_relaxed);return 1;
     }
-    return 0;
+    sprint_count(SPRINT_UNKNOWN_POINTER);return 0;
 }
 static void reset_sprint_players(void) {
+    for(unsigned i=0;i<SPRINT_COUNTERS;++i)atomic_store(&sprint_counters[i],0);
+    atomic_store(&sprint_selector_mask,0);atomic_store(&sprint_matched_selector_mask,0);
     for(unsigned i=0;i<PLAYERS;++i){atomic_store(&sprint_players[i].allowed,0);
         atomic_store(&sprint_players[i].pointer,0);atomic_store(&sprint_players[i].entity,0);
         atomic_store(&sprint_players[i].blocked_until,0);}
@@ -91,6 +109,14 @@ static void publish_sprint(const EnshwickTickData *t,const EnshwickPlayerInfo *p
     uint32_t skipped=atomic_exchange(&sprint_skipped,0);
     if(heartbeat || skipped){Line l={{0},0};prefix(&l,t);text(&l," sprint_free_mask=");number(&l,allowed_mask);
         text(&l," ai_complete=");number(&l,observed_ai_complete);text(&l," skipped_sprint_adds=");number(&l,skipped);emit(&l);}
+    if(heartbeat) {
+        static const char *const names[SPRINT_COUNTERS]={" calls="," selector_sprint="," pointer_matches=",
+            " deny_selector="," unknown_pointer="," deny_permission="," expired="," combat_blocked="};
+        Line l={{0},0};prefix(&l,t);text(&l," sprint_gate");
+        for(unsigned i=0;i<SPRINT_COUNTERS;++i){text(&l,names[i]);number(&l,atomic_exchange(&sprint_counters[i],0));}
+        text(&l," selector_mask=");number(&l,atomic_exchange(&sprint_selector_mask,0));
+        text(&l," matched_selector_mask=");number(&l,atomic_exchange(&sprint_matched_selector_mask,0));emit(&l);
+    }
 }
 #ifdef _WIN32
 static void *allocate_sprint_near(uintptr_t site) {
