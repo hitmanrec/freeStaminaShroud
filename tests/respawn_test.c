@@ -112,5 +112,8 @@ int main(void){
     died(0);sample();sprint_test_time+=10001;sample();CHECK(writes==before);
     build.fingerprint.age=999;init_respawn(&build);CHECK(!respawn_ready);
     died(0);sample();CHECK(writes==before);
+    build.fingerprint.age=210;init_respawn(&build);CHECK(respawn_ready);
+    meter(0,0,0,210);died(0);sample();meter(0,0,10,210);sample();sample();
+    CHECK(value(0,0)==210 && value(0,1)==140 && value(0,2)==100);
     printf("Respawn refill tests: %u checks passed\n",checks);return 0;
 }

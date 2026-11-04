@@ -73,6 +73,13 @@ int main(void){
     invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,0,ACTION_FREE_TOOL);
     CHECK(meters[0]==100);
     invoke(&meters[1],-4,COST_ROOT,TOOL_RETURN,0,ACTION_FREE_TOOL);CHECK(meters[1]==100);
+    action_rva_shift=0xe0;jumps[1][377]=2;
+    invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_UNKNOWN);
+    invoke(&meters[1],-10,COST_ROOT,JUMP_RETURN,-10,ACTION_UNKNOWN);
+    invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN+0xe0,0,ACTION_FREE_TOOL);
+    invoke(&meters[1],-10,COST_ROOT,JUMP_RETURN+0xe0,0,ACTION_FREE_JUMP);
+    invoke(&meters[0],-10,COST_ROOT,JUMP_RETURN+0xe0,-10,ACTION_COMBAT);
+    action_rva_shift=0;
     // Switch to a two-handed combat weapon between ticks: classify live item,
     // not old animation or old equipment snapshot.
     put32(slots[0]+176,102);invoke(&meters[0],-3,COST_ROOT,TOOL_RETURN,-3,ACTION_ITEM_CATEGORY);

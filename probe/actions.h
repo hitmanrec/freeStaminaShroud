@@ -13,6 +13,7 @@ static ActionPlayer action_players[PLAYERS];
 static _Atomic(uint32_t) action_thread;
 static _Atomic(uint64_t) action_lease;
 static int actions_ready;
+static uint64_t action_rva_shift;
 static Field action_slot, action_item_id, action_jump;
 #ifdef _WIN32
 __declspec(dllimport) uint32_t __stdcall GetCurrentThreadId(void);
@@ -39,7 +40,7 @@ static void publish_actions(const EnshwickPlayerInfo *players,uint32_t count) {
 }
 static int32_t action_delta(void *attribute,int32_t delta,uint64_t caller,uint32_t *reason,uint32_t *detail) {
     *reason=ACTION_UNKNOWN;*detail=0;
-    if(!actions_ready || delta>=0 || (caller!=TOOL_RETURN && caller!=JUMP_RETURN))return delta;
+    if(!actions_ready || delta>=0 || (caller!=TOOL_RETURN+action_rva_shift && caller!=JUMP_RETURN+action_rva_shift))return delta;
     // No ECS calls on workers, client prediction, or before a server tick.
     uint32_t thread=atomic_load_explicit(&action_thread,memory_order_acquire);
     if(!thread || thread!=action_current_thread()){*reason=ACTION_THREAD;return delta;}
@@ -54,7 +55,7 @@ static int32_t action_delta(void *attribute,int32_t delta,uint64_t caller,uint32
     const void *live=0;
     if(api->component(self,entity,stamina_layout.hash,&live)!=EnshwickStatus_OK || live!=attribute){
         *reason=ACTION_PLAYER;return delta;}
-    if(caller==JUMP_RETURN) {
+    if(caller==JUMP_RETURN+action_rva_shift) {
         SprintPlayer *p=&sprint_players[slot];
         if(atomic_load(&p->entity)!=entity || !atomic_load(&p->allowed) ||
            now>atomic_load(&p->lease) || now<atomic_load(&p->blocked_until)){
@@ -85,6 +86,9 @@ static int32_t action_delta(void *attribute,int32_t delta,uint64_t caller,uint32
 }
 static void init_actions(const EnshwickBuildInfo *build) {
     actions_ready=0;reset_actions();
+    unsigned identity=reviewed_client_build(build);
+    action_rva_shift=reviewed_code_shift(identity);
+    uint64_t shifted_base=0;
     action_slot=resolve("keen::ecs::SlotSelection","actionItem",20,1);
     action_item_id=resolve("keen::ItemInstanceInfo","itemId",4,0);
     // The request is written before the debit; DynamicLocomotion.jumpType is
@@ -93,16 +97,18 @@ static void init_actions(const EnshwickBuildInfo *build) {
     if(action_item_id.size!=20)action_item_id.available=0;
     if(api->inventory_open)diagnostic_status("action_inventory",api->inventory_open(self));
     uint64_t begin=0,length=0;
-    if(!cost_installed || !reviewed_client_build(build) || !api->code_range ||
-       build->base>UINT64_MAX-JUMP_RETURN || api->code_range(&begin,&length)!=EnshwickStatus_OK ||
-       build->base+UINT64_C(0x223af7)<begin || build->base+UINT64_C(0x2c9684)<begin ||
-       !range_ok(build->base+UINT64_C(0x223af7)-begin,24,length) ||
-       !range_ok(build->base+UINT64_C(0x2c9684)-begin,23,length) ||
-       !range_ok(build->base+UINT64_C(0x2c97d0)-begin,41,length)){
+    if(!cost_installed || !identity || !api->code_range ||
+       build->base>UINT64_MAX-(JUMP_RETURN+action_rva_shift) || api->code_range(&begin,&length)!=EnshwickStatus_OK){
         diagnostic_status("action_cost_guard",EnshwickStatus_REFUSED);return;}
-    if(sprint_code_digest((const uint8_t *)(uintptr_t)(build->base+UINT64_C(0x223af7)),24)!=UINT32_C(0xdec87622) ||
-       sprint_code_digest((const uint8_t *)(uintptr_t)(build->base+UINT64_C(0x2c9684)),23)!=UINT32_C(0x75f3353c) ||
-       sprint_code_digest((const uint8_t *)(uintptr_t)(build->base+UINT64_C(0x2c97d0)),41)!=UINT32_C(0xec1d643e)){
+    shifted_base=build->base+action_rva_shift;
+    if(shifted_base+UINT64_C(0x223af7)<begin || shifted_base+UINT64_C(0x2c9684)<begin ||
+       !range_ok(shifted_base+UINT64_C(0x223af7)-begin,24,length) ||
+       !range_ok(shifted_base+UINT64_C(0x2c9684)-begin,23,length) ||
+       !range_ok(shifted_base+UINT64_C(0x2c97d0)-begin,41,length)){
+        diagnostic_status("action_cost_guard",EnshwickStatus_REFUSED);return;}
+    if(sprint_code_digest((const uint8_t *)(uintptr_t)(shifted_base+UINT64_C(0x223af7)),24)!=UINT32_C(0xdec87622) ||
+       sprint_code_digest((const uint8_t *)(uintptr_t)(shifted_base+UINT64_C(0x2c9684)),23)!=UINT32_C(0x75f3353c) ||
+       sprint_code_digest((const uint8_t *)(uintptr_t)(shifted_base+UINT64_C(0x2c97d0)),41)!=UINT32_C(0xec1d643e)){
         diagnostic_status("action_cost_sites",EnshwickStatus_REFUSED);return;}
     actions_ready=1;diagnostic_status("action_cost_guard",EnshwickStatus_OK);
     Line l={{0},0};text(&l,"action_rules tools_schema=");

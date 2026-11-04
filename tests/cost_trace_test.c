@@ -110,6 +110,18 @@ int main(void) {
     CHECK(cost_count+atomic_load(&cost_dropped)==8000);
     CHECK(cost_count<=COST_CAPACITY);
     atomic_store(&cost_next,(uintptr_t)original);
+    // /210 uses the same GUID but a separately reviewed age and moved helper.
+    build.fingerprint.age=210;build.table=EnshwickBuildTable_PATTERNS;
+    build.base=(uintptr_t)image_code-(COST_RVA+UINT64_C(0xe0));
+    CHECK(reviewed_client_build(&build)==3 && reviewed_code_shift(3)==0xe0);
+    CHECK(reviewed_code_shift(1)==0 && reviewed_code_shift(2)==0);
+    image_code[0]^=1;init_cost_trace(&build);CHECK(hooks==2);image_code[0]^=1;
+    init_cost_trace(&build);CHECK(hooks==3);
+    reset_cost_trace();return_address=(uintptr_t)image_code+4;
+    cost_observe(&meter,&registry,-1,COST_ROOT);
+    CHECK(cost_count==1 && cost_queue[0].caller_rva==COST_RVA+0xe0+4);
+    build.fingerprint.age=211;init_cost_trace(&build);CHECK(hooks==3);
+    build.fingerprint.age=210;build.fingerprint.guid[0]^=1;CHECK(!reviewed_client_build(&build));
     printf("Cost observation tests: %u checks passed\n",checks);
     return 0;
 }

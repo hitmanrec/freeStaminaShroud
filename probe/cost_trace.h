@@ -89,11 +89,12 @@ static void init_cost_trace(const EnshwickBuildInfo *build) {
     cost_installed=0;
     EnshwickStatus status = EnshwickStatus_REFUSED;
     unsigned identity=reviewed_client_build(build);
+    uint64_t helper_rva=COST_RVA+reviewed_code_shift(identity);
     if (!identity || !api->hook || !api->caller_frame || !api->code_range ||
-        !build->base || build->base > UINT64_MAX-COST_RVA) {
+        !build->base || build->base > UINT64_MAX-helper_rva) {
         diagnostic_status("cost_trace_guard",status); return;
     }
-    uint64_t target=build->base+COST_RVA;
+    uint64_t target=build->base+helper_rva;
     status=api->code_range(&cost_code_begin,&cost_code_size);
     if(status!=EnshwickStatus_OK || target<cost_code_begin ||
        !range_ok(target-cost_code_begin,sizeof(cost_prologue),cost_code_size)) {

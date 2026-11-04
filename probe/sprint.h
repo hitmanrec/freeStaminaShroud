@@ -187,17 +187,18 @@ static void init_sprint(const EnshwickBuildInfo *build) {
     sprint_installed=0;reset_sprint_players();
 #ifdef _WIN32
     unsigned identity=reviewed_client_build(build);
+    uint64_t shift=reviewed_code_shift(identity);
     uint64_t system=0,begin=0,length=0;
     if(!identity || !api->patch_code || !api->system || !api->code_range ||
-       build->base>UINT64_MAX-SPRINT_SITE ||
+       build->base>UINT64_MAX-(SPRINT_SITE+shift) ||
        api->system(str("stamina_depletion_sprint"),&system)!=EnshwickStatus_OK ||
-       system!=build->base+SPRINT_SYSTEM || api->code_range(&begin,&length)!=EnshwickStatus_OK ||
+       system!=build->base+SPRINT_SYSTEM+shift || api->code_range(&begin,&length)!=EnshwickStatus_OK ||
        system<begin || !range_ok(system-begin,0x5b3,length)) {
         diagnostic_status("sprint_patch_guard",EnshwickStatus_REFUSED);return;
     }
     const uint8_t prologue[]={0x40,0x55,0x41,0x57,0x48,0x8d,0xac,0x24,0xf8,0xfe,0xff,0xff,0x48,0x81,0xec,0x08,0x02,0,0};
     const uint8_t original[]={0xf3,0x0f,0x58,0x30,0xf3,0x0f,0x11,0x30};
-    uintptr_t site=(uintptr_t)(build->base+SPRINT_SITE);
+    uintptr_t site=(uintptr_t)(build->base+SPRINT_SITE+shift);
     for(unsigned i=0;i<sizeof(prologue);++i)if(((const uint8_t *)(uintptr_t)system)[i]!=prologue[i]){
         diagnostic_status("sprint_patch_prologue",EnshwickStatus_REFUSED);return;}
     for(unsigned i=0;i<sizeof(original);++i)if(((const uint8_t *)site)[i]!=original[i]){

@@ -46,16 +46,17 @@ static void drain_climb_trace(const EnshwickTickData *tick,const EnshwickPlayerI
 }
 static void init_climb_trace(const EnshwickBuildInfo *build) {
     climb_trace_ready=0;reset_climb_trace();uint64_t system=0,begin=0,length=0;
-    if(!reviewed_client_build(build) || !api->hook_at || !api->system || !api->code_range ||
-       build->base>UINT64_MAX-UINT64_C(0x2f0a04) ||
+    unsigned identity=reviewed_client_build(build);uint64_t shift=reviewed_code_shift(identity);
+    if(!identity || !api->hook_at || !api->system || !api->code_range ||
+       build->base>UINT64_MAX-(UINT64_C(0x2f0a04)+shift) ||
        api->system(str("stamina_depletion_climb_wall"),&system)!=EnshwickStatus_OK ||
-       system!=build->base+UINT64_C(0x2f0600) || api->code_range(&begin,&length)!=EnshwickStatus_OK ||
-       build->base+UINT64_C(0x2f09f2)<begin ||
-       !range_ok(build->base+UINT64_C(0x2f09f2)-begin,18,length) ||
-       sprint_code_digest((const uint8_t *)(uintptr_t)(build->base+UINT64_C(0x2f09f2)),18)!=UINT32_C(0x8a76d895)){
+       system!=build->base+UINT64_C(0x2f0600)+shift || api->code_range(&begin,&length)!=EnshwickStatus_OK ||
+       build->base+UINT64_C(0x2f09f2)+shift<begin ||
+       !range_ok(build->base+UINT64_C(0x2f09f2)+shift-begin,18,length) ||
+       sprint_code_digest((const uint8_t *)(uintptr_t)(build->base+UINT64_C(0x2f09f2)+shift),18)!=UINT32_C(0x8a76d895)){
         diagnostic_status("climb_trace_guard",EnshwickStatus_REFUSED);return;}
-    EnshwickMidHookSpec before={.address=build->base+UINT64_C(0x2f09f6),.handler=climb_measure};
-    EnshwickMidHookSpec after={.address=build->base+UINT64_C(0x2f09fe),.handler=climb_measure,.user=(void *)(uintptr_t)1};
+    EnshwickMidHookSpec before={.address=build->base+UINT64_C(0x2f09f6)+shift,.handler=climb_measure};
+    EnshwickMidHookSpec after={.address=build->base+UINT64_C(0x2f09fe)+shift,.handler=climb_measure,.user=(void *)(uintptr_t)1};
     EnshwickStatus status=api->hook_at(self,&before);
     if(status==EnshwickStatus_OK)status=api->hook_at(self,&after);
     climb_trace_ready=status==EnshwickStatus_OK;diagnostic_status("climb_trace_hooks",status);
