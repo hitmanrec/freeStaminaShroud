@@ -1,33 +1,65 @@
 # freeStaminaShroud
 
-An Enshrouded mod in development: free sprinting and jumping outside combat,
-plus free tool actions regardless of combat or target. Attacks with ordinary
-combat weapons retain their normal stamina costs.
+Мод для **Enshrouded**: свободное передвижение вне боя, бесплатная работа
+инструментами и полное восстановление ресурсов при возрождении.
 
-Version **0.6.0** adds experimental one-shot restoration of health, stamina
-and mana to the character's current maxima after respawn. Sprint, ground jumps,
-axe and the confirmed pickaxe have been validated for host and guest in recorded
-sessions. Respawn restoration still needs live testing; regeneration pauses
-between double jumps remain a separate open task.
+**Рабочая версия: 0.6.0** · **Linux / Proton** · **Enshwick** · [MIT](LICENSE)
 
-- [Восполнение ресурсов при возрождении: 0.6.0](docs/respawn-refill.md)
-- [Кирка и диагностика расхода на горе: 0.5.2](docs/pickaxe-and-slope.md)
-- [Исправление первых прыжков и склона в 0.5.1](docs/session-050-jump-fix.md)
-- [Правила и короткий тест прыжков/инструментов 0.5.0](docs/action-preview.md)
-- [Установка и проверка Gameplay Preview 0.6.0 на Arch / Proton](docs/arch-proton.md)
-- [Поддержка новой сборки игры в 0.4.4](docs/build-205-support.md)
-- [Исправление целей ИИ и совместный тест с гостем без мода (0.4.3)](docs/guest-test.md)
-- [Исправление отказа по селектору в 0.4.2](docs/session-041-analysis.md)
-- [Разбор проверки 0.4.0 и диагностика 0.4.1](docs/session-04-analysis.md)
-- [Как устроен патч спринта и какие у него ограничения](docs/sprint-preview.md)
-- [Одиночный сценарий и метки действий для диагностики 0.2.x](docs/solo-diagnostics.md)
-- [Анализ полученных сессий и исправления 0.2.1](docs/session-02-analysis.md)
-- [Точки расхода и офлайн-разбор EXE без новой игровой сессии](docs/cost-paths.md)
-- [Результат первого разбора EXE и найденные списания](docs/offline-report-analysis.md)
-- [Результат второго отчёта и наблюдение стоимости 0.3.0](docs/cost-trace.md)
-- [Разбор реальной сессии 0.3.0: прыжки, склон, инструменты](docs/session-03-analysis.md)
-- [Исследование API и существующих модов](docs/research.md)
-- [Stamina rules and integration plan](docs/implementation.md)
+## Возможности
 
-Run all local checks with `sh scripts/test-all.sh`. Build the Windows x86-64 preview
-DLL on Linux with `sh scripts/build-probe.sh` (requires Zig and a native C compiler).
+| Механика | Поведение |
+| --- | --- |
+| Спринт | Бесплатный вне боя; обычная стоимость в бою |
+| Двойные и горные прыжки | Бесплатные вне боя; обычная стоимость в бою |
+| Топор и подтверждённая кирка | Бесплатные действия по любой цели и в воздух, независимо от боя |
+| Возрождение | Здоровье, стамина и мана однократно заполняются до текущих максимумов |
+
+Спринт, прыжки, топор и кирка проверены хостом и гостем без установки мода
+у гостя. Восстановление при возрождении также прошло игровую проверку
+пользователя. При повторных двойных прыжках регенерация может приостанавливаться;
+это поведение оставлено как есть.
+
+> Мод рассчитан на встроенный сервер: открыть мир с возможностью подключения
+> других игроков. Поддержка зависит от точной сборки EXE. Отдельный headless
+> сервер и все возможные сочетания модов не проверены.
+
+## Начать
+
+**[Установка на Arch / Proton →](docs/installation.md)**
+
+Для обновления уже установленного мода полностью закройте игру и выполните
+из папки репозитория:
+
+```sh
+git pull --ff-only
+sh scripts/build-probe.sh
+GAME_DIR="$HOME/.local/share/Steam/steamapps/common/Enshrouded"
+python3 scripts/install-probe.py --game-dir "$GAME_DIR" --replace
+```
+
+Если Steam-библиотека расположена на другом диске, замените `GAME_DIR`.
+Для сборки нужен Zig; проверенная версия — **0.14.1**.
+
+## Документация
+
+| Руководство | Что внутри |
+| --- | --- |
+| [Установка и обновление](docs/installation.md) | Arch, Proton, загрузчик, резервные копии, удаление |
+| [Игровые правила](docs/gameplay.md) | Бой, инструменты, возрождение и ограничения |
+| [Игра с гостями](docs/multiplayer.md) | Настройка хоста и проверенные сценарии |
+| [Если что-то не работает](docs/troubleshooting.md) | Проверка версии, ошибки совместимости и логи |
+| [Разработка](docs/development.md) | Сборка, тесты, архитектура и поддержанные EXE |
+
+## Для разработчика
+
+```sh
+sh scripts/test-all.sh
+sh scripts/build-probe.sh
+```
+
+Исходники находятся в `probe/`, проверки — в `tests/`. Названия DLL и ID мода
+сохранены для совместимости с существующей установкой. Артефакты сборки
+появляются в `.build/`; логи и отчёты в Git не добавляются.
+
+Загрузчик: [Enshwick](https://github.com/enshwick/enshwick).
+Закреплённый SDK и его лицензия находятся в [third_party/enshwick](third_party/enshwick).

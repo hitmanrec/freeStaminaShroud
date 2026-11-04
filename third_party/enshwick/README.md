@@ -6,7 +6,7 @@ Vendored unchanged from `enshwick/enshwick` commit
 
 Upstream: https://github.com/enshwick/enshwick
 
-MIT license: see LICENSE in this directory. The diagnostic needs a loader with
+MIT license: see LICENSE in this directory. The mod needs a loader with
 ABI major 11, minor at least 1 and a full matching HostApi table. A moving `dev`
 release may eventually have another ABI; a rejection requires a reviewed SDK
 update and rebuild, not disabling the compatibility checks.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install only the probe and, optionally, the two known Enshwick loader DLLs."""
+"""Install the mod and, optionally, the two pinned Enshwick loader DLLs."""
 import argparse
 from datetime import datetime, timezone
 import hashlib

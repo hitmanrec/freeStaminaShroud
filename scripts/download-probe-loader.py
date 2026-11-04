@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch the researched Enshwick dev bundle, refusing changed artifacts."""
+"""Download the pinned Enshwick loader bundle, refusing changed artifacts."""
 import argparse
 import hashlib
 from pathlib import Path

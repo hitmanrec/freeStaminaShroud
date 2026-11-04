@@ -1,2 +1,15 @@
 /.build/
 __pycache__/
+*.py[cod]
+
+# Local captures and diagnostics.
+/logs/
+/reports/
+/captures/
+*.log
+*.tar.gz
+
+# Game files and compiled artifacts are not source files.
+*.dll
+*.exe
+*.pdb

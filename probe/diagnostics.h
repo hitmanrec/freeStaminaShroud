@@ -168,7 +168,7 @@ static void sample_targets(const EnshwickTickData *t, const EnshwickPlayerInfo *
         }
         if (!any) continue;
         // The combat-target winner is SelectedTargets[0], not every sensor
-        // category in this array (same-EXE engine map; see guest-test.md).
+        // category in this array (same-EXE engine map; see docs/development.md).
         observed_ai_candidate_mask|=any;
         observed_ai_mask|=primary;
         ++matched; AiCache *c = 0;
